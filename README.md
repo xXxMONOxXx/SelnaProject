@@ -1,1 +1,1 @@
-# SelnaProject
+# Stoma Mikhail Gennadievich
