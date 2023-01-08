@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<databaseChangeLog
+   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+      http://www.liquibase.org/xml/ns/pro 
+      http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd"
+      logicalFilePath="homework-2">  
+
+    <changeSet id="homework-2-create-type-role" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/01.create-type-role.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-users-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/02.create-users-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-profiles-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/03.create-profiles-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-create-books-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/04.create-books-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-items-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/05.create-items-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-create-genres-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/06.create-genres-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-authors-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/07.create-authors-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-create-book-genres-relation" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/08.create-book-genres-relation.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-books-author-relation" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/09.create-books-author-relation.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-insert-users-sample" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/10.insert-users-sample.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-insert-profiles-sample" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/11.insert-profiles-sample.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-insert-authors-sample" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/12.insert-authors-sample.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-insert-genres-sample" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/13.insert-genres-sample.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-insert-books-sample" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/14.insert-books-sample.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-insert-books-author-sample" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/15.insert-books-author-sample.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-insert-book-genres-sample" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/16.insert-book-genres-sample.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-insert-items-sample" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/17.insert-items-sample.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+
+
+</databaseChangeLog> 
