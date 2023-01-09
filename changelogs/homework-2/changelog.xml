@@ -81,6 +81,18 @@
         <sqlFile encoding="utf8" path="./sql/18.create-authors-name-index.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet id="homework-2-create-books-isbn-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/19.create-books-isbn-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-profiles-phone-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/20.create-profiles-phone-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-profiles-email-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/21.create-profiles-email-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
     <changeSet author="mishastoma" id="homework-2-insert-users-sample">
         <insert tableName="users">
             <column name="username" value="addy"/>
