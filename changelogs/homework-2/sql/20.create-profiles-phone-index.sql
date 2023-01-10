@@ -1,0 +1,1 @@
+create index idx_phone on profiles(phone);
