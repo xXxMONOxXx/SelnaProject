@@ -24,6 +24,7 @@
                 <version>4.5.0</version>
                 <configuration>
                     <propertyFile>src/main/liquibase/liquibase.properties</propertyFile>
+                    <changeLogFile>src/main/liquibase/changelog-master.xml</changeLogFile>
                 </configuration>
                 <executions>
                     <execution>

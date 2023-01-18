@@ -1,4 +1,4 @@
-package by.mishastoma.dao;
+package by.mishastoma.utils;
 
 import by.mishastoma.di.annotations.Value;
 import lombok.Getter;

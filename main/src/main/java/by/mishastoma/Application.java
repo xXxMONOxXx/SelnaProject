@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Application {
     @SneakyThrows
     public static void main(String... args){
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Application.class, "application.properties");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
         Controller bean = context.getBean(Controller.class);
         String dbResult = bean.execute();
         log.info(dbResult);

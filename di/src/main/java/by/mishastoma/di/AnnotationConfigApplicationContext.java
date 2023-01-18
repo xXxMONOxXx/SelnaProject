@@ -19,6 +19,7 @@ import java.lang.reflect.Parameter;
 import java.util.*;
 
 public class AnnotationConfigApplicationContext {
+    public static final String DEFAULT_PROPERTIES_FILE_NAME = "application.properties";
     private final Reflections reflections;
     private final StringUtils stringUtils = new StringUtils();
     private final PropReader propReader = new PropReader();
@@ -26,11 +27,11 @@ public class AnnotationConfigApplicationContext {
     private final Set<Class<?>> classes;
     private Map<String, Object> annotatedObjects = new HashMap<>();
     private Map<String, String> objectsMap = new HashMap<>();
-    public AnnotationConfigApplicationContext(Class<?> context, String propFileName) throws DIException {
+    public AnnotationConfigApplicationContext(Class<?> context) throws DIException {
         reflections = new Reflections(context, new SubTypesScanner(false));
         try {
             classes = getClasses();
-            objectsMap = propReader.readPropFile(propFileName);
+            objectsMap = propReader.readPropFile(DEFAULT_PROPERTIES_FILE_NAME);
             createComponents();
         } catch (FileNotFoundException e) {
             throw new DIException(e.getMessage());

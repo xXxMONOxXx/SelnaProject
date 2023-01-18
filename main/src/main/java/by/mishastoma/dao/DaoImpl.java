@@ -2,6 +2,7 @@ package by.mishastoma.dao;
 
 import by.mishastoma.di.annotations.Autowire;
 import by.mishastoma.di.annotations.Component;
+import by.mishastoma.utils.ParametersHolder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
