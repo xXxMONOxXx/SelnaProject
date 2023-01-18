@@ -1,0 +1,1 @@
+create index idx_fk_book_id_genres on book_genres(fk_book_id);

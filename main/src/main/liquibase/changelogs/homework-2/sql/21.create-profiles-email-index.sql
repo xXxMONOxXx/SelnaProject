@@ -1,0 +1,1 @@
+create index idx_email on profiles(email);

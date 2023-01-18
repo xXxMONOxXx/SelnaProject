@@ -1,0 +1,8 @@
+by\mishastoma\di\annotations\Value.class
+by\mishastoma\di\annotations\Autowire.class
+by\mishastoma\di\AnnotationConfigApplicationContext.class
+by\mishastoma\di\utils\MethodUtils.class
+by\mishastoma\di\utils\StringUtils.class
+by\mishastoma\di\exception\DIException.class
+by\mishastoma\di\utils\PropReader.class
+by\mishastoma\di\annotations\Component.class
