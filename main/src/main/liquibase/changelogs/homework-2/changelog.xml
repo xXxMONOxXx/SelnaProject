@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<databaseChangeLog
+   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+      http://www.liquibase.org/xml/ns/pro 
+      http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd"
+      logicalFilePath="homework-2">  
+
+    <changeSet id="homework-2-create-type-role" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/01.create-type-role.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-users-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/02.create-users-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-profiles-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/03.create-profiles-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-create-books-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/04.create-books-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-items-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/05.create-items-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-create-genres-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/06.create-genres-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-authors-table" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/07.create-authors-table.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-create-book-genres-relation" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/08.create-book-genres-relation.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-books-author-relation" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/09.create-books-author-relation.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-items-book-id-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/10.create-items-book-id-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-create-items-user-id-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/11.create-items-user-id-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-book-genres-book-id-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/12.create-book-genres-book-id-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+    
+    <changeSet id="homework-2-create-book-genres-genre-id-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/13.create-book-genres-genre-id-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-books-author-book-id-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/14.create-books-author-book-id-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-books-author-author-id-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/15.create-books-author-author-id-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-user-username-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/16.create-user-username-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-books-title-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/17.create-books-title-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-create-authors-name-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/18.create-authors-name-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-books-isbn-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/19.create-books-isbn-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-profiles-phone-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/20.create-profiles-phone-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="homework-2-create-profiles-email-index" author="mishastoma">
+        <sqlFile encoding="utf8" path="./sql/21.create-profiles-email-index.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet author="mishastoma" id="homework-2-insert-users-sample">
+        <insert tableName="users">
+            <column name="username" value="addy"/>
+            <column name="password" value="6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="max"/>
+            <column name="password" value="d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="bernard"/>
+            <column name="password" value="4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="cleo"/>
+            <column name="password" value="4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="genna"/>
+            <column name="password" value="ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="mishastoma" id="homework-2-insert-profiles-sample">
+        <insert tableName="profiles">
+            <column name="firstname" value="Addy"/>
+            <column name="surname" value="Lamb"/>
+	    <column name="phone" value="375332949604"/>
+	    <column name="email" value="rogahn.charlie@franecki.com"/>
+	    <column name="birthdate" value="2000-09-16"/>    
+        </insert>
+        <insert tableName="profiles">
+            <column name="firstname" value="Max"/>
+            <column name="surname" value="Evans"/>
+	    <column name="phone" value="375446926083"/>
+	    <column name="email" value="terry.maye@stracke.com"/>
+	    <column name="birthdate" value="1998-02-13"/>    
+        </insert><insert tableName="profiles">
+            <column name="firstname" value="Bernard"/>
+            <column name="surname" value="Ford"/>
+	    <column name="phone" value="375336665432"/>
+	    <column name="email" value="dix-irigero20@yahoo.com"/>
+	    <column name="birthdate" value="2005-05-20"/>    
+        </insert><insert tableName="profiles">
+            <column name="firstname" value="Cleo"/>
+            <column name="surname" value="Turner"/>
+	    <column name="phone" value="375296443350"/>
+	    <column name="email" value="bufa-mikove29@gmail.com"/>
+	    <column name="birthdate" value="2004-11-05"/>    
+        </insert><insert tableName="profiles">
+            <column name="firstname" value="Genna"/>
+            <column name="surname" value="Wand"/>
+	    <column name="phone" value="375449751773"/>
+	    <column name="email" value="gir_ujavevo82@outlook.com"/>
+	    <column name="birthdate" value="2003-06-14"/>    
+        </insert>
+    </changeSet>
+
+    <changeSet author="mishastoma" id="homework-2-insert-authors-sample">
+        <insert tableName="authors">
+            <column name="firstname" value="William"/>
+            <column name="surname" value="Shakespeare"/>
+	    <column name="patronymic" value="null"/>  
+        </insert>
+        <insert tableName="authors">
+            <column name="firstname" value="Charles"/>
+            <column name="surname" value="Dickens"/>
+	    <column name="patronymic" value="null"/>  
+        </insert>        
+	<insert tableName="authors">
+            <column name="firstname" value="Anton"/>
+            <column name="surname" value="Chekhov"/>
+	    <column name="patronymic" value="Pavlovich"/>  
+        </insert>
+    </changeSet>
+
+    <changeSet author="mishastoma" id="homework-2-insert-genres-sample">
+        <insert tableName="genres">
+            <column name="genre" value="Fantasy"/> 
+        </insert>
+        <insert tableName="genres">
+            <column name="genre" value="Sci-Fi"/> 
+        </insert>
+        <insert tableName="genres">
+            <column name="genre" value="Mystery"/> 
+        </insert>
+        <insert tableName="genres">
+            <column name="genre" value="Thriller"/> 
+        </insert>
+        <insert tableName="genres">
+            <column name="genre" value="Romance"/> 
+        </insert>
+        <insert tableName="genres">
+            <column name="genre" value="Westerns"/> 
+        </insert>
+        <insert tableName="genres">
+            <column name="genre" value="Dystopian"/> 
+        </insert>
+        <insert tableName="genres">
+            <column name="genre" value="Contemporary"/> 
+        </insert>
+        <insert tableName="genres">
+            <column name="genre" value="Tradegy"/> 
+        </insert>
+        <insert tableName="genres">
+            <column name="genre" value="Comedy"/> 
+        </insert>
+        <insert tableName="genres">
+            <column name="genre" value="Drama"/> 
+        </insert>
+    </changeSet>
+
+    <changeSet author="mishastoma" id="homework-2-insert-books-sample">
+        <insert tableName="books">
+            <column name="title" value="Romeo and Juliet"/>
+            <column name="isbn" value="9785171025212"/>
+	    <column name="release_date" value="2020-01-01"/>  
+        </insert>
+        <insert tableName="books">
+            <column name="title" value="Hamlet. Macbeth"/>
+            <column name="isbn" value="9785171081591"/>
+	    <column name="release_date" value="2020-01-01"/>  
+        </insert>        
+	<insert tableName="books">
+            <column name="title" value="Вишневый сад"/>
+            <column name="isbn" value="9785171489496"/>
+	    <column name="release_date" value="2022-01-01"/>  
+        </insert>        
+	<insert tableName="books">
+            <column name="title" value="Палата №6"/>
+            <column name="isbn" value="9785041583071"/>
+	    <column name="release_date" value="2022-01-01"/>  
+        </insert>       
+	 <insert tableName="books">
+            <column name="title" value="The Old Curiosity Shop"/>
+            <column name="isbn" value="9785699701834"/>
+	    <column name="release_date" value="2017-01-01"/>  
+        </insert>
+    </changeSet>
+
+    <changeSet author="mishastoma" id="homework-2-insert-books-author-sample">
+        <insert tableName="books_author">
+            <column name="fk_book_id" value="1"/>
+            <column name="fk_author_id" value="1"/> 
+        </insert>
+        <insert tableName="books_author">
+            <column name="fk_book_id" value="2"/>
+            <column name="fk_author_id" value="1"/> 
+        </insert>
+        <insert tableName="books_author">
+            <column name="fk_book_id" value="3"/>
+            <column name="fk_author_id" value="3"/> 
+        </insert>
+        <insert tableName="books_author">
+            <column name="fk_book_id" value="4"/>
+            <column name="fk_author_id" value="3"/> 
+        </insert>
+        <insert tableName="books_author">
+            <column name="fk_book_id" value="5"/>
+            <column name="fk_author_id" value="2"/> 
+        </insert>
+    </changeSet>
+
+    <changeSet author="mishastoma" id="homework-2-insert-book-genres-sample">
+        <insert tableName="book_genres">
+            <column name="fk_book_id" value="1"/>
+            <column name="fk_genre_id" value="9"/> 
+        </insert>
+        <insert tableName="book_genres">
+            <column name="fk_book_id" value="2"/>
+            <column name="fk_genre_id" value="9"/> 
+        </insert>
+	<insert tableName="book_genres">
+            <column name="fk_book_id" value="3"/>
+            <column name="fk_genre_id" value="10"/> 
+        </insert>
+        <insert tableName="book_genres">
+            <column name="fk_book_id" value="4"/>
+            <column name="fk_genre_id" value="11"/> 
+        </insert>
+        <insert tableName="book_genres">
+            <column name="fk_book_id" value="5"/>
+            <column name="fk_genre_id" value="5"/> 
+        </insert>
+    </changeSet>
+
+    <changeSet author="mishastoma" id="homework-2-insert-items-sample">
+        <insert tableName="items">
+            <column name="fk_book_id" value="1"/>
+        </insert>
+        <insert tableName="items">
+            <column name="fk_book_id" value="1"/>
+        </insert>
+        <insert tableName="items">
+            <column name="fk_book_id" value="2"/>
+        </insert>
+        <insert tableName="items">
+            <column name="fk_book_id" value="2"/>
+        </insert>
+        <insert tableName="items">
+            <column name="fk_book_id" value="3"/>
+        </insert>
+        <insert tableName="items">
+            <column name="fk_book_id" value="3"/>
+        </insert>
+        <insert tableName="items">
+            <column name="fk_book_id" value="4"/>
+        </insert>
+        <insert tableName="items">
+            <column name="fk_book_id" value="4"/>
+        </insert>
+        <insert tableName="items">
+            <column name="fk_book_id" value="5"/>
+        </insert>
+        <insert tableName="items">
+            <column name="fk_book_id" value="5"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog> 

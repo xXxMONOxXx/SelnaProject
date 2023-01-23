@@ -1,0 +1,1 @@
+create type role as enum ('admin', 'librarian', 'customer');
