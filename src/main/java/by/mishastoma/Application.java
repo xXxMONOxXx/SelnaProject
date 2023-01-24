@@ -4,7 +4,6 @@ import by.mishastoma.controller.AuthorControllerImpl;
 import by.mishastoma.controller.BookControllerImpl;
 import by.mishastoma.controller.GenreControllerImpl;
 import by.mishastoma.controller.UserControllerImpl;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @ComponentScan
 public class Application {
-    @SneakyThrows
     public static void main(String... args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
         checkAuthor(context);
@@ -24,7 +22,6 @@ public class Application {
 
     }
 
-    @SneakyThrows
     private static void checkAuthor(ApplicationContext context) {
         AuthorControllerImpl controller = context.getBean(AuthorControllerImpl.class);
         log.info("Before operations:\n" + controller.findAll());
@@ -36,7 +33,6 @@ public class Application {
         log.info("After insert:\n" + controller.findAll());
     }
 
-    @SneakyThrows
     private static void checkBook(ApplicationContext context) {
         BookControllerImpl controller = context.getBean(BookControllerImpl.class);
         log.info("Before operations:\n" + controller.findAll());
@@ -48,7 +44,6 @@ public class Application {
         log.info("After insert:\n" + controller.findAll());
     }
 
-    @SneakyThrows
     private static void checkGenre(ApplicationContext context) {
         GenreControllerImpl controller = context.getBean(GenreControllerImpl.class);
         log.info("Before operations:\n" + controller.findAll());
@@ -60,7 +55,6 @@ public class Application {
         log.info("After insert:\n" + controller.findAll());
     }
 
-    @SneakyThrows
     private static void checkUser(ApplicationContext context) {
         UserControllerImpl controller = context.getBean(UserControllerImpl.class);
         log.info("Before operations:\n" + controller.findAll());

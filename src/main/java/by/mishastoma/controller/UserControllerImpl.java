@@ -1,6 +1,5 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.controller.CrudController;
 import by.mishastoma.dto.DTOUser;
 import by.mishastoma.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
