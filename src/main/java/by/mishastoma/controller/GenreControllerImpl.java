@@ -1,9 +1,7 @@
-package by.mishastoma.controller.impl;
+package by.mishastoma.controller;
 
-import by.mishastoma.controller.GenreController;
+import by.mishastoma.controller.CrudController;
 import by.mishastoma.dto.DTOGenre;
-import by.mishastoma.exception.ControllerException;
-import by.mishastoma.exception.ServiceException;
 import by.mishastoma.service.GenreService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,48 +12,47 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class GenreControllerImpl implements GenreController {
+public class GenreControllerImpl implements CrudController {
     private final GenreService service;
     private final ObjectMapper objectMapper;
 
     @Override
-    public void insert(String obj) throws ControllerException {
+    public void insert(String obj) {
         try {
             DTOGenre dtoGenre = objectMapper.readValue(obj, DTOGenre.class);
             service.insert(dtoGenre);
-        } catch (ServiceException | JsonProcessingException e) {
-            throw new ControllerException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void delete(String obj) throws ControllerException {
+    public void delete(String obj) {
         try {
             DTOGenre dtoGenre = objectMapper.readValue(obj, DTOGenre.class);
             service.delete(dtoGenre);
-        } catch (ServiceException | JsonProcessingException e) {
-            throw new ControllerException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public String findAll() throws ControllerException {
+    public String findAll() {
         try {
             List<DTOGenre> list = service.findAll();
-            return objectMapper.writeValueAsString(list);
-
-        } catch (ServiceException | JsonProcessingException e) {
-            throw new ControllerException(e);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void update(String obj) throws ControllerException {
+    public void update(String obj) {
         try {
             DTOGenre dtoGenre = objectMapper.readValue(obj, DTOGenre.class);
             service.update(dtoGenre);
-        } catch (ServiceException | JsonProcessingException e) {
-            throw new ControllerException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Setter
 public class DTOUser {
 
-    private long id;
+    private Long id;
     private String username;
     private String password;
     private String role;

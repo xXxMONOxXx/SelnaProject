@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @SuperBuilder
 @Getter
@@ -24,4 +25,18 @@ public class User extends AbstractEntity {
     private LocalDate birthdate;
     private boolean isBlocked;
     private List<Long> itemIds;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username) && Objects.equals(phone, user.phone) && Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), username, phone, email);
+    }
 }

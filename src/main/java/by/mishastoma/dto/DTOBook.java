@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Setter
 public class DTOBook {
 
-    private long id;
+    private Long id;
     private String title;
     private String isbn;
     private int quantity;

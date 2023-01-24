@@ -1,1 +1,0 @@
-create index idx_isbn on books(isbn);

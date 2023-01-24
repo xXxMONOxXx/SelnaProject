@@ -2,7 +2,6 @@ package by.mishastoma.dao.impl;
 
 import by.mishastoma.dao.BookDao;
 import by.mishastoma.entity.Book;
-import by.mishastoma.exception.DaoException;
 import by.mishastoma.util.DaoUtils;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +22,7 @@ public class BookDaoImpl implements BookDao {
         LocalDate dateMock1 = LocalDate.parse("2020-01-01", formatter);
         LocalDate dateMock2 = LocalDate.parse("2020-01-01", formatter);
         list.add(Book.builder()
-                .id(1)
+                .id(1L)
                 .title("Romeo and Juliet")
                 .isbn("9785171025212")
                 .releaseDate(dateMock1)
@@ -32,7 +31,7 @@ public class BookDaoImpl implements BookDao {
                 .genreIds(Arrays.asList(9L))
                 .build());
         list.add(Book.builder()
-                .id(2)
+                .id(2L)
                 .title("Hamlet. Macbeth")
                 .isbn("9785171081591")
                 .releaseDate(dateMock2)
@@ -43,32 +42,32 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public void insert(Book t) throws DaoException {
+    public void insert(Book t) {
         if (list.contains(t)) {
-            throw new DaoException("Can't add entity to dao, entity already exists " + t.toString());
+            throw new RuntimeException("Can't add entity to dao, entity already exists " + t.toString());
         }
         list.add(t);
     }
 
     @Override
-    public void delete(Book t) throws DaoException {
+    public void delete(Book t) {
         int index = DaoUtils.getIndexOfEntity(t, list);
         if (index == -1) {
-            throw new DaoException("Can't delete entity from dao, entity doesn't exist " + t.toString());
+            throw new RuntimeException("Can't delete entity from dao, entity doesn't exist " + t.toString());
         }
         list.remove(index);
     }
 
     @Override
-    public List<Book> findAll() throws DaoException {
+    public List<Book> findAll() {
         return new ArrayList<>(list);
     }
 
     @Override
-    public void update(Book t) throws DaoException {
+    public void update(Book t) {
         int index = DaoUtils.getIndexOfEntity(t, list);
         if (index == -1) {
-            throw new DaoException("Can't update entity, dao doesn't contain this entity " + t.toString());
+            throw new RuntimeException("Can't update entity, dao doesn't contain this entity " + t.toString());
         }
         list.set(index, t);
     }
