@@ -1,7 +1,7 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.dto.DTOAuthor;
-import by.mishastoma.service.AuthorService;
+import by.mishastoma.model.dto.DTOAuthor;
+import by.mishastoma.model.service.AuthorService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +15,10 @@ public class AuthorControllerImpl implements CrudController {
     private final AuthorService service;
     private final ObjectMapper objectMapper;
 
-
     @Override
     public void insert(String obj) {
-        DTOAuthor dtoAuthor = null;
         try {
-            dtoAuthor = objectMapper.readValue(obj, DTOAuthor.class);
+            DTOAuthor dtoAuthor = objectMapper.readValue(obj, DTOAuthor.class);
             service.insert(dtoAuthor);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

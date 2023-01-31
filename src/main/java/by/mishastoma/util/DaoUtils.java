@@ -1,6 +1,6 @@
 package by.mishastoma.util;
 
-import by.mishastoma.entity.AbstractEntity;
+import by.mishastoma.model.entity.AbstractEntity;
 
 import java.util.List;
 

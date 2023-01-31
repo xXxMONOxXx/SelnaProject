@@ -1,7 +1,7 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.dto.DTOUser;
-import by.mishastoma.service.UserService;
+import by.mishastoma.model.dto.DTOUser;
+import by.mishastoma.model.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
