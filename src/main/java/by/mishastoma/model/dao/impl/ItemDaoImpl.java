@@ -13,8 +13,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ItemDaoImpl implements ItemDao {
-
-    private final ConnectionHolder connectionHolder;
     private static final String INSERT_QUERY = "insert into items " +
             "(fk_book_id) values " +
             "(?)";
@@ -44,29 +42,35 @@ public class ItemDaoImpl implements ItemDao {
     private static final String TAKING_DATE = "taking_date";
     private static final String EXPIRATION_DATE = "expiration_date";
     private static final String TOTAL = "total";
+    private final ConnectionHolder connectionHolder;
 
     @Override
-    public void insert(Item item, Connection connection) throws SQLException {
+    public void insert(Item item) throws SQLException {
+        Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY)) {
             statement.setLong(1, item.getBookId());
+            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
 
     @Override
-    public void delete(Item item, Connection connection) throws SQLException {
+    public void delete(Item item) throws SQLException {
+        Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
             statement.setLong(1, item.getId());
             statement.executeUpdate();
+            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
 
     @Override
-    public List<Item> findAll(Connection connection) throws SQLException {
+    public List<Item> findAll() throws SQLException {
         List<Item> items = new ArrayList<>();
+        Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_QUERY)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -79,7 +83,7 @@ public class ItemDaoImpl implements ItemDao {
                         build();
                 items.add(item);
             }
-
+            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -87,26 +91,30 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public void update(Item item, Connection connection) throws SQLException {
+    public void update(Item item) throws SQLException {
+        Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
             statement.setLong(1, item.getUserId());
             statement.setDate(2, Date.valueOf(item.getTakingDate()));
             statement.setDate(3, Date.valueOf(item.getExpirationDate()));
             statement.setLong(4, item.getId());
             statement.executeUpdate();
+            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
 
     @Override
-    public int count(long bookId, Connection connection) throws SQLException {
+    public int count(long bookId) throws SQLException {
         int quantity = 0;
+        Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(COUNT_QUERY)) {
             statement.setLong(1, bookId);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             quantity = resultSet.getInt(TOTAL);
+            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -114,14 +122,16 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public List<Long> getItemsIds(long bookId, Connection connection) {
+    public List<Long> getItemsIds(long bookId) {
         List<Long> ids = new ArrayList<>();
+        Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(SELECT_BOOKS_ITEMS_QUERY)) {
             statement.setLong(1, bookId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 ids.add(resultSet.getLong(ID));
             }
+            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -129,10 +139,12 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public void deleteUnsignedItem(long bookId, Connection connection) {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE_UNSIGNED_ITEM_QUERY)) {
+    public void deleteUnsignedItem(long bookId) {
+        try (Connection connection = connectionHolder.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_UNSIGNED_ITEM_QUERY)) {
             statement.setLong(1, bookId);
             statement.executeUpdate();
+            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

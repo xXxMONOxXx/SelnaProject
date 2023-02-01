@@ -1,40 +1,42 @@
 package by.mishastoma.config;
 
-import liquibase.Contexts;
-import liquibase.LabelExpression;
-import liquibase.Liquibase;
-import liquibase.database.Database;
-import liquibase.database.DatabaseFactory;
-import liquibase.database.jvm.JdbcConnection;
-import liquibase.resource.ClassLoaderResourceAccessor;
-import lombok.SneakyThrows;
+import liquibase.integration.spring.SpringLiquibase;
+import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import javax.annotation.PostConstruct;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:application.properties")
 public class LiquibaseConfig {
 
-    @Value("${db.url}")
+    @Value("${spring.datasource.url}")
     private String url;
-    @Value("${db.username}")
+    @Value("${spring.datasource.username}")
     private String username;
-    @Value("${db.password}")
+    @Value("${spring.datasource.password}")
     private String password;
-    @Value("${liquibase.changelog.path}")
+    @Value("${spring.liquibase.change-log}")
     private String path;
 
-    @PostConstruct
-    @SneakyThrows
-    private void loadLiquibase() {
-        Connection connection = DriverManager.getConnection(url, username, password);
-        Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
-        Liquibase liquibase = new Liquibase(path, new ClassLoaderResourceAccessor(), database);
-        liquibase.update(new Contexts(), new LabelExpression());
+
+    @Bean
+    public DataSource dataSource() {
+        PGSimpleDataSource ds = new PGSimpleDataSource();
+        ds.setURL(url);
+        ds.setUser(username);
+        ds.setPassword(password);
+        return ds;
+    }
+
+    @Bean
+    public SpringLiquibase liquibase() {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog(path);
+        liquibase.setDataSource(dataSource());
+        return liquibase;
     }
 }

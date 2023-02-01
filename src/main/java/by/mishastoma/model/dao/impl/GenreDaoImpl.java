@@ -1,5 +1,6 @@
 package by.mishastoma.model.dao.impl;
 
+import by.mishastoma.connection.ConnectionHolder;
 import by.mishastoma.model.dao.GenreDao;
 import by.mishastoma.model.entity.Genre;
 import lombok.RequiredArgsConstructor;
@@ -28,47 +29,52 @@ public class GenreDaoImpl implements GenreDao {
 
     private static final String ID = "id";
     private static final String GENRE_ID = "fk_genre_id";
+    private final ConnectionHolder connectionHolder;
 
     @Override
-    public void insert(Genre t, Connection connection) {
+    public void insert(Genre t) {
 
     }
 
     @Override
-    public void delete(Genre t, Connection connection) {
+    public void delete(Genre t) {
 
     }
 
     @Override
-    public List<Genre> findAll(Connection connection) {
+    public List<Genre> findAll() {
         return null;
     }
 
     @Override
-    public void update(Genre t, Connection connection) {
+    public void update(Genre t) {
 
     }
 
     @Override
-    public void insertBookGenreRelation(long bookId, long genreId, Connection connection) throws SQLException {
+    public void insertBookGenreRelation(long bookId, long genreId) throws SQLException {
+        Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(INSERT_BOOK_GENRE_RELATION_QUERY)) {
             statement.setLong(1, bookId);
             statement.setLong(2, genreId);
             statement.executeUpdate();
+            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
     }
 
     @Override
-    public List<Long> getBooksGenres(long bookId, Connection connection) throws SQLException {
+    public List<Long> getBooksGenres(long bookId) throws SQLException {
         List<Long> ids = new ArrayList<>();
+        Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(SELECT_RELATION_IDS_BOOK_GENRES_QUERY)) {
             statement.setLong(1, bookId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 ids.add(resultSet.getLong(GENRE_ID));
             }
+            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
         }
@@ -76,11 +82,13 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public void deleteBookGenreRelation(long bookId, long genreId, Connection connection) throws SQLException {
+    public void deleteBookGenreRelation(long bookId, long genreId) throws SQLException {
+        Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(DELETE_BOOK_GENRE_RELATION_QUERY)) {
             statement.setLong(1, bookId);
             statement.setLong(2, genreId);
             statement.executeUpdate();
+            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
         }

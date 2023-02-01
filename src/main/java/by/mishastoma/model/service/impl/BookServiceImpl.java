@@ -1,7 +1,6 @@
 package by.mishastoma.model.service.impl;
 
 import by.mishastoma.annotation.Transaction;
-import by.mishastoma.connection.ConnectionHolder;
 import by.mishastoma.model.dao.AuthorDao;
 import by.mishastoma.model.dao.BookDao;
 import by.mishastoma.model.dao.GenreDao;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -27,184 +25,113 @@ public class BookServiceImpl implements BookService {
     private final ItemDao itemDao;
     private final GenreDao genreDao;
     private final ModelMapper modelMapper;
-    private final ConnectionHolder connectionHolder;
 
     @Transaction
     @Override
     public void insert(DTOBook dtoBook) {
-        Connection connection = null;
-        boolean transactionSuccess = false;
         try {
-            connection = connectionHolder.getConnection();
-            connectionHolder.beginTransaction(connection);
             Book book = modelMapper.map(dtoBook, Book.class);
-            bookDao.insert(book, connection);
-            book.setId(bookDao.getIdByIsbn(book.getIsbn(), connection));
-            insertBookRelations(book, connection);
-            transactionSuccess = true;
+            bookDao.insert(book);
+            book.setId(bookDao.getIdByIsbn(book.getIsbn()));
+            insertBookRelations(book);
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (connection != null) {
-                try {
-                    if (transactionSuccess) {
-                        connectionHolder.commitTransaction(connection);
-                    } else {
-                        connectionHolder.rollbackTransaction(connection);
-                    }
-                    if (!connectionHolder.releaseConnection(connection)) {
-                        throw new RuntimeException("Couldn't release connection, connection closed");
-                    }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
         }
     }
 
     @Transaction
     @Override
     public void delete(DTOBook dtoBook) {
-        Connection connection = null;
-        boolean transactionSuccess = false;
         try {
-            connection = connectionHolder.getConnection();
-            connectionHolder.beginTransaction(connection);
             Book book = modelMapper.map(dtoBook, Book.class);
-            deleteRelations(book, connection);
-            bookDao.delete(book, connection);
-            transactionSuccess = true;
+            deleteRelations(book);
+            bookDao.delete(book);
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (connection != null) {
-                try {
-                    if (transactionSuccess) {
-                        connectionHolder.commitTransaction(connection);
-                    } else {
-                        connectionHolder.rollbackTransaction(connection);
-                    }
-                    if (!connectionHolder.releaseConnection(connection)) {
-                        throw new RuntimeException("Couldn't release connection, connection closed");
-                    }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
         }
     }
 
     @Override
     public List<DTOBook> findAll() {
-        Connection connection = null;
         try {
-            connection = connectionHolder.getConnection();
-            List<Book> books = bookDao.findAll(connectionHolder.getConnection());
+            List<Book> books = bookDao.findAll();
             for (int i = 0; i < books.size(); i++) {
-                getDataFromRelations(books.get(i), connection);
+                getDataFromRelations(books.get(i));
             }
             return books.stream().map(x -> modelMapper.map(x, DTOBook.class)).toList();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-
-            if (connection != null) {
-                if (!connectionHolder.releaseConnection(connection)) {
-                    throw new RuntimeException("Couldn't release connection, connection closed");
-                }
-            }
-
         }
     }
 
     @Transaction
     @Override
     public void update(DTOBook dtoBook) {
-        Connection connection = null;
-        boolean transactionSuccess = false;
         try {
-            connection = connectionHolder.getConnection();
-            connectionHolder.beginTransaction(connection);
             Book book = modelMapper.map(dtoBook, Book.class);
-            bookDao.update(book, connection);
-            updateRelations(book, connection);
-            transactionSuccess = true;
+            bookDao.update(book);
+            updateRelations(book);
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (connection != null) {
-                try {
-                    if (transactionSuccess) {
-                        connectionHolder.commitTransaction(connection);
-                    } else {
-                        connectionHolder.rollbackTransaction(connection);
-                    }
-                    if (!connectionHolder.releaseConnection(connection)) {
-                        throw new RuntimeException("Couldn't release connection, connection closed");
-                    }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
         }
     }
 
-    private void insertBookRelations(Book book, Connection connection) throws SQLException {
+    private void insertBookRelations(Book book) throws SQLException {
         for (Long id : book.getAuthorIds()) {
-            authorDao.insertBookAuthorRelation(book.getId(), id, connection);
+            authorDao.insertBookAuthorRelation(book.getId(), id);
         }
         for (Long id : book.getGenreIds()) {
-            genreDao.insertBookGenreRelation(book.getId(), id, connection);
+            genreDao.insertBookGenreRelation(book.getId(), id);
         }
         for (int i = 0; i < book.getQuantity(); i++) {
-            itemDao.insert(Item.builder().bookId(book.getId()).build(), connection);
+            itemDao.insert(Item.builder().bookId(book.getId()).build());
         }
     }
 
-    private void deleteRelations(Book book, Connection connection) throws SQLException {
+    private void deleteRelations(Book book) throws SQLException {
         for (Long id : book.getAuthorIds()) {
-            authorDao.deleteBookAuthorRelation(book.getId(), id, connection);
+            authorDao.deleteBookAuthorRelation(book.getId(), id);
         }
         for (Long id : book.getGenreIds()) {
-            genreDao.deleteBookGenreRelation(book.getId(), id, connection);
+            genreDao.deleteBookGenreRelation(book.getId(), id);
         }
-        List<Long> itemIds = itemDao.getItemsIds(book.getId(), connection);
+        List<Long> itemIds = itemDao.getItemsIds(book.getId());
         for (Long id : itemIds) {
-            itemDao.delete(Item.builder().id(id).build(), connection);
+            itemDao.delete(Item.builder().id(id).build());
         }
     }
 
-    private void updateRelations(Book book, Connection connection) throws SQLException {
+    private void updateRelations(Book book) throws SQLException {
         for (Long id : book.getAuthorIds()) {
-            authorDao.deleteBookAuthorRelation(book.getId(), id, connection);
+            authorDao.deleteBookAuthorRelation(book.getId(), id);
         }
         for (Long id : book.getGenreIds()) {
-            genreDao.deleteBookGenreRelation(book.getId(), id, connection);
+            genreDao.deleteBookGenreRelation(book.getId(), id);
         }
         for (Long id : book.getAuthorIds()) {
-            authorDao.insertBookAuthorRelation(book.getId(), id, connection);
+            authorDao.insertBookAuthorRelation(book.getId(), id);
         }
         for (Long id : book.getGenreIds()) {
-            genreDao.insertBookGenreRelation(book.getId(), id, connection);
+            genreDao.insertBookGenreRelation(book.getId(), id);
         }
         int bookQuantity = book.getQuantity();
-        int currentQuantity = itemDao.count(book.getId(), connection);
+        int currentQuantity = itemDao.count(book.getId());
         if (bookQuantity != currentQuantity) {
             if (bookQuantity > currentQuantity) {
                 for (int i = currentQuantity; i < bookQuantity; i++) {
-                    itemDao.insert(Item.builder().bookId(book.getId()).build(), connection);
+                    itemDao.insert(Item.builder().bookId(book.getId()).build());
                 }
             } else {
                 for (int i = currentQuantity; i > bookQuantity; i--) {
-                    itemDao.deleteUnsignedItem(book.getId(), connection);
+                    itemDao.deleteUnsignedItem(book.getId());
                 }
             }
         }
     }
 
-    private void getDataFromRelations(Book book, Connection connection) throws SQLException {
-        book.setGenreIds(genreDao.getBooksGenres(book.getId(), connection));
-        book.setAuthorIds(authorDao.getBooksAuthors(book.getId(), connection));
-        book.setQuantity(itemDao.count(book.getId(), connection));
+    private void getDataFromRelations(Book book) throws SQLException {
+        book.setGenreIds(genreDao.getBooksGenres(book.getId()));
+        book.setAuthorIds(authorDao.getBooksAuthors(book.getId()));
+        book.setQuantity(itemDao.count(book.getId()));
     }
 }

@@ -6,7 +6,6 @@ import by.mishastoma.model.entity.User;
 import by.mishastoma.util.DaoUtils;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void insert(User t, Connection connection) {
+    public void insert(User t) {
         if (list.contains(t)) {
             throw new RuntimeException("Can't add entity to dao, entity already exists " + t.toString());
         }
@@ -59,7 +58,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void delete(User t, Connection connection) {
+    public void delete(User t) {
         int index = DaoUtils.getIndexOfEntity(t, list);
         if (index == -1) {
             throw new RuntimeException("Can't delete entity from dao, entity doesn't exist " + t.toString());
@@ -68,12 +67,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> findAll(Connection connection) {
+    public List<User> findAll() {
         return new ArrayList<>(list);
     }
 
     @Override
-    public void update(User t, Connection connection) {
+    public void update(User t) {
         int index = DaoUtils.getIndexOfEntity(t, list);
         if (index == -1) {
             throw new RuntimeException("Can't update entity, dao doesn't contain this entity " + t.toString());
