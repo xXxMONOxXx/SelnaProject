@@ -60,8 +60,7 @@ public class AuthorDaoImpl implements AuthorDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }
@@ -75,8 +74,7 @@ public class AuthorDaoImpl implements AuthorDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }
@@ -93,8 +91,7 @@ public class AuthorDaoImpl implements AuthorDao {
             }
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
         return ids;

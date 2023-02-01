@@ -51,8 +51,7 @@ public class ItemDaoImpl implements ItemDao {
             statement.setLong(1, item.getBookId());
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }
@@ -65,8 +64,7 @@ public class ItemDaoImpl implements ItemDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }
@@ -89,8 +87,7 @@ public class ItemDaoImpl implements ItemDao {
             }
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
         return items;
@@ -107,8 +104,7 @@ public class ItemDaoImpl implements ItemDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }
@@ -124,15 +120,14 @@ public class ItemDaoImpl implements ItemDao {
             quantity = resultSet.getInt(TOTAL);
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
         return quantity;
     }
 
     @Override
-    public List<Long> getItemsIds(long bookId) {
+    public List<Long> getItemsIds(long bookId) throws SQLException {
         List<Long> ids = new ArrayList<>();
         Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(SELECT_BOOKS_ITEMS_QUERY)) {
@@ -142,24 +137,22 @@ public class ItemDaoImpl implements ItemDao {
                 ids.add(resultSet.getLong(ID));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        finally {
+            throw new SQLException(e);
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
         return ids;
     }
 
     @Override
-    public void deleteUnsignedItem(long bookId) {
+    public void deleteUnsignedItem(long bookId) throws SQLException {
         Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(DELETE_UNSIGNED_ITEM_QUERY)) {
             statement.setLong(1, bookId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        finally {
+            throw new SQLException(e);
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }

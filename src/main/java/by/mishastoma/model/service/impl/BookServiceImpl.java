@@ -28,31 +28,31 @@ public class BookServiceImpl implements BookService {
 
     @Transaction
     @Override
-    public void insert(DTOBook dtoBook) {
+    public void insert(DTOBook dtoBook) throws SQLException {
         try {
             Book book = modelMapper.map(dtoBook, Book.class);
             bookDao.insert(book);
             book.setId(bookDao.getIdByIsbn(book.getIsbn()));
             insertBookRelations(book);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         }
     }
 
     @Transaction
     @Override
-    public void delete(DTOBook dtoBook) {
+    public void delete(DTOBook dtoBook) throws SQLException {
         try {
             Book book = modelMapper.map(dtoBook, Book.class);
             deleteRelations(book);
             bookDao.delete(book);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         }
     }
 
     @Override
-    public List<DTOBook> findAll() {
+    public List<DTOBook> findAll() throws SQLException {
         try {
             List<Book> books = bookDao.findAll();
             for (int i = 0; i < books.size(); i++) {
@@ -60,19 +60,19 @@ public class BookServiceImpl implements BookService {
             }
             return books.stream().map(x -> modelMapper.map(x, DTOBook.class)).toList();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         }
     }
 
     @Transaction
     @Override
-    public void update(DTOBook dtoBook) {
+    public void update(DTOBook dtoBook) throws SQLException {
         try {
             Book book = modelMapper.map(dtoBook, Book.class);
             bookDao.update(book);
             updateRelations(book);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new SQLException(e);
         }
     }
 

@@ -60,8 +60,7 @@ public class GenreDaoImpl implements GenreDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }
@@ -78,8 +77,7 @@ public class GenreDaoImpl implements GenreDao {
             }
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
         return ids;
@@ -94,8 +92,7 @@ public class GenreDaoImpl implements GenreDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }

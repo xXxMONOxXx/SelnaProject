@@ -52,8 +52,7 @@ public class BookDaoImpl implements BookDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }
@@ -66,8 +65,7 @@ public class BookDaoImpl implements BookDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }
@@ -89,8 +87,7 @@ public class BookDaoImpl implements BookDao {
             }
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
         return books;
@@ -107,8 +104,7 @@ public class BookDaoImpl implements BookDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
     }
@@ -128,8 +124,7 @@ public class BookDaoImpl implements BookDao {
                     build();
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
         return book;
@@ -146,8 +141,7 @@ public class BookDaoImpl implements BookDao {
             id = resultSet.getLong(ID);
         } catch (SQLException e) {
             throw new SQLException(e);
-        }
-        finally {
+        } finally {
             connectionHolder.releaseConnection(connection);
         }
         return id;

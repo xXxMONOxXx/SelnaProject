@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Component
@@ -20,7 +21,7 @@ public class UserControllerImpl implements CrudController {
         try {
             DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
             service.insert(dtoUser);
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -30,7 +31,7 @@ public class UserControllerImpl implements CrudController {
         try {
             DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
             service.delete(dtoUser);
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -40,7 +41,7 @@ public class UserControllerImpl implements CrudController {
         try {
             List<DTOUser> list = service.findAll();
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -50,7 +51,7 @@ public class UserControllerImpl implements CrudController {
         try {
             DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
             service.update(dtoUser);
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
