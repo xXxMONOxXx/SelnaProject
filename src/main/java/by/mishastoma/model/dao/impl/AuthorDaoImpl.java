@@ -58,9 +58,11 @@ public class AuthorDaoImpl implements AuthorDao {
             statement.setLong(1, bookId);
             statement.setLong(2, authorsId);
             statement.executeUpdate();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 
@@ -71,9 +73,11 @@ public class AuthorDaoImpl implements AuthorDao {
             statement.setLong(1, bookId);
             statement.setLong(2, authorId);
             statement.executeUpdate();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 
@@ -87,9 +91,11 @@ public class AuthorDaoImpl implements AuthorDao {
             while (resultSet.next()) {
                 ids.add(resultSet.getLong(AUTHOR_ID));
             }
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
         return ids;
     }

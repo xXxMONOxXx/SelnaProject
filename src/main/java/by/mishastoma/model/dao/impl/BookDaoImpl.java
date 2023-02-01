@@ -50,9 +50,11 @@ public class BookDaoImpl implements BookDao {
             statement.setString(2, t.getIsbn());
             statement.setDate(3, Date.valueOf(t.getReleaseDate()));
             statement.executeUpdate();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 
@@ -62,9 +64,11 @@ public class BookDaoImpl implements BookDao {
         try (PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
             statement.setLong(1, t.getId());
             statement.executeUpdate();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 
@@ -83,9 +87,11 @@ public class BookDaoImpl implements BookDao {
                         build();
                 books.add(book);
             }
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
         return books;
     }
@@ -99,9 +105,11 @@ public class BookDaoImpl implements BookDao {
             statement.setDate(3, Date.valueOf(t.getReleaseDate()));
             statement.setLong(4, t.getId());
             statement.executeUpdate();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 
@@ -118,9 +126,11 @@ public class BookDaoImpl implements BookDao {
                     title(resultSet.getString(TITLE)).
                     releaseDate(resultSet.getDate(RELEASE_DATE).toLocalDate()).
                     build();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
         return book;
     }
@@ -134,9 +144,11 @@ public class BookDaoImpl implements BookDao {
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             id = resultSet.getLong(ID);
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
         return id;
     }

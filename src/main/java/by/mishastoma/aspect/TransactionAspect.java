@@ -31,6 +31,6 @@ public class TransactionAspect {
     @SneakyThrows
     @AfterThrowing("@annotation(by.mishastoma.annotation.Transaction)")
     public void exceptionTransaction() {
-        connectionHolder.rollbackTransaction();
+        connectionHolder.commitTransaction();
     }
 }

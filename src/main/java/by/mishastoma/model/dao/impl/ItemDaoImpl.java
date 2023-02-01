@@ -49,9 +49,11 @@ public class ItemDaoImpl implements ItemDao {
         Connection connection = connectionHolder.getConnection();
         try (PreparedStatement statement = connection.prepareStatement(INSERT_QUERY)) {
             statement.setLong(1, item.getBookId());
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 
@@ -61,9 +63,11 @@ public class ItemDaoImpl implements ItemDao {
         try (PreparedStatement statement = connection.prepareStatement(DELETE_QUERY)) {
             statement.setLong(1, item.getId());
             statement.executeUpdate();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 
@@ -83,9 +87,11 @@ public class ItemDaoImpl implements ItemDao {
                         build();
                 items.add(item);
             }
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
         return items;
     }
@@ -99,9 +105,11 @@ public class ItemDaoImpl implements ItemDao {
             statement.setDate(3, Date.valueOf(item.getExpirationDate()));
             statement.setLong(4, item.getId());
             statement.executeUpdate();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 
@@ -114,9 +122,11 @@ public class ItemDaoImpl implements ItemDao {
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             quantity = resultSet.getInt(TOTAL);
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
         return quantity;
     }
@@ -131,22 +141,26 @@ public class ItemDaoImpl implements ItemDao {
             while (resultSet.next()) {
                 ids.add(resultSet.getLong(ID));
             }
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
         return ids;
     }
 
     @Override
     public void deleteUnsignedItem(long bookId) {
-        try (Connection connection = connectionHolder.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE_UNSIGNED_ITEM_QUERY)) {
+        Connection connection = connectionHolder.getConnection();
+        try (PreparedStatement statement = connection.prepareStatement(DELETE_UNSIGNED_ITEM_QUERY)) {
             statement.setLong(1, bookId);
             statement.executeUpdate();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 }

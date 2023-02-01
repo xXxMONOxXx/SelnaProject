@@ -58,9 +58,11 @@ public class GenreDaoImpl implements GenreDao {
             statement.setLong(1, bookId);
             statement.setLong(2, genreId);
             statement.executeUpdate();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 
@@ -74,9 +76,11 @@ public class GenreDaoImpl implements GenreDao {
             while (resultSet.next()) {
                 ids.add(resultSet.getLong(GENRE_ID));
             }
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
         return ids;
     }
@@ -88,9 +92,11 @@ public class GenreDaoImpl implements GenreDao {
             statement.setLong(1, bookId);
             statement.setLong(2, genreId);
             statement.executeUpdate();
-            connectionHolder.releaseConnection(connection);
         } catch (SQLException e) {
             throw new SQLException(e);
+        }
+        finally {
+            connectionHolder.releaseConnection(connection);
         }
     }
 }
