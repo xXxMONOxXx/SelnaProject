@@ -21,7 +21,7 @@ public class AuthorControllerImpl implements CrudController {
         try {
             DTOAuthor dtoAuthor = objectMapper.readValue(obj, DTOAuthor.class);
             service.insert(dtoAuthor);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -31,7 +31,7 @@ public class AuthorControllerImpl implements CrudController {
         try {
             DTOAuthor dtoAuthor = objectMapper.readValue(obj, DTOAuthor.class);
             service.delete(dtoAuthor);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -41,7 +41,7 @@ public class AuthorControllerImpl implements CrudController {
         try {
             List<DTOAuthor> list = service.findAll();
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -51,7 +51,7 @@ public class AuthorControllerImpl implements CrudController {
         try {
             DTOAuthor dtoAuthor = objectMapper.readValue(obj, DTOAuthor.class);
             service.update(dtoAuthor);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }

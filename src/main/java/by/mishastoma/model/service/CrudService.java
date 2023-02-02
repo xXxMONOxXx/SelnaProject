@@ -4,11 +4,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface CrudService<M> {
-    void insert(M m) throws SQLException;
+    void insert(M m);
 
-    void delete(M m) throws SQLException;
+    void delete(M m);
 
-    List<M> findAll() throws SQLException;
+    List<M> findAll();
 
-    void update(M m) throws SQLException;
+    void update(M m);
 }

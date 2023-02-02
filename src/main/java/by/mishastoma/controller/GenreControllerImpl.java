@@ -21,7 +21,7 @@ public class GenreControllerImpl implements CrudController {
         try {
             DTOGenre dtoGenre = objectMapper.readValue(obj, DTOGenre.class);
             service.insert(dtoGenre);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -31,7 +31,7 @@ public class GenreControllerImpl implements CrudController {
         try {
             DTOGenre dtoGenre = objectMapper.readValue(obj, DTOGenre.class);
             service.delete(dtoGenre);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -41,7 +41,7 @@ public class GenreControllerImpl implements CrudController {
         try {
             List<DTOGenre> list = service.findAll();
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -51,7 +51,7 @@ public class GenreControllerImpl implements CrudController {
         try {
             DTOGenre dtoGenre = objectMapper.readValue(obj, DTOGenre.class);
             service.update(dtoGenre);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }

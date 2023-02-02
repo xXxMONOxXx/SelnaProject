@@ -22,7 +22,7 @@ public class ItemController implements CrudController {
         try {
             DTOItem dtoItem = objectMapper.readValue(obj, DTOItem.class);
             service.insert(dtoItem);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -32,7 +32,7 @@ public class ItemController implements CrudController {
         try {
             DTOItem dtoItem = objectMapper.readValue(obj, DTOItem.class);
             service.delete(dtoItem);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -42,7 +42,7 @@ public class ItemController implements CrudController {
         try {
             List<DTOItem> dtoItems = service.findAll();
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(dtoItems);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -52,7 +52,7 @@ public class ItemController implements CrudController {
         try {
             DTOItem dtoItem = objectMapper.readValue(obj, DTOItem.class);
             service.update(dtoItem);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }

@@ -21,7 +21,7 @@ public class UserControllerImpl implements CrudController {
         try {
             DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
             service.insert(dtoUser);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -31,7 +31,7 @@ public class UserControllerImpl implements CrudController {
         try {
             DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
             service.delete(dtoUser);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -41,7 +41,7 @@ public class UserControllerImpl implements CrudController {
         try {
             List<DTOUser> list = service.findAll();
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -51,7 +51,7 @@ public class UserControllerImpl implements CrudController {
         try {
             DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
             service.update(dtoUser);
-        } catch (JsonProcessingException | SQLException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
