@@ -1,12 +1,13 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.dto.DTOBook;
-import by.mishastoma.service.BookService;
+import by.mishastoma.model.dto.DTOBook;
+import by.mishastoma.model.service.BookService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Component

@@ -1,7 +1,7 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.model.dto.DTOUser;
-import by.mishastoma.model.service.UserService;
+import by.mishastoma.model.dto.DTOItem;
+import by.mishastoma.model.service.ItemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,15 +12,16 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class UserControllerImpl implements CrudController {
-    private final UserService service;
+public class ItemController implements CrudController {
+
+    private final ItemService service;
     private final ObjectMapper objectMapper;
 
     @Override
     public void insert(String obj) {
         try {
-            DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
-            service.insert(dtoUser);
+            DTOItem dtoItem = objectMapper.readValue(obj, DTOItem.class);
+            service.insert(dtoItem);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -29,8 +30,8 @@ public class UserControllerImpl implements CrudController {
     @Override
     public void delete(String obj) {
         try {
-            DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
-            service.delete(dtoUser);
+            DTOItem dtoItem = objectMapper.readValue(obj, DTOItem.class);
+            service.delete(dtoItem);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -39,8 +40,8 @@ public class UserControllerImpl implements CrudController {
     @Override
     public String findAll() {
         try {
-            List<DTOUser> list = service.findAll();
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
+            List<DTOItem> dtoItems = service.findAll();
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(dtoItems);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -49,8 +50,8 @@ public class UserControllerImpl implements CrudController {
     @Override
     public void update(String obj) {
         try {
-            DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
-            service.update(dtoUser);
+            DTOItem dtoItem = objectMapper.readValue(obj, DTOItem.class);
+            service.update(dtoItem);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
