@@ -4,16 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
 public class DTOBook {
 
-    private Long id;
+    private Integer id;
     private String title;
     private String isbn;
-    private int quantity;
     private LocalDate releaseDate;
-    private long[] genreIds;
-    private long[] authorIds;
+    private Set<DTOAuthor> authors;
+    private Set<DTOGenre> genres;
+    private Set<DTOItem> items;
 }

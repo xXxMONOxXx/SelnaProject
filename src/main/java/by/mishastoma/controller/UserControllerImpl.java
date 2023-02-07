@@ -1,20 +1,25 @@
 package by.mishastoma.controller;
 
+import by.mishastoma.model.dto.DTORole;
 import by.mishastoma.model.dto.DTOUser;
+import by.mishastoma.model.service.AuthorService;
 import by.mishastoma.model.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public class UserControllerImpl implements CrudController {
     private final UserService service;
     private final ObjectMapper objectMapper;
+
+    private UserControllerImpl(UserService service, ObjectMapper objectMapper){
+        this.service = service;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void insert(String obj) {
@@ -37,10 +42,10 @@ public class UserControllerImpl implements CrudController {
     }
 
     @Override
-    public String findAll() {
+    public String findById(int id) {
         try {
-            List<DTOUser> list = service.findAll();
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
+            DTOUser user = service.findById(id);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -51,6 +56,34 @@ public class UserControllerImpl implements CrudController {
         try {
             DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
             service.update(dtoUser);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String findUserByIdCriteria(Integer id){
+        try {
+            DTOUser user = service.findUserByIdCriteria(id);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String findUserByUserName(String username){
+        try {
+            DTOUser user = service.findUserByUsername(username);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String findUserWithRole(String role){
+        try {
+            DTORole dtoRole = objectMapper.readValue(role, DTORole.class);
+            List<DTOUser> list = service.findUsersWithRole(dtoRole);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

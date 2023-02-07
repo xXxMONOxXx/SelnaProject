@@ -8,9 +8,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class DTOItem {
-    private Long id;
-    private Long bookId;
-    private Long userId;
+    private Integer id;
+    private Integer bookId;
+    private Integer userId;
     private LocalDate takingDate;
     private LocalDate expirationDate;
 

@@ -5,7 +5,7 @@ public interface CrudController {
 
     void delete(String obj);
 
-    String findAll();
+    String findById(int id);
 
     void update(String obj);
 }

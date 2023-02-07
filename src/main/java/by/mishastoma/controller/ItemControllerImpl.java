@@ -2,20 +2,22 @@ package by.mishastoma.controller;
 
 import by.mishastoma.model.dto.DTOItem;
 import by.mishastoma.model.service.ItemService;
+import by.mishastoma.model.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
-import java.util.List;
-
 @Component
-@RequiredArgsConstructor
-public class ItemController implements CrudController {
+public class ItemControllerImpl implements CrudController {
 
     private final ItemService service;
     private final ObjectMapper objectMapper;
+
+    private ItemControllerImpl(ItemService service, ObjectMapper objectMapper){
+        this.service = service;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void insert(String obj) {
@@ -38,10 +40,10 @@ public class ItemController implements CrudController {
     }
 
     @Override
-    public String findAll() {
+    public String findById(int id) {
         try {
-            List<DTOItem> dtoItems = service.findAll();
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(dtoItems);
+            DTOItem item = service.findById(id);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(item);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

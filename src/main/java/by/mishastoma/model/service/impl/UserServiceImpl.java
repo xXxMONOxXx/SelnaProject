@@ -1,60 +1,65 @@
 package by.mishastoma.model.service.impl;
 
+import by.mishastoma.model.dao.AuthorDao;
 import by.mishastoma.model.dao.UserDao;
+import by.mishastoma.model.dto.DTORole;
 import by.mishastoma.model.dto.DTOUser;
-import by.mishastoma.model.entity.User;
+import by.mishastoma.model.entity.RoleEntity;
+import by.mishastoma.model.entity.UserEntity;
 import by.mishastoma.model.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserDao dao;
     private final ModelMapper modelMapper;
 
+    private UserServiceImpl(UserDao dao, ModelMapper modelMapper){
+        this.dao = dao;
+        this.modelMapper = modelMapper;
+    }
+
     @Override
     public void insert(DTOUser dtoUser) {
-        try {
-            User user = modelMapper.map(dtoUser, User.class);
-            dao.insert(user);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        UserEntity user = modelMapper.map(dtoUser, UserEntity.class);
+        dao.save(user);
     }
 
     @Override
     public void delete(DTOUser dtoUser) {
-        try {
-            User user = modelMapper.map(dtoUser, User.class);
-            dao.delete(user);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        UserEntity user = modelMapper.map(dtoUser, UserEntity.class);
+        dao.delete(user);
     }
 
     @Override
-    public List<DTOUser> findAll() {
-        try {
-            List<User> users = dao.findAll();
-            return users.stream().map(x -> modelMapper.map(x, DTOUser.class)).toList();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public DTOUser findById(int id) {
+        return modelMapper.map(dao.findById(id), DTOUser.class);
     }
 
     @Override
     public void update(DTOUser dtoUser) {
-        try {
-            User user = modelMapper.map(dtoUser, User.class);
-            dao.update(user);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        UserEntity user = modelMapper.map(dtoUser, UserEntity.class);
+        dao.update(user);
+    }
+
+    @Override
+    public DTOUser findUserByIdCriteria(Integer id) {
+        return modelMapper.map(dao.findByIdCriteria(id), DTOUser.class);
+    }
+
+    @Override
+    public DTOUser findUserByUsername(String username) {
+        return modelMapper.map(dao.findUserByUsername(username), DTOUser.class);
+    }
+
+    @Override
+    public List<DTOUser> findUsersWithRole(DTORole role) {
+        List<UserEntity> userEntities = dao.findUsersByRole(modelMapper.map(role,RoleEntity.class));
+        return userEntities.stream().map(x -> modelMapper.map(x, DTOUser.class)).toList();
     }
 }

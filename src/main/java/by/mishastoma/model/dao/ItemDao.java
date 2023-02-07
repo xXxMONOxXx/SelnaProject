@@ -1,14 +1,15 @@
 package by.mishastoma.model.dao;
 
-import by.mishastoma.model.entity.Item;
+import by.mishastoma.model.entity.ItemEntity;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.io.Serializable;
 
-public interface ItemDao extends CrudDao<Item> {
-    int count(long bookId) throws SQLException;
+public interface ItemDao {
+    void save(ItemEntity entity);
 
-    List<Long> getItemsIds(long bookId) throws SQLException;
+    ItemEntity findById(Serializable id);
 
-    void deleteUnsignedItem(long bookId) throws SQLException;
+    void update(ItemEntity t);
+
+    void delete(ItemEntity t);
 }

@@ -1,14 +1,17 @@
 package by.mishastoma.model.dao;
 
-import by.mishastoma.model.entity.Genre;
+import by.mishastoma.model.entity.GenreEntity;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.io.Serializable;
 
-public interface GenreDao extends CrudDao<Genre> {
-    void insertBookGenreRelation(long bookId, long genreId) throws SQLException;
+public interface GenreDao {
+    void save(GenreEntity entity);
 
-    List<Long> getBooksGenres(long bookId) throws SQLException;
+    GenreEntity findById(Serializable id);
 
-    void deleteBookGenreRelation(long bookId, long genreId) throws SQLException;
+    void update(GenreEntity t);
+
+    void delete(GenreEntity t);
+
+    GenreEntity findByGenreName(String genre);
 }

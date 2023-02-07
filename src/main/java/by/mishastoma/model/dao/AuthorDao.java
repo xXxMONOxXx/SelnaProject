@@ -1,15 +1,18 @@
 package by.mishastoma.model.dao;
 
-import by.mishastoma.model.entity.Author;
 
-import java.sql.SQLException;
-import java.util.List;
+import by.mishastoma.model.entity.AuthorEntity;
 
-public interface AuthorDao extends CrudDao<Author> {
-    void insertBookAuthorRelation(long bookId, long authorsId) throws SQLException;
+import java.io.Serializable;
 
-    void deleteBookAuthorRelation(long bookId, long authorId) throws SQLException;
+public interface AuthorDao {
 
-    List<Long> getBooksAuthors(long bookId) throws SQLException;
+    void save(AuthorEntity entity);
+
+    AuthorEntity findById(Serializable id);
+
+    void update(AuthorEntity t);
+
+    void delete(AuthorEntity t);
 
 }
