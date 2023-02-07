@@ -6,8 +6,6 @@
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd"
         logicalFilePath="db">
 
-
-
     <changeSet id="homework-2-create-type-role" author="mishastoma">
         <sqlFile encoding="utf8" path="./sql/01.create-type-role.sql" relativeToChangelogFile="true"/>
     </changeSet>
