@@ -12,7 +12,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = { LiquibaseConfig.class, HibernateConfig.class, AuthorDaoImpl.class },
+        classes = {LiquibaseConfig.class, HibernateConfig.class, AuthorDaoImpl.class },
         loader = AnnotationConfigContextLoader.class)
 public class AuthorDaoImplTest {
 

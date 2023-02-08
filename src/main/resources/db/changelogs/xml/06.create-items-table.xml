@@ -1,0 +1,40 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+      http://www.liquibase.org/xml/ns/pro
+      http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+<changeSet id="06.create-items-table" author="mishastoma">
+    <createTable tableName="items">
+        <column name="id" type="int" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="fk_book_id" type="int">
+            <constraints nullable="false"/>
+        </column>
+        <column name="fk_users_id" type="int"/>
+        <column name="taking_date" type="date"/>
+        <column name="expiration_date" type="date"/>
+    </createTable>
+    <dropDefaultValue tableName="items"
+                      columnName="fk_users_id"/>
+    <dropDefaultValue tableName="items"
+                      columnName="taking_date"/>
+    <dropDefaultValue tableName="items"
+                      columnName="expiration_date"/>
+    <addForeignKeyConstraint baseColumnNames="fk_book_id"
+                             baseTableName="items"
+                             constraintName="fk_book_id_fk"
+                             referencedColumnNames="id"
+                             referencedTableName="books"/>
+    <addForeignKeyConstraint baseColumnNames="fk_users_id"
+                             baseTableName="items"
+                             constraintName="fk_users_id_fk"
+                             referencedColumnNames="id"
+                             referencedTableName="users"/>
+
+</changeSet>
+
+</databaseChangeLog>

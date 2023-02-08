@@ -35,9 +35,6 @@ public class HibernateConfig {
     @Value("${hibernate.ddl-auto}")
     private String hibernateDll;
 
-    @Value("${hibernate.default_schema}")
-    private String hibernateDefaultSchema;
-
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -71,7 +68,6 @@ public class HibernateConfig {
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.dialect", dialect);
         properties.setProperty("hibernate.ddl-auto", hibernateDll);
-        properties.setProperty("hibernate.default_schema", hibernateDefaultSchema);
         return properties;
     }
 

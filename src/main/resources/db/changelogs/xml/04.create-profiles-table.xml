@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+      http://www.liquibase.org/xml/ns/pro
+      http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+<changeSet id="04.create-profiles-table" author="mishastoma">
+    <createTable  tableName="profiles">
+        <column name="id" type="int" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="firstname" type="varchar(32)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="surname" type="varchar(256)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="phone" type="varchar(25)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="email" type="varchar(320)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="birthdate" type="date">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
+
+    <addForeignKeyConstraint baseColumnNames="id"
+                             baseTableName="profiles"
+                             constraintName="fk_user_id_profile"
+                             referencedColumnNames="id"
+                             referencedTableName="users"/>
+</changeSet>
+
+</databaseChangeLog>
