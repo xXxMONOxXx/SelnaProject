@@ -1,34 +1,31 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
-      http://www.liquibase.org/xml/ns/pro
-      http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
-<changeSet id="10.create-book-genres-relation" author="mishastoma">
-    <createTable tableName="book_genres">
-        <column name="id" type="int" autoIncrement="true">
-            <constraints primaryKey="true" nullable="false"/>
-        </column>
-        <column name="book_id" type="int">
-            <constraints nullable="false"/>
-        </column>
-        <column name="genre_id" type="int">
-            <constraints nullable="false"/>
-        </column>
-    </createTable>
-    <addForeignKeyConstraint baseColumnNames="book_id"
-                             baseTableName="book_genres"
-                             constraintName="book_id_fk_genre"
-                             referencedColumnNames="id"
-                             referencedTableName="books"/>
-    <addForeignKeyConstraint baseColumnNames="genre_id"
-                             baseTableName="book_genres"
-                             constraintName="genre_id_fk_genre"
-                             referencedColumnNames="id"
-                             referencedTableName="genres"/>
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="10.create-book-genres-relation" author="mishastoma">
+        <createTable tableName="book_genres">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="book_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="genre_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="book_id"
+                                 baseTableName="book_genres"
+                                 constraintName="book_id_fk_genre"
+                                 referencedColumnNames="id"
+                                 referencedTableName="books"/>
+        <addForeignKeyConstraint baseColumnNames="genre_id"
+                                 baseTableName="book_genres"
+                                 constraintName="genre_id_fk_genre"
+                                 referencedColumnNames="id"
+                                 referencedTableName="genres"/>
 
-</changeSet>
+    </changeSet>
 </databaseChangeLog>
 

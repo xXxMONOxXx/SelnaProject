@@ -2,19 +2,15 @@ package by.mishastoma.model.dao.impl;
 
 import by.mishastoma.model.dao.AbstractDao;
 import by.mishastoma.model.dao.GenreDao;
-import by.mishastoma.model.entity.*;
+import by.mishastoma.model.entity.GenreEntity;
+import by.mishastoma.model.entity.GenreEntity_;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.SetAttribute;
-import javax.persistence.metamodel.SingularAttribute;
-import javax.persistence.metamodel.StaticMetamodel;
-import java.sql.Date;
 
 @Component
 public class GenreDaoImpl extends AbstractDao<GenreEntity> implements GenreDao {

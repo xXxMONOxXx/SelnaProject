@@ -1,1 +1,1 @@
-create index idx_email on profiles(email);
+create index idx_email on profiles (email);

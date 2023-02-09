@@ -1,1 +1,1 @@
-create index idx_username on users(username);
+create index idx_username on users (username);

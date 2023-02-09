@@ -1,24 +1,17 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.model.dto.DTOAuthor;
 import by.mishastoma.model.dto.DTOBook;
-import by.mishastoma.model.dto.DTOGenre;
-import by.mishastoma.model.service.AuthorService;
 import by.mishastoma.model.service.BookService;
-import by.mishastoma.model.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class BookControllerImpl implements CrudController {
     private final BookService service;
     private final ObjectMapper objectMapper;
 
-    private BookControllerImpl(BookService service, ObjectMapper objectMapper){
+    private BookControllerImpl(BookService service, ObjectMapper objectMapper) {
         this.service = service;
         this.objectMapper = objectMapper;
     }
@@ -90,7 +83,7 @@ public class BookControllerImpl implements CrudController {
         }
     }
 
-    public String findBookByIsbn(String isbn){
+    public String findBookByIsbn(String isbn) {
         try {
             DTOBook book = service.findBookByIsbn(isbn);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);

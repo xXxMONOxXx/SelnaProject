@@ -2,10 +2,8 @@ package by.mishastoma.controller;
 
 import by.mishastoma.model.dto.DTOAuthor;
 import by.mishastoma.model.service.AuthorService;
-import by.mishastoma.model.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,7 +11,7 @@ public class AuthorControllerImpl implements CrudController {
     private final AuthorService service;
     private final ObjectMapper objectMapper;
 
-    private AuthorControllerImpl(AuthorService service, ObjectMapper objectMapper){
+    private AuthorControllerImpl(AuthorService service, ObjectMapper objectMapper) {
         this.service = service;
         this.objectMapper = objectMapper;
     }

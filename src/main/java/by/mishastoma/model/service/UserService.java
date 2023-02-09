@@ -2,8 +2,6 @@ package by.mishastoma.model.service;
 
 import by.mishastoma.model.dto.DTORole;
 import by.mishastoma.model.dto.DTOUser;
-import by.mishastoma.model.entity.RoleEntity;
-import by.mishastoma.model.entity.UserEntity;
 
 import java.util.List;
 

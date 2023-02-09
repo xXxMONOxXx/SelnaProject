@@ -10,8 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = {LiquibaseConfig.class, HibernateConfig.class, AuthorDaoImpl.class },
+        classes = {LiquibaseConfig.class, HibernateConfig.class, AuthorDaoImpl.class},
         loader = AnnotationConfigContextLoader.class)
 public class AuthorDaoImplTest {
     private static final Integer EXPECTED_ID = 1;
@@ -35,7 +33,7 @@ public class AuthorDaoImplTest {
     private AuthorDao dao;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         expectedEntity = AuthorEntity.builder()
                 .id(EXPECTED_ID)
                 .firstname(EXPECTED_FIRSTNAME)
@@ -50,22 +48,22 @@ public class AuthorDaoImplTest {
     }
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         dao.save(saveEntity);
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         dao.update(expectedEntity);
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         dao.delete(expectedEntity);
     }
 
     @Test
-    public void getTest(){
+    public void getTest() {
         AuthorEntity actualEntity = dao.findById(EXPECTED_ID);
         Assert.assertEquals(expectedEntity, actualEntity);
     }

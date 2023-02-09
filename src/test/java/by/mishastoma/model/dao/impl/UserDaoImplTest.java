@@ -2,9 +2,7 @@ package by.mishastoma.model.dao.impl;
 
 import by.mishastoma.config.HibernateConfig;
 import by.mishastoma.config.LiquibaseConfig;
-import by.mishastoma.model.dao.GenreDao;
 import by.mishastoma.model.dao.UserDao;
-import by.mishastoma.model.entity.GenreEntity;
 import by.mishastoma.model.entity.RoleEntity;
 import by.mishastoma.model.entity.UserEntity;
 import org.junit.Assert;
@@ -23,7 +21,7 @@ import java.util.List;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = {LiquibaseConfig.class, HibernateConfig.class, UserDaoImpl.class },
+        classes = {LiquibaseConfig.class, HibernateConfig.class, UserDaoImpl.class},
         loader = AnnotationConfigContextLoader.class)
 public class UserDaoImplTest {
 
@@ -47,7 +45,7 @@ public class UserDaoImplTest {
     private UserDao dao;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         expectedRole = RoleEntity.builder()
                 .id(EXPECTED_ROLE_ID)
                 .role(EXPECTED_ROLE_NAME)
@@ -76,39 +74,40 @@ public class UserDaoImplTest {
     }
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         dao.save(saveEntity);
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         dao.update(expectedEntity);
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         dao.delete(expectedEntity);
     }
 
     @Test
-    public void getTest(){
+    public void getTest() {
         UserEntity actualEntity = dao.findById(EXPECTED_ID);
         Assert.assertEquals(expectedEntity, actualEntity);
     }
+
     @Test
-    public void findUsersByRole(){
+    public void findUsersByRole() {
         List<UserEntity> actualUsers = dao.findUsersByRole(expectedRole);
         Assert.assertEquals(expectedUsersWithAdminRole, actualUsers);
     }
 
     @Test
-    public void findByIdCriteria(){
+    public void findByIdCriteria() {
         UserEntity actualEntity = dao.findByIdCriteria(EXPECTED_ID);
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
-    public void findByUsername(){
+    public void findByUsername() {
         UserEntity actualEntity = dao.findUserByUsername(EXPECTED_USERNAME);
         Assert.assertEquals(expectedEntity, actualEntity);
     }

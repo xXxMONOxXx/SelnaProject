@@ -6,8 +6,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity

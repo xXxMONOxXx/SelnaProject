@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = {LiquibaseConfig.class, HibernateConfig.class, BookDaoImpl.class },
+        classes = {LiquibaseConfig.class, HibernateConfig.class, BookDaoImpl.class},
         loader = AnnotationConfigContextLoader.class)
 public class BookDaoImplTest {
 
@@ -37,7 +37,7 @@ public class BookDaoImplTest {
     private BookDao dao;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         expectedEntity = BookEntity.builder()
                 .id(EXPECTED_ID)
                 .title(EXPECTED_TITLE)
@@ -53,46 +53,46 @@ public class BookDaoImplTest {
     }
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         dao.save(saveEntity);
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         dao.update(expectedEntity);
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         dao.delete(expectedEntity);
     }
 
     @Test
-    public void getTest(){
+    public void getTest() {
         BookEntity actualEntity = dao.findById(EXPECTED_ID);
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
-    public void findBookByUdJpql(){
+    public void findBookByUdJpql() {
         BookEntity actualEntity = dao.findBookByIdJpql(EXPECTED_ID);
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
-    public void findBookByEntityGraph(){
+    public void findBookByEntityGraph() {
         BookEntity actualEntity = dao.findBookByIdEntityGraph(EXPECTED_ID);
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
-    public void findBookByIdCriteria(){
+    public void findBookByIdCriteria() {
         BookEntity actualEntity = dao.findBookByIdCriteria(EXPECTED_ID);
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
-    public void findBookByIsbn(){
+    public void findBookByIsbn() {
         BookEntity actualEntity = dao.findBookByIsbn(EXPECTED_ISBN);
         Assert.assertEquals(expectedEntity, actualEntity);
     }

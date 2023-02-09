@@ -2,7 +2,9 @@ package by.mishastoma.model.dao.impl;
 
 import by.mishastoma.model.dao.AbstractDao;
 import by.mishastoma.model.dao.UserDao;
-import by.mishastoma.model.entity.*;
+import by.mishastoma.model.entity.RoleEntity;
+import by.mishastoma.model.entity.UserEntity;
+import by.mishastoma.model.entity.UserEntity_;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Component;
 
@@ -11,9 +13,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.ListAttribute;
-import javax.persistence.metamodel.SingularAttribute;
-import javax.persistence.metamodel.StaticMetamodel;
 import java.util.List;
 
 @Component

@@ -2,7 +2,8 @@ package by.mishastoma.model.dao.impl;
 
 import by.mishastoma.model.dao.AbstractDao;
 import by.mishastoma.model.dao.BookDao;
-import by.mishastoma.model.entity.*;
+import by.mishastoma.model.entity.BookEntity;
+import by.mishastoma.model.entity.BookEntity_;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.SetAttribute;
-import javax.persistence.metamodel.SingularAttribute;
-import javax.persistence.metamodel.StaticMetamodel;
-import java.sql.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component

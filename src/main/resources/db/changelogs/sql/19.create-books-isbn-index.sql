@@ -1,1 +1,1 @@
-create index idx_isbn on books(isbn);
+create index idx_isbn on books (isbn);

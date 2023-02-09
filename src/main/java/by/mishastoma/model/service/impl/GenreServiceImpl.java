@@ -1,11 +1,9 @@
 package by.mishastoma.model.service.impl;
 
-import by.mishastoma.model.dao.AuthorDao;
 import by.mishastoma.model.dao.GenreDao;
 import by.mishastoma.model.dto.DTOGenre;
 import by.mishastoma.model.entity.GenreEntity;
 import by.mishastoma.model.service.GenreService;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +13,7 @@ public class GenreServiceImpl implements GenreService {
     private final GenreDao dao;
     private final ModelMapper modelMapper;
 
-    private GenreServiceImpl(GenreDao dao, ModelMapper modelMapper){
+    private GenreServiceImpl(GenreDao dao, ModelMapper modelMapper) {
         this.dao = dao;
         this.modelMapper = modelMapper;
     }

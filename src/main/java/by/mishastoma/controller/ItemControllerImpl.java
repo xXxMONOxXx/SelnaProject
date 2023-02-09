@@ -2,10 +2,8 @@ package by.mishastoma.controller;
 
 import by.mishastoma.model.dto.DTOItem;
 import by.mishastoma.model.service.ItemService;
-import by.mishastoma.model.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,7 +12,7 @@ public class ItemControllerImpl implements CrudController {
     private final ItemService service;
     private final ObjectMapper objectMapper;
 
-    private ItemControllerImpl(ItemService service, ObjectMapper objectMapper){
+    private ItemControllerImpl(ItemService service, ObjectMapper objectMapper) {
         this.service = service;
         this.objectMapper = objectMapper;
     }

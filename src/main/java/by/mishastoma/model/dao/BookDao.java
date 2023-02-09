@@ -1,12 +1,8 @@
 package by.mishastoma.model.dao;
 
-import by.mishastoma.model.entity.AuthorEntity;
 import by.mishastoma.model.entity.BookEntity;
-import by.mishastoma.model.entity.GenreEntity;
-import by.mishastoma.model.entity.GenreEntity_;
 
 import java.io.Serializable;
-import java.util.List;
 
 public interface BookDao {
 

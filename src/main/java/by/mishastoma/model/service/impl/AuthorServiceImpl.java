@@ -15,7 +15,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final ModelMapper modelMapper;
 
-    private AuthorServiceImpl(AuthorDao dao, ModelMapper modelMapper){
+    private AuthorServiceImpl(AuthorDao dao, ModelMapper modelMapper) {
         this.dao = dao;
         this.modelMapper = modelMapper;
     }

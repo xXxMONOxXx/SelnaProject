@@ -1,13 +1,11 @@
 package by.mishastoma.model.service.impl;
 
-import by.mishastoma.model.dao.AuthorDao;
 import by.mishastoma.model.dao.UserDao;
 import by.mishastoma.model.dto.DTORole;
 import by.mishastoma.model.dto.DTOUser;
 import by.mishastoma.model.entity.RoleEntity;
 import by.mishastoma.model.entity.UserEntity;
 import by.mishastoma.model.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +17,7 @@ public class UserServiceImpl implements UserService {
     private final UserDao dao;
     private final ModelMapper modelMapper;
 
-    private UserServiceImpl(UserDao dao, ModelMapper modelMapper){
+    private UserServiceImpl(UserDao dao, ModelMapper modelMapper) {
         this.dao = dao;
         this.modelMapper = modelMapper;
     }
@@ -59,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<DTOUser> findUsersWithRole(DTORole role) {
-        List<UserEntity> userEntities = dao.findUsersByRole(modelMapper.map(role,RoleEntity.class));
+        List<UserEntity> userEntities = dao.findUsersByRole(modelMapper.map(role, RoleEntity.class));
         return userEntities.stream().map(x -> modelMapper.map(x, DTOUser.class)).toList();
     }
 }

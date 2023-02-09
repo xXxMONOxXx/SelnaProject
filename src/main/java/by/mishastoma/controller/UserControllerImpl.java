@@ -2,11 +2,9 @@ package by.mishastoma.controller;
 
 import by.mishastoma.model.dto.DTORole;
 import by.mishastoma.model.dto.DTOUser;
-import by.mishastoma.model.service.AuthorService;
 import by.mishastoma.model.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,7 +14,7 @@ public class UserControllerImpl implements CrudController {
     private final UserService service;
     private final ObjectMapper objectMapper;
 
-    private UserControllerImpl(UserService service, ObjectMapper objectMapper){
+    private UserControllerImpl(UserService service, ObjectMapper objectMapper) {
         this.service = service;
         this.objectMapper = objectMapper;
     }
@@ -61,7 +59,7 @@ public class UserControllerImpl implements CrudController {
         }
     }
 
-    public String findUserByIdCriteria(Integer id){
+    public String findUserByIdCriteria(Integer id) {
         try {
             DTOUser user = service.findUserByIdCriteria(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
@@ -70,7 +68,7 @@ public class UserControllerImpl implements CrudController {
         }
     }
 
-    public String findUserByUserName(String username){
+    public String findUserByUserName(String username) {
         try {
             DTOUser user = service.findUserByUsername(username);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
@@ -79,7 +77,7 @@ public class UserControllerImpl implements CrudController {
         }
     }
 
-    public String findUserWithRole(String role){
+    public String findUserWithRole(String role) {
         try {
             DTORole dtoRole = objectMapper.readValue(role, DTORole.class);
             List<DTOUser> list = service.findUsersWithRole(dtoRole);

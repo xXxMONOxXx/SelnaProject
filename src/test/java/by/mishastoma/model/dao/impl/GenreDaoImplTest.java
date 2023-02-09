@@ -2,9 +2,7 @@ package by.mishastoma.model.dao.impl;
 
 import by.mishastoma.config.HibernateConfig;
 import by.mishastoma.config.LiquibaseConfig;
-import by.mishastoma.model.dao.AuthorDao;
 import by.mishastoma.model.dao.GenreDao;
-import by.mishastoma.model.entity.AuthorEntity;
 import by.mishastoma.model.entity.GenreEntity;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        classes = {LiquibaseConfig.class, HibernateConfig.class, GenreDaoImpl.class },
+        classes = {LiquibaseConfig.class, HibernateConfig.class, GenreDaoImpl.class},
         loader = AnnotationConfigContextLoader.class)
 public class GenreDaoImplTest {
     private static final Integer EXPECTED_ID = 1;
@@ -32,7 +30,7 @@ public class GenreDaoImplTest {
     private GenreDao dao;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         expectedEntity = GenreEntity.builder()
                 .id(EXPECTED_ID)
                 .genre(EXPECTED_GENRE)
@@ -44,28 +42,28 @@ public class GenreDaoImplTest {
     }
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         dao.save(saveEntity);
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         dao.update(expectedEntity);
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         dao.delete(expectedEntity);
     }
 
     @Test
-    public void getTest(){
+    public void getTest() {
         GenreEntity actualEntity = dao.findById(EXPECTED_ID);
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
-    public void findByGenre(){
+    public void findByGenre() {
         GenreEntity actualEntity = dao.findByGenreName(EXPECTED_GENRE);
         Assert.assertEquals(expectedEntity, actualEntity);
     }

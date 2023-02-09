@@ -1,11 +1,9 @@
 package by.mishastoma.model.service.impl;
 
-import by.mishastoma.model.dao.AuthorDao;
 import by.mishastoma.model.dao.ItemDao;
 import by.mishastoma.model.dto.DTOItem;
 import by.mishastoma.model.entity.ItemEntity;
 import by.mishastoma.model.service.ItemService;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +13,7 @@ public class ItemServiceImpl implements ItemService {
     private final ItemDao dao;
     private final ModelMapper modelMapper;
 
-    private ItemServiceImpl(ItemDao dao, ModelMapper modelMapper){
+    private ItemServiceImpl(ItemDao dao, ModelMapper modelMapper) {
         this.dao = dao;
         this.modelMapper = modelMapper;
     }

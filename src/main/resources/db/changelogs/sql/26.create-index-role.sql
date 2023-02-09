@@ -1,1 +1,1 @@
-create index idx_role_name on roles(role_name);
+create index idx_role_name on roles (role_name);

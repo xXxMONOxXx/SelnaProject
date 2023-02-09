@@ -1,1 +1,2 @@
-alter table users drop user_role;
+alter table users
+    drop user_role;
