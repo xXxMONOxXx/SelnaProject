@@ -1,8 +1,6 @@
 package by.mishastoma;
 
 import by.mishastoma.controller.BookControllerImpl;
-import by.mishastoma.controller.GenreControllerImpl;
-import by.mishastoma.controller.UserControllerImpl;
 import liquibase.servicelocator.LiquibaseService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -20,5 +18,8 @@ public class Application {
     @SneakyThrows
     public static void main(String... args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
+        //AuthorControllerImpl controller = context.getBean(AuthorControllerImpl.class);
+        BookControllerImpl controller = context.getBean(BookControllerImpl.class);
+        System.out.println(controller.findById(1));
     }
 }

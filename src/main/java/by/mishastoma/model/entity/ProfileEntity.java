@@ -11,13 +11,13 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "profiles", schema = "public", catalog = "postgres")
+@Table(name = "profiles")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 public class ProfileEntity {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;
@@ -36,6 +36,10 @@ public class ProfileEntity {
     @Basic
     @Column(name = "birthdate")
     private LocalDate birthdate;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private UserEntity user;
 
     @Override
     public boolean equals(Object o) {

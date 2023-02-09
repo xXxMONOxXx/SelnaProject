@@ -11,21 +11,21 @@
         <column name="id" type="int" autoIncrement="true">
             <constraints primaryKey="true" nullable="false"/>
         </column>
-        <column name="fk_book_id" type="int">
+        <column name="book_id" type="int">
             <constraints nullable="false"/>
         </column>
-        <column name="fk_author_id" type="int">
+        <column name="author_id" type="int">
         <constraints nullable="false"/>
     </column>
     </createTable>
-    <addForeignKeyConstraint baseColumnNames="fk_book_id"
+    <addForeignKeyConstraint baseColumnNames="book_id"
                              baseTableName="books_author"
-                             constraintName="fk_book_id_fk_author"
+                             constraintName="books_author_fk_book"
                              referencedColumnNames="id"
                              referencedTableName="books"/>
-    <addForeignKeyConstraint baseColumnNames="fk_author_id"
+    <addForeignKeyConstraint baseColumnNames="author_id"
                              baseTableName="books_author"
-                             constraintName="fk_author_id_fk_author"
+                             constraintName="books_author_id_fk_author"
                              referencedColumnNames="id"
                              referencedTableName="authors"/>
 

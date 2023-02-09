@@ -11,27 +11,27 @@
         <column name="id" type="int" autoIncrement="true">
             <constraints primaryKey="true" nullable="false"/>
         </column>
-        <column name="fk_book_id" type="int">
+        <column name="book_id" type="int">
             <constraints nullable="false"/>
         </column>
-        <column name="fk_users_id" type="int"/>
+        <column name="users_id" type="int"/>
         <column name="taking_date" type="date"/>
         <column name="expiration_date" type="date"/>
     </createTable>
     <dropDefaultValue tableName="items"
-                      columnName="fk_users_id"/>
+                      columnName="users_id"/>
     <dropDefaultValue tableName="items"
                       columnName="taking_date"/>
     <dropDefaultValue tableName="items"
                       columnName="expiration_date"/>
-    <addForeignKeyConstraint baseColumnNames="fk_book_id"
+    <addForeignKeyConstraint baseColumnNames="book_id"
                              baseTableName="items"
-                             constraintName="fk_book_id_fk"
+                             constraintName="book_id_fk"
                              referencedColumnNames="id"
                              referencedTableName="books"/>
-    <addForeignKeyConstraint baseColumnNames="fk_users_id"
+    <addForeignKeyConstraint baseColumnNames="users_id"
                              baseTableName="items"
-                             constraintName="fk_users_id_fk"
+                             constraintName="users_id_fk"
                              referencedColumnNames="id"
                              referencedTableName="users"/>
 

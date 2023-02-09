@@ -29,9 +29,6 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery q = cb.createQuery(UserEntity.class);
         Root o = q.from(UserEntity.class);
-        o.fetch("items", JoinType.INNER);
-        o.fetch("role", JoinType.INNER);
-        o.fetch("profile", JoinType.INNER);
         q.select(o);
         q.where(cb.equal(o.get("id"), id));
         return (UserEntity) entityManager.createQuery(q).getSingleResult();
@@ -43,6 +40,8 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<UserEntity> criteriaQuery = cb.createQuery(UserEntity.class);
         Root<UserEntity> root = criteriaQuery.from(UserEntity.class);
+        root.fetch("role", JoinType.INNER);
+        root.fetch("profile", JoinType.INNER);
         criteriaQuery.select(root).where(cb.equal(root.get(UserEntity_.ROLE), role));
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
@@ -53,7 +52,6 @@ public class UserDaoImpl extends AbstractDao<UserEntity> implements UserDao {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<UserEntity> criteriaQuery = cb.createQuery(UserEntity.class);
         Root<UserEntity> root = criteriaQuery.from(UserEntity.class);
-        root.fetch("items", JoinType.INNER);
         root.fetch("role", JoinType.INNER);
         root.fetch("profile", JoinType.INNER);
         criteriaQuery.select(root).where(cb.equal(root.get(UserEntity_.USERNAME), username));

@@ -8,7 +8,7 @@
       http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
 <changeSet id="12.create-book-genres-genre-id-index" author="mishastoma">
     <createIndex indexName = "idx_fk_genre_id" tableName = "book_genres">
-        <column name="fk_genre_id"/>
+        <column name="genre_id"/>
     </createIndex>
 </changeSet>
 

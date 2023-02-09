@@ -153,80 +153,83 @@
 
     <changeSet author="mishastoma" id="homework-2-insert-books-author-sample">
         <insert tableName="books_author">
-            <column name="fk_book_id" value="1"/>
-            <column name="fk_author_id" value="1"/>
+            <column name="book_id" value="1"/>
+            <column name="author_id" value="1"/>
         </insert>
         <insert tableName="books_author">
-            <column name="fk_book_id" value="2"/>
-            <column name="fk_author_id" value="1"/>
+            <column name="book_id" value="2"/>
+            <column name="author_id" value="1"/>
         </insert>
         <insert tableName="books_author">
-            <column name="fk_book_id" value="3"/>
-            <column name="fk_author_id" value="3"/>
+            <column name="book_id" value="3"/>
+            <column name="author_id" value="3"/>
         </insert>
         <insert tableName="books_author">
-            <column name="fk_book_id" value="4"/>
-            <column name="fk_author_id" value="3"/>
+            <column name="book_id" value="4"/>
+            <column name="author_id" value="3"/>
         </insert>
         <insert tableName="books_author">
-            <column name="fk_book_id" value="5"/>
-            <column name="fk_author_id" value="2"/>
+            <column name="book_id" value="5"/>
+            <column name="author_id" value="2"/>
         </insert>
     </changeSet>
 
     <changeSet author="mishastoma" id="homework-2-insert-book-genres-sample">
         <insert tableName="book_genres">
-            <column name="fk_book_id" value="1"/>
-            <column name="fk_genre_id" value="9"/>
+            <column name="book_id" value="1"/>
+            <column name="genre_id" value="9"/>
         </insert>
         <insert tableName="book_genres">
-            <column name="fk_book_id" value="2"/>
-            <column name="fk_genre_id" value="9"/>
+            <column name="book_id" value="2"/>
+            <column name="genre_id" value="9"/>
         </insert>
         <insert tableName="book_genres">
-            <column name="fk_book_id" value="3"/>
-            <column name="fk_genre_id" value="10"/>
+            <column name="book_id" value="3"/>
+            <column name="genre_id" value="10"/>
         </insert>
         <insert tableName="book_genres">
-            <column name="fk_book_id" value="4"/>
-            <column name="fk_genre_id" value="11"/>
+            <column name="book_id" value="4"/>
+            <column name="genre_id" value="11"/>
         </insert>
         <insert tableName="book_genres">
-            <column name="fk_book_id" value="5"/>
-            <column name="fk_genre_id" value="5"/>
+            <column name="book_id" value="5"/>
+            <column name="genre_id" value="5"/>
         </insert>
     </changeSet>
 
     <changeSet author="mishastoma" id="homework-2-insert-items-sample">
         <insert tableName="items">
-            <column name="fk_book_id" value="1"/>
+            <column name="book_id" value="1"/>
+            <column name="users_id" value="1"/>
+            <column name="taking_date" value="2023-02-08"/>
+            <column name="expiration_date" value="2023-02-23"/>
         </insert>
         <insert tableName="items">
-            <column name="fk_book_id" value="1"/>
+            <column name="book_id" value="1"/>
         </insert>
         <insert tableName="items">
-            <column name="fk_book_id" value="2"/>
+            <column name="book_id" value="2"/>
         </insert>
         <insert tableName="items">
-            <column name="fk_book_id" value="2"/>
+            <column name="book_id" value="2"/>
         </insert>
         <insert tableName="items">
-            <column name="fk_book_id" value="3"/>
+            <column name="book_id" value="3"/>
         </insert>
         <insert tableName="items">
-            <column name="fk_book_id" value="3"/>
+            <column name="book_id" value="3"/>
         </insert>
         <insert tableName="items">
-            <column name="fk_book_id" value="4"/>
+            <column name="book_id" value="4"/>
         </insert>
         <insert tableName="items">
-            <column name="fk_book_id" value="4"/>
+            <column name="book_id" value="4"/>
         </insert>
         <insert tableName="items">
-            <column name="fk_book_id" value="5"/>
+            <column name="book_id" value="5"/>
         </insert>
         <insert tableName="items">
-            <column name="fk_book_id" value="5"/>
+            <column name="book_id" value="5"/>
         </insert>
     </changeSet>
 

@@ -9,13 +9,13 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "users", schema = "public", catalog = "postgres")
+@Table(name = "users")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 public class UserEntity  {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;
@@ -38,7 +38,7 @@ public class UserEntity  {
     private RoleEntity role;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_users_id")
+    @JoinColumn(name = "users_id")
     private List<ItemEntity> items;
 
     @Override

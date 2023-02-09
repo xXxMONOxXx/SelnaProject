@@ -11,21 +11,21 @@
         <column name="id" type="int" autoIncrement="true">
             <constraints primaryKey="true" nullable="false"/>
         </column>
-        <column name="fk_book_id" type="int">
+        <column name="book_id" type="int">
             <constraints nullable="false"/>
         </column>
-        <column name="fk_genre_id" type="int">
+        <column name="genre_id" type="int">
             <constraints nullable="false"/>
         </column>
     </createTable>
-    <addForeignKeyConstraint baseColumnNames="fk_book_id"
+    <addForeignKeyConstraint baseColumnNames="book_id"
                              baseTableName="book_genres"
-                             constraintName="fk_book_id_fk_genre"
+                             constraintName="book_id_fk_genre"
                              referencedColumnNames="id"
                              referencedTableName="books"/>
-    <addForeignKeyConstraint baseColumnNames="fk_genre_id"
+    <addForeignKeyConstraint baseColumnNames="genre_id"
                              baseTableName="book_genres"
-                             constraintName="fk_genre_id_fk_genre"
+                             constraintName="genre_id_fk_genre"
                              referencedColumnNames="id"
                              referencedTableName="genres"/>
 

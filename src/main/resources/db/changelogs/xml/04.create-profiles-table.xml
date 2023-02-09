@@ -30,7 +30,7 @@
 
     <addForeignKeyConstraint baseColumnNames="id"
                              baseTableName="profiles"
-                             constraintName="fk_user_id_profile"
+                             constraintName="user_id_profile"
                              referencedColumnNames="id"
                              referencedTableName="users"/>
 </changeSet>

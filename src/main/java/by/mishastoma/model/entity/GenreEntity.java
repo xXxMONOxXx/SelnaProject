@@ -7,21 +7,27 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
-@Table(name = "genres", schema = "public", catalog = "postgres")
+@Table(name = "genres")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 public class GenreEntity{
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;
     @Basic
     @Column(name = "genre")
     private String genre;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "book_genres",
+            joinColumns = @JoinColumn(name = "genre_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private Set<BookEntity> books;
 
     @Override
     public boolean equals(Object o) {

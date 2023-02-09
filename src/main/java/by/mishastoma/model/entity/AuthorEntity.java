@@ -7,18 +7,19 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
-@Table(name = "authors", schema = "public", catalog = "postgres")
+@Table(name = "authors")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 public class AuthorEntity {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Basic
     @Column(name = "firstname")
     private String firstname;
@@ -28,6 +29,11 @@ public class AuthorEntity {
     @Basic
     @Column(name = "patronymic")
     private String patronymic;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "books_author",
+            joinColumns = @JoinColumn(name = "author_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private Set<BookEntity> books;
 
     @Override
     public boolean equals(Object o) {

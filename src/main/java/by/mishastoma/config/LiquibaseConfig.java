@@ -1,12 +1,11 @@
 package by.mishastoma.config;
 
 import liquibase.integration.spring.SpringLiquibase;
-import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
@@ -22,15 +21,18 @@ public class LiquibaseConfig {
     private String password;
     @Value("${spring.liquibase.change-log}")
     private String path;
+    @Value("${spring.datasource.driver-class-name}")
+    private String driverClassName;
 
 
     @Bean
     public DataSource dataSource() {
-        PGSimpleDataSource ds = new PGSimpleDataSource();
-        ds.setURL(url);
-        ds.setUser(username);
-        ds.setPassword(password);
-        return ds;
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        return dataSource;
     }
 
     @Bean

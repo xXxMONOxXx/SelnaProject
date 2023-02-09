@@ -18,13 +18,13 @@ import java.util.Set;
                 @NamedAttributeNode("authors")
         })
 @Entity
-@Table(name = "books", schema = "public", catalog = "postgres")
+@Table(name = "books")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 public class BookEntity{
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;
@@ -40,16 +40,16 @@ public class BookEntity{
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "books_author",
-            joinColumns = @JoinColumn(name = "fk_book_id"), inverseJoinColumns = @JoinColumn(name = "fk_author_id"))
+            joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<AuthorEntity> authors;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "book_genres",
-            joinColumns = @JoinColumn(name = "fk_book_id"), inverseJoinColumns = @JoinColumn(name = "fk_genre_id"))
+            joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<GenreEntity> genres;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_book_id")
+    @JoinColumn(name = "book_id")
     private Set<ItemEntity> items;
 
     @Override

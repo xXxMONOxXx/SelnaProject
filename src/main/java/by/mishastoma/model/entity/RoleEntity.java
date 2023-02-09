@@ -9,13 +9,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "roles", schema = "public", catalog = "postgres")
+@Table(name = "roles")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 public class RoleEntity {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;
