@@ -4,6 +4,7 @@ import by.mishastoma.config.HibernateConfig;
 import by.mishastoma.config.LiquibaseConfig;
 import by.mishastoma.model.dao.BookDao;
 import by.mishastoma.model.entity.BookEntity;
+import by.mishastoma.model.entity.ItemEntity;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,6 +33,9 @@ public class BookDaoImplTest {
     private static final String SAVE_TITLE = "Test";
     private static final String SAVE_ISBN = "9999999999999";
     private static final LocalDate SAVE_RELEASE_DATE = LocalDate.parse("2023-01-01");
+    private static final Integer EXPECTED_ITEM_ID = 1;
+    private static ItemEntity expectedItem;
+    private static Set<ItemEntity> expectedItems;
     private static BookEntity expectedEntity;
     private static BookEntity saveEntity;
 
@@ -38,13 +44,20 @@ public class BookDaoImplTest {
 
     @Before
     public void setUp() {
+
+        expectedItems = new HashSet<>();
+        expectedItem = ItemEntity.builder()
+                .id(EXPECTED_ITEM_ID)
+                .bookId(EXPECTED_ID)
+                .build();
+        expectedItems.add(expectedItem);
         expectedEntity = BookEntity.builder()
                 .id(EXPECTED_ID)
                 .title(EXPECTED_TITLE)
                 .isbn(EXPECTED_ISBN)
                 .releaseDate(EXPECTED_RELEASE_DATE)
+                .items(expectedItems)
                 .build();
-
         saveEntity = BookEntity.builder()
                 .title(SAVE_TITLE)
                 .isbn(SAVE_ISBN)

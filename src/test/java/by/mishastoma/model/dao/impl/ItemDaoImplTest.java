@@ -28,6 +28,7 @@ public class ItemDaoImplTest {
     private static final LocalDate EXPECTED_EXPIRATION_DATE = LocalDate.parse("2023-02-23");
     private static final LocalDate SAVE_TAKING_DATE = LocalDate.parse("2023-01-29");
     private static final LocalDate SAVE_EXPIRATION_DATE = LocalDate.parse("2023-02-19");
+    private static final Integer EXPECTED_BOOK_ID = 1;
     private static final int SAVE_BOOK_ID = 1;
     private static ItemEntity expectedEntity;
     private static ItemEntity saveEntity;
@@ -39,6 +40,7 @@ public class ItemDaoImplTest {
     public void setUp() {
         expectedEntity = ItemEntity.builder()
                 .id(EXPECTED_ID)
+                .bookId(EXPECTED_BOOK_ID)
                 .takingDate(EXPECTED_TAKING_DATE)
                 .expirationDate(EXPECTED_EXPIRATION_DATE)
                 .build();
