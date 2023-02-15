@@ -1,17 +1,11 @@
 package by.mishastoma.model.dao;
 
-import by.mishastoma.model.entity.GenreEntity;
+import by.mishastoma.model.entity.Genre;
 
 import java.io.Serializable;
+import java.util.Optional;
 
-public interface GenreDao {
-    void save(GenreEntity entity);
+public interface GenreDao extends GenericDao<Genre>{
 
-    GenreEntity findById(Serializable id);
-
-    void update(GenreEntity t);
-
-    void delete(GenreEntity t);
-
-    GenreEntity findByGenreName(String genre);
+    Optional<Genre> findByName(String genre);
 }

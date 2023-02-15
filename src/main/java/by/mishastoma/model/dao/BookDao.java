@@ -1,25 +1,18 @@
 package by.mishastoma.model.dao;
 
-import by.mishastoma.model.entity.BookEntity;
+import by.mishastoma.model.entity.Book;
 
 import java.io.Serializable;
+import java.util.Optional;
 
-public interface BookDao {
+public interface BookDao extends GenericDao<Book>{
 
-    void save(BookEntity entity);
+    Optional<Book> findByIdJpql(Serializable id);
 
-    BookEntity findById(Serializable id);
+    Optional<Book> findByIdEntityGraph(Serializable id);
 
-    void update(BookEntity t);
+    Optional<Book> findByIdCriteria(Serializable id);
 
-    void delete(BookEntity t);
-
-    BookEntity findBookByIdJpql(Integer id);
-
-    BookEntity findBookByIdEntityGraph(Integer id);
-
-    BookEntity findBookByIdCriteria(Integer id);
-
-    BookEntity findBookByIsbn(String isbn);
+    Optional<Book> findByIsbn(String isbn);
 
 }

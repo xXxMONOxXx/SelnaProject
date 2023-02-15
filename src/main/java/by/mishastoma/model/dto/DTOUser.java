@@ -9,10 +9,10 @@ import java.util.List;
 @Setter
 public class DTOUser {
 
-    private Integer id;
+    private Long id;
     private String username;
     private String password;
-    private DTORole role;
-    private DTOProfile profile;
-    private List<DTOItem> items;
+    private RoleDto role;
+    private ProfileDto profile;
+    private List<ItemDto> items;
 }

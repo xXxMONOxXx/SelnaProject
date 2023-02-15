@@ -1,5 +1,6 @@
 package by.mishastoma.config;
 
+import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -28,12 +30,15 @@ public class HibernateConfig {
     private String password;
     @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
-
+    @Value("${hibernate.show-sql}")
+    private String showSql;
     @Value("${hibernate.dialect}")
     private String dialect;
 
     @Value("${hibernate.ddl-auto}")
     private String hibernateDll;
+    @Value("${hibernate.merge.entity.copy.observer}")
+    private String mergeEntityCopyObserver;
 
     @Bean
     public DataSource dataSource() {
@@ -63,11 +68,17 @@ public class HibernateConfig {
         return transactionManager;
     }
 
+    @Bean
+    public EntityManager entityManager() {
+        return entityManagerFactory().getObject().createEntityManager();
+    }
+
     private Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.dialect", dialect);
-        properties.setProperty("hibernate.ddl-auto", hibernateDll);
+        properties.setProperty(AvailableSettings.DIALECT, dialect);
+        //properties.setProperty(AvailableSettings.HBM2DDL_AUTO, hibernateDll);
+        properties.setProperty(AvailableSettings.SHOW_SQL, showSql);
+        properties.setProperty(AvailableSettings.MERGE_ENTITY_COPY_OBSERVER, mergeEntityCopyObserver);
         return properties;
     }
 

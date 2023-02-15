@@ -1,7 +1,7 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.model.dto.DTORole;
 import by.mishastoma.model.dto.DTOUser;
+import by.mishastoma.model.dto.RoleDto;
 import by.mishastoma.model.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,7 +40,7 @@ public class UserControllerImpl implements CrudController {
     }
 
     @Override
-    public String findById(int id) {
+    public String findById(long id) {
         try {
             DTOUser user = service.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
@@ -79,8 +79,8 @@ public class UserControllerImpl implements CrudController {
 
     public String findUserWithRole(String role) {
         try {
-            DTORole dtoRole = objectMapper.readValue(role, DTORole.class);
-            List<DTOUser> list = service.findUsersWithRole(dtoRole);
+            RoleDto roleDto = objectMapper.readValue(role, RoleDto.class);
+            List<DTOUser> list = service.findUsersWithRole(roleDto);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

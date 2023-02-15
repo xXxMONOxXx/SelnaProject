@@ -3,7 +3,8 @@ package by.mishastoma.model.dao.impl;
 import by.mishastoma.config.HibernateConfig;
 import by.mishastoma.config.LiquibaseConfig;
 import by.mishastoma.model.dao.ItemDao;
-import by.mishastoma.model.entity.ItemEntity;
+import by.mishastoma.model.entity.Genre;
+import by.mishastoma.model.entity.Item;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,53 +24,69 @@ import java.time.LocalDate;
         loader = AnnotationConfigContextLoader.class)
 public class ItemDaoImplTest {
 
-    private static final Integer EXPECTED_ID = 1;
-    private static final LocalDate EXPECTED_TAKING_DATE = LocalDate.parse("2023-02-08");
-    private static final LocalDate EXPECTED_EXPIRATION_DATE = LocalDate.parse("2023-02-23");
-    private static final LocalDate SAVE_TAKING_DATE = LocalDate.parse("2023-01-29");
-    private static final LocalDate SAVE_EXPIRATION_DATE = LocalDate.parse("2023-02-19");
-    private static final Integer EXPECTED_BOOK_ID = 1;
-    private static final int SAVE_BOOK_ID = 1;
-    private static ItemEntity expectedEntity;
-    private static ItemEntity saveEntity;
+    private static final Long EXPECTED_ID = 1L;
+    private static final Date EXPECTED_TAKING_DATE = Date.valueOf("2023-02-08");
+    private static final Date EXPECTED_EXPIRATION_DATE = Date.valueOf("2023-02-23");
+    private static final Date SAVE_TAKING_DATE = Date.valueOf("2023-01-29");
+    private static final Date SAVE_EXPIRATION_DATE = Date.valueOf("2023-02-19");
+    private static final Date UPDATE_TAKING_DATE = Date.valueOf("2023-02-09");
+    private static final Long EXPECTED_BOOK_ID = 1L;
+    private static final Long SAVE_BOOK_ID = 1L;
+    private static final Long SAVE_ID = 10L;
+    private static final Long DELETE_ID = 2L;
+    private static Item expectedEntity;
+    private static Item saveEntity;
+    private static Item deleteEntity;
 
     @Autowired
     private ItemDao dao;
 
     @Before
     public void setUp() {
-        expectedEntity = ItemEntity.builder()
+        expectedEntity = Item.builder()
                 .id(EXPECTED_ID)
                 .bookId(EXPECTED_BOOK_ID)
                 .takingDate(EXPECTED_TAKING_DATE)
                 .expirationDate(EXPECTED_EXPIRATION_DATE)
                 .build();
 
-        saveEntity = ItemEntity.builder()
+        saveEntity = Item.builder()
                 .bookId(SAVE_BOOK_ID)
                 .takingDate(SAVE_TAKING_DATE)
                 .expirationDate(SAVE_EXPIRATION_DATE)
+                .build();
+
+        deleteEntity = Item.builder()
+                .id(DELETE_ID)
                 .build();
     }
 
     @Test
     public void saveTest() {
         dao.save(saveEntity);
+        Item actualEntity = dao.findById(SAVE_ID).get();
+        saveEntity.setId(SAVE_ID);
+        Assert.assertEquals(actualEntity, saveEntity);
+
     }
 
     @Test
     public void updateTest() {
+        expectedEntity.setTakingDate(UPDATE_TAKING_DATE);
         dao.update(expectedEntity);
+        Item actualEntity = dao.findById(EXPECTED_ID).get();
+        Assert.assertEquals(actualEntity, expectedEntity);
     }
 
     @Test
     public void deleteTest() {
-        dao.delete(expectedEntity);
+        dao.delete(deleteEntity);
+        Assert.assertTrue(dao.findById(DELETE_ID).isEmpty());
     }
 
     @Test
     public void getTest() {
-        ItemEntity actualEntity = dao.findById(EXPECTED_ID);
+        Item actualEntity = dao.findById(EXPECTED_ID).get();
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 }

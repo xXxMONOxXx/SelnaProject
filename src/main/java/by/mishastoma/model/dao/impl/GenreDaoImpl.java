@@ -2,30 +2,29 @@ package by.mishastoma.model.dao.impl;
 
 import by.mishastoma.model.dao.AbstractDao;
 import by.mishastoma.model.dao.GenreDao;
-import by.mishastoma.model.entity.GenreEntity;
-import by.mishastoma.model.entity.GenreEntity_;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import by.mishastoma.model.entity.Genre;
+import by.mishastoma.model.entity.Genre_;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Optional;
 
 @Component
-public class GenreDaoImpl extends AbstractDao<GenreEntity> implements GenreDao {
+public class GenreDaoImpl extends AbstractDao<Genre> implements GenreDao {
 
-    private GenreDaoImpl(LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean) {
-        super(localContainerEntityManagerFactoryBean, GenreEntity.class);
+    private GenreDaoImpl(EntityManager entityManager) {
+        super(entityManager, Genre.class);
     }
 
     @Override
-    public GenreEntity findByGenreName(String genre) {
-        EntityManager entityManager = localContainerEntityManagerFactoryBean.getObject().createEntityManager();
+    public Optional<Genre> findByName(String name) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<GenreEntity> criteriaQuery = cb.createQuery(GenreEntity.class);
-        Root<GenreEntity> root = criteriaQuery.from(GenreEntity.class);
-        criteriaQuery.select(root).where(cb.equal(root.get(GenreEntity_.GENRE), genre));
-        return entityManager.createQuery(criteriaQuery).getSingleResult();
+        CriteriaQuery<Genre> criteriaQuery = cb.createQuery(Genre.class);
+        Root<Genre> root = criteriaQuery.from(Genre.class);
+        criteriaQuery.select(root).where(cb.equal(root.get(Genre_.NAME), name));
+        return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
 }

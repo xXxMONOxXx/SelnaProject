@@ -90,37 +90,37 @@
 
     <changeSet author="mishastoma" id="homework-2-insert-genres-sample">
         <insert tableName="genres">
-            <column name="genre" value="Fantasy"/>
+            <column name="name" value="Fantasy"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Sci-Fi"/>
+            <column name="name" value="Sci-Fi"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Mystery"/>
+            <column name="name" value="Mystery"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Thriller"/>
+            <column name="name" value="Thriller"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Romance"/>
+            <column name="name" value="Romance"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Westerns"/>
+            <column name="name" value="Westerns"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Dystopian"/>
+            <column name="name" value="Dystopian"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Contemporary"/>
+            <column name="name" value="Contemporary"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Tradegy"/>
+            <column name="name" value="Tradegy"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Comedy"/>
+            <column name="name" value="Comedy"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Drama"/>
+            <column name="name" value="Drama"/>
         </insert>
     </changeSet>
 

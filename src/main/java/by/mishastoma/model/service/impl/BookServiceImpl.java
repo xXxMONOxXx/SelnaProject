@@ -1,12 +1,15 @@
 package by.mishastoma.model.service.impl;
 
 import by.mishastoma.model.dao.BookDao;
-import by.mishastoma.model.dto.DTOBook;
-import by.mishastoma.model.entity.BookEntity;
+import by.mishastoma.model.dto.BookDto;
+import by.mishastoma.model.entity.Book;
 import by.mishastoma.model.service.BookService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
+import java.io.Serializable;
 
 @Component
 public class BookServiceImpl implements BookService {
@@ -21,49 +24,52 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public void insert(DTOBook dtoBook) {
-        BookEntity book = modelMapper.map(dtoBook, BookEntity.class);
+    public void insert(BookDto bookDto) {
+        Book book = modelMapper.map(bookDto, Book.class);
         dao.save(book);
     }
 
     @Transactional
     @Override
-    public void delete(DTOBook dtoBook) {
-        BookEntity book = modelMapper.map(dtoBook, BookEntity.class);
+    public void delete(BookDto bookDto) {
+        Book book = modelMapper.map(bookDto, Book.class);
         dao.delete(book);
     }
 
     @Override
-    public DTOBook findById(int id) {
-        BookEntity bookEntity = dao.findById(id);
-        DTOBook book = modelMapper.map(bookEntity, DTOBook.class);
-        return book;
+    public BookDto findById(Serializable id) {
+        Book bookEntity = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't find book with id +" + id));
+        return modelMapper.map(bookEntity, BookDto.class);
     }
 
     @Transactional
     @Override
-    public void update(DTOBook dtoBook) {
-        BookEntity book = modelMapper.map(dtoBook, BookEntity.class);
+    public void update(BookDto bookDto) {
+        Book book = modelMapper.map(bookDto, Book.class);
         dao.update(book);
     }
 
     @Override
-    public DTOBook findBookByIdJpql(Integer id) {
-        return modelMapper.map(dao.findBookByIdJpql(id), DTOBook.class);
+    public BookDto findBookByIdJpql(Serializable id) {
+        Book bookEntity = dao.findByIdJpql(id).orElseThrow(() -> new EntityNotFoundException("Can't find book with id " + id));
+        return modelMapper.map(bookEntity, BookDto.class);
     }
 
     @Override
-    public DTOBook findBookByIdEntityGraph(Integer id) {
-        return modelMapper.map(dao.findBookByIdEntityGraph(id), DTOBook.class);
+    public BookDto findBookByIdEntityGraph(Serializable id) {
+        Book bookEntity = dao.findByIdEntityGraph(id).orElseThrow(() -> new EntityNotFoundException("Can't find book with id " + id));
+        return modelMapper.map(bookEntity, BookDto.class);
     }
 
     @Override
-    public DTOBook findBookByIdCriteria(Integer id) {
-        return modelMapper.map(dao.findBookByIdCriteria(id), DTOBook.class);
+    public BookDto findBookByIdCriteria(Serializable id) {
+        Book bookEntity = dao.findByIdCriteria(id).orElseThrow(() -> new EntityNotFoundException("Can't find book with id " + id));
+        return modelMapper.map(bookEntity, BookDto.class);
     }
 
     @Override
-    public DTOBook findBookByIsbn(String isbn) {
-        return modelMapper.map(dao.findBookByIsbn(isbn), DTOBook.class);
+    public BookDto findBookByIsbn(String isbn) {
+        Book bookEntity = dao.findByIsbn(isbn).orElseThrow(() -> new EntityNotFoundException("Can't find book with isbn " + isbn));
+        return modelMapper.map(bookEntity, BookDto.class);
     }
 }

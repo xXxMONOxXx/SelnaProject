@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DTORole {
-    private Integer id;
+public class RoleDto {
+    private Long id;
     private String role;
 }

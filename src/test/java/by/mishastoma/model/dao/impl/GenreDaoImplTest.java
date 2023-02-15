@@ -3,7 +3,7 @@ package by.mishastoma.model.dao.impl;
 import by.mishastoma.config.HibernateConfig;
 import by.mishastoma.config.LiquibaseConfig;
 import by.mishastoma.model.dao.GenreDao;
-import by.mishastoma.model.entity.GenreEntity;
+import by.mishastoma.model.entity.Genre;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,51 +20,67 @@ import org.springframework.transaction.annotation.Transactional;
         classes = {LiquibaseConfig.class, HibernateConfig.class, GenreDaoImpl.class},
         loader = AnnotationConfigContextLoader.class)
 public class GenreDaoImplTest {
-    private static final Integer EXPECTED_ID = 1;
+    private static final Long EXPECTED_ID = 1L;
     private static final String EXPECTED_GENRE = "Fantasy";
     private static final String SAVE_GENRE = "Test";
-    private static GenreEntity expectedEntity;
-    private static GenreEntity saveEntity;
+    private static final Long SAVE_ID = 12L;
+    private static final String UPDATE_NAME = "Testupdt";
+    private static final Long DELETE_ID = 2L;
+    private static Genre expectedEntity;
+    private static Genre deleteGenre;
+    private static Genre saveEntity;
 
     @Autowired
     private GenreDao dao;
 
     @Before
     public void setUp() {
-        expectedEntity = GenreEntity.builder()
+        expectedEntity = Genre.builder()
                 .id(EXPECTED_ID)
-                .genre(EXPECTED_GENRE)
+                .name(EXPECTED_GENRE)
                 .build();
 
-        saveEntity = GenreEntity.builder()
-                .genre(SAVE_GENRE)
+        saveEntity = Genre.builder()
+                .name(SAVE_GENRE)
+                .build();
+
+        deleteGenre = Genre.builder()
+                .id(DELETE_ID)
                 .build();
     }
 
     @Test
     public void saveTest() {
         dao.save(saveEntity);
+        Genre actualEntity = dao.findById(SAVE_ID).get();
+        Assert.assertEquals(actualEntity, saveEntity);
     }
 
     @Test
     public void updateTest() {
+        expectedEntity.setName(UPDATE_NAME);
         dao.update(expectedEntity);
+        Genre actualEntity = dao.findById(EXPECTED_ID).get();
+        Assert.assertEquals(actualEntity, expectedEntity);
     }
 
+    @Transactional
     @Test
-    public void deleteTest() {
-        dao.delete(expectedEntity);
-    }
-
-    @Test
-    public void getTest() {
-        GenreEntity actualEntity = dao.findById(EXPECTED_ID);
+    public void findByGenre() {
+        Genre actualEntity = dao.findByName(EXPECTED_GENRE).get();
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
-    public void findByGenre() {
-        GenreEntity actualEntity = dao.findByGenreName(EXPECTED_GENRE);
+    public void deleteTest() {
+        dao.delete(deleteGenre);
+        Assert.assertTrue(dao.findById(DELETE_ID).isEmpty());
+    }
+
+    @Test
+    public void getTest() {
+        Genre actualEntity = dao.findById(EXPECTED_ID).get();
+        expectedEntity.setName(UPDATE_NAME);
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 }

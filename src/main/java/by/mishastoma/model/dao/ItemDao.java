@@ -1,15 +1,10 @@
 package by.mishastoma.model.dao;
 
-import by.mishastoma.model.entity.ItemEntity;
+import by.mishastoma.model.entity.Item;
 
 import java.io.Serializable;
+import java.util.Optional;
 
-public interface ItemDao {
-    void save(ItemEntity entity);
+public interface ItemDao extends GenericDao<Item>{
 
-    ItemEntity findById(Serializable id);
-
-    void update(ItemEntity t);
-
-    void delete(ItemEntity t);
 }

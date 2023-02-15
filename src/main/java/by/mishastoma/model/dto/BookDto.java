@@ -8,13 +8,13 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class DTOBook {
+public class BookDto {
 
-    private Integer id;
+    private Long id;
     private String title;
     private String isbn;
     private LocalDate releaseDate;
-    private Set<DTOAuthor> authors;
-    private Set<DTOGenre> genres;
-    private Set<DTOItem> items;
+    private Set<AuthorDto> authors;
+    private Set<GenreDto> genres;
+    private Set<ItemDto> items;
 }

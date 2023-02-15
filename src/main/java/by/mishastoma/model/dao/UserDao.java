@@ -1,24 +1,18 @@
 package by.mishastoma.model.dao;
 
 
-import by.mishastoma.model.entity.RoleEntity;
-import by.mishastoma.model.entity.UserEntity;
+import by.mishastoma.model.entity.Role;
+import by.mishastoma.model.entity.User;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
-public interface UserDao {
-    void save(UserEntity entity);
+public interface UserDao extends GenericDao<User>{
 
-    UserEntity findById(Serializable id);
+    Optional<User> findByIdCriteria(Serializable id);
 
-    void update(UserEntity t);
+    List<User> findByRole(Role role);
 
-    void delete(UserEntity t);
-
-    UserEntity findByIdCriteria(Integer id);
-
-    List<UserEntity> findUsersByRole(RoleEntity role);
-
-    UserEntity findUserByUsername(String username);
+    Optional<User> findByUsername(String username);
 }

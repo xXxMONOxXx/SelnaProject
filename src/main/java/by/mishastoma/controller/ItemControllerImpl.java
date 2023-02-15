@@ -1,6 +1,6 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.model.dto.DTOItem;
+import by.mishastoma.model.dto.ItemDto;
 import by.mishastoma.model.service.ItemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,8 +20,8 @@ public class ItemControllerImpl implements CrudController {
     @Override
     public void insert(String obj) {
         try {
-            DTOItem dtoItem = objectMapper.readValue(obj, DTOItem.class);
-            service.insert(dtoItem);
+            ItemDto itemDto = objectMapper.readValue(obj, ItemDto.class);
+            service.insert(itemDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -30,17 +30,17 @@ public class ItemControllerImpl implements CrudController {
     @Override
     public void delete(String obj) {
         try {
-            DTOItem dtoItem = objectMapper.readValue(obj, DTOItem.class);
-            service.delete(dtoItem);
+            ItemDto itemDto = objectMapper.readValue(obj, ItemDto.class);
+            service.delete(itemDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public String findById(int id) {
+    public String findById(long id) {
         try {
-            DTOItem item = service.findById(id);
+            ItemDto item = service.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(item);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -50,8 +50,8 @@ public class ItemControllerImpl implements CrudController {
     @Override
     public void update(String obj) {
         try {
-            DTOItem dtoItem = objectMapper.readValue(obj, DTOItem.class);
-            service.update(dtoItem);
+            ItemDto itemDto = objectMapper.readValue(obj, ItemDto.class);
+            service.update(itemDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

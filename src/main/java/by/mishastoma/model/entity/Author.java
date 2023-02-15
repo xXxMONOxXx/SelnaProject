@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,11 +15,11 @@ import java.util.Set;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class AuthorEntity {
+public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Basic
     @Column(name = "firstname")
     private String firstname;
@@ -32,29 +33,18 @@ public class AuthorEntity {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "books_author",
             joinColumns = @JoinColumn(name = "author_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Set<BookEntity> books;
+    private Set<Book> books;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        AuthorEntity that = (AuthorEntity) o;
-
-        if (id != that.id) return false;
-        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-        if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
-        if (patronymic != null ? !patronymic.equals(that.patronymic) : that.patronymic != null) return false;
-
-        return true;
+        Author that = (Author) o;
+        return Objects.equals(id, that.id) && Objects.equals(firstname, that.firstname) && Objects.equals(surname, that.surname) && Objects.equals(patronymic, that.patronymic);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + (patronymic != null ? patronymic.hashCode() : 0);
-        return result;
+        return Objects.hash(id, firstname, surname, patronymic);
     }
 }

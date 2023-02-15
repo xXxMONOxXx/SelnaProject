@@ -12,6 +12,7 @@
         <insert tableName="users">
             <column name="username" value="addy"/>
             <column name="password" value="6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"/>
+            <column name="role_id" value="3"/>
         </insert>
         <insert tableName="users">
             <column name="username" value="max"/>
@@ -89,40 +90,39 @@
 
     <changeSet author="mishastoma" id="homework-2-insert-genres-sample">
         <insert tableName="genres">
-            <column name="genre" value="Fantasy"/>
+            <column name="name" value="Fantasy"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Sci-Fi"/>
+            <column name="name" value="Sci-Fi"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Mystery"/>
+            <column name="name" value="Mystery"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Thriller"/>
+            <column name="name" value="Thriller"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Romance"/>
+            <column name="name" value="Romance"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Westerns"/>
+            <column name="name" value="Westerns"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Dystopian"/>
+            <column name="name" value="Dystopian"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Contemporary"/>
+            <column name="name" value="Contemporary"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Tradegy"/>
+            <column name="name" value="Tradegy"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Comedy"/>
+            <column name="name" value="Comedy"/>
         </insert>
         <insert tableName="genres">
-            <column name="genre" value="Drama"/>
+            <column name="name" value="Drama"/>
         </insert>
     </changeSet>
-
     <changeSet author="mishastoma" id="homework-2-insert-books-sample">
         <insert tableName="books">
             <column name="title" value="Romeo and Juliet"/>
@@ -200,7 +200,7 @@
     <changeSet author="mishastoma" id="homework-2-insert-items-sample">
         <insert tableName="items">
             <column name="book_id" value="1"/>
-            <column name="users_id" value="1"/>
+            <column name="user_id" value="1"/>
             <column name="taking_date" value="2023-02-08"/>
             <column name="expiration_date" value="2023-02-23"/>
         </insert>

@@ -1,6 +1,6 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.model.dto.DTOBook;
+import by.mishastoma.model.dto.BookDto;
 import by.mishastoma.model.service.BookService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +19,8 @@ public class BookControllerImpl implements CrudController {
     @Override
     public void insert(String obj) {
         try {
-            DTOBook dtoBook = objectMapper.readValue(obj, DTOBook.class);
-            service.insert(dtoBook);
+            BookDto bookDto = objectMapper.readValue(obj, BookDto.class);
+            service.insert(bookDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -29,17 +29,17 @@ public class BookControllerImpl implements CrudController {
     @Override
     public void delete(String obj) {
         try {
-            DTOBook dtoBook = objectMapper.readValue(obj, DTOBook.class);
-            service.delete(dtoBook);
+            BookDto bookDto = objectMapper.readValue(obj, BookDto.class);
+            service.delete(bookDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public String findById(int id) {
+    public String findById(long id) {
         try {
-            DTOBook book = service.findById(id);
+            BookDto book = service.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -49,34 +49,34 @@ public class BookControllerImpl implements CrudController {
     @Override
     public void update(String obj) {
         try {
-            DTOBook dtoBook = objectMapper.readValue(obj, DTOBook.class);
-            service.update(dtoBook);
+            BookDto bookDto = objectMapper.readValue(obj, BookDto.class);
+            service.update(bookDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String findBookByIdJpql(Integer id) {
+    public String findBookByIdJpql(long id) {
         try {
-            DTOBook book = service.findBookByIdJpql(id);
+            BookDto book = service.findBookByIdJpql(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String findBookByIdEntityGraph(Integer id) {
+    public String findBookByIdEntityGraph(long id) {
         try {
-            DTOBook book = service.findBookByIdEntityGraph(id);
+            BookDto book = service.findBookByIdEntityGraph(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String findBookByIdCriteria(Integer id) {
+    public String findBookByIdCriteria(long id) {
         try {
-            DTOBook book = service.findBookByIdCriteria(id);
+            BookDto book = service.findBookByIdCriteria(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -85,7 +85,7 @@ public class BookControllerImpl implements CrudController {
 
     public String findBookByIsbn(String isbn) {
         try {
-            DTOBook book = service.findBookByIsbn(isbn);
+            BookDto book = service.findBookByIsbn(isbn);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

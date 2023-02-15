@@ -7,8 +7,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class DTOProfile {
-    private Integer id;
+public class ProfileDto {
+    private Long id;
     private String firstname;
     private String surname;
     private String phone;

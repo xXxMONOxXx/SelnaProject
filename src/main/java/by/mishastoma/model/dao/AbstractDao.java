@@ -1,35 +1,32 @@
 package by.mishastoma.model.dao;
 
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-
 import javax.persistence.EntityManager;
 import java.io.Serializable;
+import java.util.Optional;
 
 public abstract class AbstractDao<T> {
-    protected final LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean;
+    protected final EntityManager entityManager;
     private final Class<T> type;
 
-    protected AbstractDao(LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean, Class<T> type) {
+    protected AbstractDao(EntityManager entityManager, Class<T> type) {
         this.type = type;
-        this.localContainerEntityManagerFactoryBean = localContainerEntityManagerFactoryBean;
+        this.entityManager = entityManager;
     }
 
     public void save(T t) {
-        EntityManager entityManager = localContainerEntityManagerFactoryBean.getObject().createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(t);
         entityManager.flush();
         entityManager.getTransaction().commit();
     }
 
-    public T findById(Serializable id) {
-        EntityManager entityManager = localContainerEntityManagerFactoryBean.getObject().createEntityManager();
-        T t = entityManager.find(type, id);
-        return t;
+    public Optional<T> findById(Serializable id) {
+        T t = null;
+        t = entityManager.find(type, id);
+        return Optional.ofNullable(t);
     }
 
     public void update(T t) {
-        EntityManager entityManager = localContainerEntityManagerFactoryBean.getObject().createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.merge(t);
         entityManager.flush();
@@ -37,11 +34,11 @@ public abstract class AbstractDao<T> {
     }
 
     public void delete(T t) {
-        EntityManager entityManager = localContainerEntityManagerFactoryBean.getObject().createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
-        entityManager.flush();
-        entityManager.getTransaction().commit();
+        //entityManager.getTransaction().begin();
+        //entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
+        entityManager.remove(t);
+        //entityManager.flush();
+        //entityManager.getTransaction().commit();
     }
 
 }

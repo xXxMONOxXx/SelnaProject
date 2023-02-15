@@ -6,43 +6,33 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
-@Table(name = "items")
+@Table(name = "roles")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class ItemEntity {
+public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Basic
-    @Column(name = "book_id")
-    private int bookId;
-    @Basic
-    @Column(name = "users_id")
-    private Integer userId;
-    @Basic
-    @Column(name = "taking_date")
-    private LocalDate takingDate;
-    @Basic
-    @Column(name = "expiration_date")
-    private LocalDate expirationDate;
-
+    @Column(name = "role")
+    private String role;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ItemEntity that = (ItemEntity) o;
-        return id == that.id;
+        Role that = (Role) o;
+        return Objects.equals(id, that.id) && Objects.equals(role, that.role);
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return Objects.hash(id, role);
     }
 }

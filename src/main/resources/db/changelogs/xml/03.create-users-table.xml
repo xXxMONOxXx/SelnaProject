@@ -5,7 +5,7 @@
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet id="03.create-users-table" author="mishastoma">
         <createTable tableName="users">
-            <column name="id" type="int" autoIncrement="true">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="username" type="varchar(32)">
@@ -15,7 +15,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="is_blocked" type="boolean"/>
-            <column name="role_id" type="int">
+            <column name="role_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -26,8 +26,7 @@
 
         <addDefaultValue columnName="is_blocked"
                          defaultValue="false"
-                         tableName="users"
-        />
+                         tableName="users"/>
 
         <addForeignKeyConstraint baseColumnNames="role_id"
                                  baseTableName="users"

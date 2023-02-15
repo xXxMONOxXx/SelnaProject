@@ -3,8 +3,8 @@ package by.mishastoma.model.dao.impl;
 import by.mishastoma.config.HibernateConfig;
 import by.mishastoma.config.LiquibaseConfig;
 import by.mishastoma.model.dao.UserDao;
-import by.mishastoma.model.entity.RoleEntity;
-import by.mishastoma.model.entity.UserEntity;
+import by.mishastoma.model.entity.Role;
+import by.mishastoma.model.entity.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,33 +25,36 @@ import java.util.List;
         loader = AnnotationConfigContextLoader.class)
 public class UserDaoImplTest {
 
-    private static final Integer EXPECTED_ID = 1;
+    private static final Long EXPECTED_ID = 1L;
     private static final String EXPECTED_USERNAME = "addy";
     private static final boolean EXPECTED_IS_BLOCKED = false;
     private static final String EXPECTED_PASSWORD = "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b";
-    private static final Integer EXPECTED_ROLE_ID = 3;
+    private static final Long EXPECTED_ROLE_ID = 3L;
     private static final String EXPECTED_ROLE_NAME = "admin";
     private static final String SAVE_USERNAME = "test";
     private static final String SAVE_PASSWORD = "f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2";
+    private static final String UPDATE_PASSWORD = "f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2";
     private static final String SAVE_ROLE_NAME = "librarian";
-    private static final Integer SAVE_ROLE_ID = 2;
-    private static UserEntity expectedEntity;
-    private static UserEntity saveEntity;
-    private static RoleEntity expectedRole;
-    private static RoleEntity saveRole;
-    private static List<UserEntity> expectedUsersWithAdminRole;
+    private static final Long SAVE_ROLE_ID = 2L;
+    private static final Long DELETE_ID = 3L;
+    private static User expectedEntity;
+    private static User saveEntity;
+    private static User deleteEntity;
+    private static Role expectedRole;
+    private static Role saveRole;
+    private static List<User> expectedUsersWithAdminRole;
 
     @Autowired
     private UserDao dao;
 
     @Before
     public void setUp() {
-        expectedRole = RoleEntity.builder()
+        expectedRole = Role.builder()
                 .id(EXPECTED_ROLE_ID)
                 .role(EXPECTED_ROLE_NAME)
                 .build();
 
-        expectedEntity = UserEntity.builder()
+        expectedEntity = User.builder()
                 .id(EXPECTED_ID)
                 .username(EXPECTED_USERNAME)
                 .password(EXPECTED_PASSWORD)
@@ -59,16 +62,21 @@ public class UserDaoImplTest {
                 .role(expectedRole)
                 .build();
 
-        saveRole = RoleEntity.builder()
+        saveRole = Role.builder()
                 .id(SAVE_ROLE_ID)
                 .role(SAVE_ROLE_NAME)
                 .build();
 
-        saveEntity = UserEntity.builder()
+        saveEntity = User.builder()
                 .username(SAVE_USERNAME)
                 .password(SAVE_PASSWORD)
                 .role(saveRole)
                 .build();
+
+        deleteEntity = User.builder()
+                .id(DELETE_ID)
+                .build();
+
         expectedUsersWithAdminRole = new ArrayList<>();
         expectedUsersWithAdminRole.add(expectedEntity);
     }
@@ -76,39 +84,44 @@ public class UserDaoImplTest {
     @Test
     public void saveTest() {
         dao.save(saveEntity);
+        Assert.assertTrue(dao.findByUsername(SAVE_USERNAME).isPresent());
     }
 
     @Test
     public void updateTest() {
+        expectedEntity.setPassword(UPDATE_PASSWORD);
         dao.update(expectedEntity);
+        User actualEntity = dao.findById(EXPECTED_ID).get();
+        Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
     public void deleteTest() {
-        dao.delete(expectedEntity);
+        dao.delete(deleteEntity);
+        Assert.assertTrue(dao.findById(DELETE_ID).isEmpty());
     }
 
     @Test
     public void getTest() {
-        UserEntity actualEntity = dao.findById(EXPECTED_ID);
+        User actualEntity = dao.findById(EXPECTED_ID).get();
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
     public void findUsersByRole() {
-        List<UserEntity> actualUsers = dao.findUsersByRole(expectedRole);
+        List<User> actualUsers = dao.findByRole(expectedRole);
         Assert.assertEquals(expectedUsersWithAdminRole, actualUsers);
     }
 
     @Test
     public void findByIdCriteria() {
-        UserEntity actualEntity = dao.findByIdCriteria(EXPECTED_ID);
+        User actualEntity = dao.findByIdCriteria(EXPECTED_ID).get();
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
     public void findByUsername() {
-        UserEntity actualEntity = dao.findUserByUsername(EXPECTED_USERNAME);
+        User actualEntity = dao.findByUsername(EXPECTED_USERNAME).get();
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 }

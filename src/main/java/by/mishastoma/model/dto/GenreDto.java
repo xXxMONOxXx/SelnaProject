@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DTOGenre {
+public class GenreDto {
 
-    private Integer id;
+    private Long id;
     private String genre;
 }

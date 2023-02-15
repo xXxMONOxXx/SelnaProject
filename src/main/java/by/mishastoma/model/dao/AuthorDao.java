@@ -1,18 +1,11 @@
 package by.mishastoma.model.dao;
 
 
-import by.mishastoma.model.entity.AuthorEntity;
+import by.mishastoma.model.entity.Author;
 
 import java.io.Serializable;
+import java.util.Optional;
 
-public interface AuthorDao {
-
-    void save(AuthorEntity entity);
-
-    AuthorEntity findById(Serializable id);
-
-    void update(AuthorEntity t);
-
-    void delete(AuthorEntity t);
+public interface AuthorDao extends GenericDao<Author>{
 
 }

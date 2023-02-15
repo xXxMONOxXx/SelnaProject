@@ -1,14 +1,17 @@
 package by.mishastoma.model.service.impl;
 
 import by.mishastoma.model.dao.UserDao;
-import by.mishastoma.model.dto.DTORole;
 import by.mishastoma.model.dto.DTOUser;
-import by.mishastoma.model.entity.RoleEntity;
-import by.mishastoma.model.entity.UserEntity;
+import by.mishastoma.model.dto.RoleDto;
+import by.mishastoma.model.entity.Role;
+import by.mishastoma.model.entity.User;
 import by.mishastoma.model.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.io.Serializable;
 import java.util.List;
 
 @Component
@@ -24,40 +27,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void insert(DTOUser dtoUser) {
-        UserEntity user = modelMapper.map(dtoUser, UserEntity.class);
+        User user = modelMapper.map(dtoUser, User.class);
         dao.save(user);
     }
 
+    @Transactional
     @Override
     public void delete(DTOUser dtoUser) {
-        UserEntity user = modelMapper.map(dtoUser, UserEntity.class);
+        User user = modelMapper.map(dtoUser, User.class);
         dao.delete(user);
     }
 
     @Override
-    public DTOUser findById(int id) {
-        return modelMapper.map(dao.findById(id), DTOUser.class);
+    public DTOUser findById(Serializable id) {
+        User userEntity = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't find user with id " + id));
+        return modelMapper.map(userEntity, DTOUser.class);
     }
 
     @Override
     public void update(DTOUser dtoUser) {
-        UserEntity user = modelMapper.map(dtoUser, UserEntity.class);
+        User user = modelMapper.map(dtoUser, User.class);
         dao.update(user);
     }
 
     @Override
-    public DTOUser findUserByIdCriteria(Integer id) {
-        return modelMapper.map(dao.findByIdCriteria(id), DTOUser.class);
+    public DTOUser findUserByIdCriteria(Serializable id) {
+        User userEntity = dao.findByIdCriteria(id).orElseThrow(() -> new EntityNotFoundException("Can't find user with id " + id));
+        return modelMapper.map(userEntity, DTOUser.class);
     }
 
     @Override
     public DTOUser findUserByUsername(String username) {
-        return modelMapper.map(dao.findUserByUsername(username), DTOUser.class);
+        User userEntity = dao.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("Can't find user with username " + username));
+        return modelMapper.map(dao.findByUsername(username), DTOUser.class);
     }
 
     @Override
-    public List<DTOUser> findUsersWithRole(DTORole role) {
-        List<UserEntity> userEntities = dao.findUsersByRole(modelMapper.map(role, RoleEntity.class));
+    public List<DTOUser> findUsersWithRole(RoleDto role) {
+        List<User> userEntities = dao.findByRole(modelMapper.map(role, Role.class));
         return userEntities.stream().map(x -> modelMapper.map(x, DTOUser.class)).toList();
     }
 }

@@ -1,6 +1,6 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.model.dto.DTOGenre;
+import by.mishastoma.model.dto.GenreDto;
 import by.mishastoma.model.service.GenreService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +19,8 @@ public class GenreControllerImpl implements CrudController {
     @Override
     public void insert(String obj) {
         try {
-            DTOGenre dtoGenre = objectMapper.readValue(obj, DTOGenre.class);
-            service.insert(dtoGenre);
+            GenreDto genreDto = objectMapper.readValue(obj, GenreDto.class);
+            service.insert(genreDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -29,17 +29,17 @@ public class GenreControllerImpl implements CrudController {
     @Override
     public void delete(String obj) {
         try {
-            DTOGenre dtoGenre = objectMapper.readValue(obj, DTOGenre.class);
-            service.delete(dtoGenre);
+            GenreDto genreDto = objectMapper.readValue(obj, GenreDto.class);
+            service.delete(genreDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public String findById(int id) {
+    public String findById(long id) {
         try {
-            DTOGenre genre = service.findById(id);
+            GenreDto genre = service.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(genre);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -49,8 +49,8 @@ public class GenreControllerImpl implements CrudController {
     @Override
     public void update(String obj) {
         try {
-            DTOGenre dtoGenre = objectMapper.readValue(obj, DTOGenre.class);
-            service.update(dtoGenre);
+            GenreDto genreDto = objectMapper.readValue(obj, GenreDto.class);
+            service.update(genreDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -58,8 +58,8 @@ public class GenreControllerImpl implements CrudController {
 
     public String findGenreByName(String genre) {
         try {
-            DTOGenre dtoGenre = service.findGenreByName(genre);
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(dtoGenre);
+            GenreDto genreDto = service.findGenreByName(genre);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(genreDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

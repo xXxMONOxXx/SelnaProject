@@ -1,6 +1,6 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.model.dto.DTOAuthor;
+import by.mishastoma.model.dto.AuthorDto;
 import by.mishastoma.model.service.AuthorService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +19,8 @@ public class AuthorControllerImpl implements CrudController {
     @Override
     public void insert(String obj) {
         try {
-            DTOAuthor dtoAuthor = objectMapper.readValue(obj, DTOAuthor.class);
-            service.insert(dtoAuthor);
+            AuthorDto authorDto = objectMapper.readValue(obj, AuthorDto.class);
+            service.insert(authorDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -29,17 +29,17 @@ public class AuthorControllerImpl implements CrudController {
     @Override
     public void delete(String obj) {
         try {
-            DTOAuthor dtoAuthor = objectMapper.readValue(obj, DTOAuthor.class);
-            service.delete(dtoAuthor);
+            AuthorDto authorDto = objectMapper.readValue(obj, AuthorDto.class);
+            service.delete(authorDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public String findById(int id) {
+    public String findById(long id) {
         try {
-            DTOAuthor author = service.findById(id);
+            AuthorDto author = service.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(author);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -49,8 +49,8 @@ public class AuthorControllerImpl implements CrudController {
     @Override
     public void update(String obj) {
         try {
-            DTOAuthor dtoAuthor = objectMapper.readValue(obj, DTOAuthor.class);
-            service.update(dtoAuthor);
+            AuthorDto authorDto = objectMapper.readValue(obj, AuthorDto.class);
+            service.update(authorDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

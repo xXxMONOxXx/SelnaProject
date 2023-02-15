@@ -5,13 +5,13 @@
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet id="09.create-books-author-relation" author="mishastoma">
         <createTable tableName="books_author">
-            <column name="id" type="int" autoIncrement="true">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="book_id" type="int">
+            <column name="book_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="author_id" type="int">
+            <column name="author_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
         </createTable>

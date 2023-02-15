@@ -1,14 +1,16 @@
 package by.mishastoma.model.service;
 
-import by.mishastoma.model.dto.DTOBook;
+import by.mishastoma.model.dto.BookDto;
 
-public interface BookService extends CrudService<DTOBook> {
+import java.io.Serializable;
 
-    DTOBook findBookByIdJpql(Integer id);
+public interface BookService extends CrudService<BookDto> {
 
-    DTOBook findBookByIdEntityGraph(Integer id);
+    BookDto findBookByIdJpql(Serializable id);
 
-    DTOBook findBookByIdCriteria(Integer id);
+    BookDto findBookByIdEntityGraph(Serializable id);
 
-    DTOBook findBookByIsbn(String isbn);
+    BookDto findBookByIdCriteria(Serializable id);
+
+    BookDto findBookByIsbn(String isbn);
 }
