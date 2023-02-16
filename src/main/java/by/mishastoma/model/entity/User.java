@@ -30,8 +30,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     private Profile profile;
 
     @ManyToOne

@@ -35,7 +35,8 @@ public class Profile {
     @Basic
     @Column(name = "birthdate")
     private LocalDate birthdate;
-    @OneToOne(mappedBy = "profile")
+    @OneToOne
+    @MapsId
     private User user;
 
     @Override
