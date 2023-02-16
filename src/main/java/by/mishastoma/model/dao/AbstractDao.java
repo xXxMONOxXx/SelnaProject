@@ -1,5 +1,7 @@
 package by.mishastoma.model.dao;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.Optional;
@@ -33,10 +35,11 @@ public abstract class AbstractDao<T> {
         entityManager.getTransaction().commit();
     }
 
+    @Transactional
     public void delete(T t) {
         //entityManager.getTransaction().begin();
-        //entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
         entityManager.remove(t);
+        //entityManager.remove(t);
         //entityManager.flush();
         //entityManager.getTransaction().commit();
     }

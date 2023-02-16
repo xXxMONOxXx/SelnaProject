@@ -35,7 +35,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(DTOUser dtoUser) {
         User user = modelMapper.map(dtoUser, User.class);
-        dao.delete(user);
+        User entity = dao.findById(user.getId()).orElseThrow(() -> new EntityNotFoundException("Can't find user with id " + user.getId()));
+        dao.delete(entity);
     }
 
     @Override
