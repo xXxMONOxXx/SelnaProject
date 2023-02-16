@@ -6,6 +6,7 @@ import by.mishastoma.model.entity.Genre;
 import by.mishastoma.model.service.GenreService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.Serializable;
@@ -27,9 +28,10 @@ public class GenreServiceImpl implements GenreService {
         dao.save(genre);
     }
 
+    @Transactional
     @Override
-    public void delete(GenreDto genreDto) {
-        Genre genre = modelMapper.map(genreDto, Genre.class);
+    public void delete(Serializable id) {
+        Genre genre = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't find genre with id " + id));
         dao.delete(genre);
     }
 

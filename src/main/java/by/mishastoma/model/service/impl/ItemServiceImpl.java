@@ -28,8 +28,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void delete(ItemDto itemDto) {
-        Item item = modelMapper.map(itemDto, Item.class);
+    public void delete(Serializable id) {
+        Item item = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't find item with id " + id));
         dao.delete(item);
     }
 

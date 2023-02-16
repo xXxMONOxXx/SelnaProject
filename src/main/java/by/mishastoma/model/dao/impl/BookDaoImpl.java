@@ -28,13 +28,13 @@ public class BookDaoImpl extends AbstractDao<Book> implements BookDao {
     @Override
     public Optional<Book> findByIdJpql(Serializable id) {
         Query query = entityManager.createQuery("select b from Book b join b.authors a join b.genres g join b.users i where b.id = :id");
-        query.setParameter("id", id);
+        query.setParameter(Book_.ID, id);
         return Optional.ofNullable((Book) query.getSingleResult());
     }
 
     @Override
     public Optional<Book> findByIdEntityGraph(Serializable id) {
-        EntityGraph graph = entityManager.getEntityGraph("graph.Book.assosiations");
+        EntityGraph<?> graph = entityManager.getEntityGraph("graph.Book.associations");
         Map hints = new HashMap();
         hints.put("javax.persistence.fetchgraph", graph);
         return Optional.ofNullable(entityManager.find(Book.class, id, hints));
@@ -42,22 +42,21 @@ public class BookDaoImpl extends AbstractDao<Book> implements BookDao {
 
     @Override
     public Optional<Book> findByIdCriteria(Serializable id) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery q = cb.createQuery(Book.class);
-        Root o = q.from(Book.class);
-        o.fetch("users", JoinType.INNER);
-        o.fetch("genres", JoinType.INNER);
-        o.fetch("authors", JoinType.INNER);
-        q.select(o).where(cb.equal(o.get("id"), id));
-        return Optional.ofNullable((Book) entityManager.createQuery(q).getSingleResult());
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
+        Root<Book> root = criteriaQuery.from(Book.class);
+        root.fetch(Book_.GENRES, JoinType.INNER);
+        root.fetch(Book_.AUTHORS, JoinType.INNER);
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(Book_.ID), id));
+        return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
 
     @Override
     public Optional<Book> findByIsbn(String isbn) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Book> criteriaQuery = cb.createQuery(Book.class);
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
         Root<Book> root = criteriaQuery.from(Book.class);
-        criteriaQuery.select(root).where(cb.equal(root.get(Book_.isbn), isbn));
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(Book_.ISBN), isbn));
         return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
 }

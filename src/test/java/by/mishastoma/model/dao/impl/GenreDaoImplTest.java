@@ -25,9 +25,8 @@ public class GenreDaoImplTest {
     private static final String SAVE_GENRE = "Test";
     private static final Long SAVE_ID = 12L;
     private static final String UPDATE_NAME = "Testupdt";
-    private static final Long DELETE_ID = 2L;
+    private static final Long DELETE_ID = 9L;
     private static Genre expectedEntity;
-    private static Genre deleteGenre;
     private static Genre saveEntity;
 
     @Autowired
@@ -42,10 +41,6 @@ public class GenreDaoImplTest {
 
         saveEntity = Genre.builder()
                 .name(SAVE_GENRE)
-                .build();
-
-        deleteGenre = Genre.builder()
-                .id(DELETE_ID)
                 .build();
     }
 
@@ -64,7 +59,6 @@ public class GenreDaoImplTest {
         Assert.assertEquals(actualEntity, expectedEntity);
     }
 
-    @Transactional
     @Test
     public void findByGenre() {
         Genre actualEntity = dao.findByName(EXPECTED_GENRE).get();
@@ -73,14 +67,14 @@ public class GenreDaoImplTest {
 
     @Test
     public void deleteTest() {
-        dao.delete(deleteGenre);
+        Genre deleteEntity = dao.findById(DELETE_ID).get();
+        dao.delete(deleteEntity);
         Assert.assertTrue(dao.findById(DELETE_ID).isEmpty());
     }
 
     @Test
     public void getTest() {
         Genre actualEntity = dao.findById(EXPECTED_ID).get();
-        expectedEntity.setName(UPDATE_NAME);
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 }

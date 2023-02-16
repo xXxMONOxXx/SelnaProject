@@ -31,8 +31,8 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public void delete(BookDto bookDto) {
-        Book book = modelMapper.map(bookDto, Book.class);
+    public void delete(Serializable id) {
+        Book book = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't find book with id +" + id));
         dao.delete(book);
     }
 

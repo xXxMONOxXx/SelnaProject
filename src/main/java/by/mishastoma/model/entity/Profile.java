@@ -6,7 +6,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
@@ -34,7 +34,7 @@ public class Profile {
     private String email;
     @Basic
     @Column(name = "birthdate")
-    private LocalDate birthdate;
+    private Date birthdate;
     @OneToOne
     @MapsId
     private User user;

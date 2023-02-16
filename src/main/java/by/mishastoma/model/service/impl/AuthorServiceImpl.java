@@ -6,6 +6,7 @@ import by.mishastoma.model.entity.Author;
 import by.mishastoma.model.service.AuthorService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.Serializable;
@@ -29,9 +30,10 @@ public class AuthorServiceImpl implements AuthorService {
         dao.save(author);
     }
 
+    @Transactional
     @Override
-    public void delete(AuthorDto authorDto) {
-        Author author = modelMapper.map(authorDto, Author.class);
+    public void delete(Serializable id) {
+        Author author = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("Can't find author with id " + id));
         dao.delete(author);
     }
 

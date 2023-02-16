@@ -27,17 +27,12 @@ public class GenreControllerImpl implements CrudController {
     }
 
     @Override
-    public void delete(String obj) {
-        try {
-            GenreDto genreDto = objectMapper.readValue(obj, GenreDto.class);
-            service.delete(genreDto);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public void delete(Long id) {
+        service.delete(id);
     }
 
     @Override
-    public String findById(long id) {
+    public String findById(Long id) {
         try {
             GenreDto genre = service.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(genre);

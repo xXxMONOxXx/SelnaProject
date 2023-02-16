@@ -8,5 +8,5 @@ import lombok.Setter;
 public class GenreDto {
 
     private Long id;
-    private String genre;
+    private String name;
 }

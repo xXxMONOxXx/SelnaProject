@@ -12,7 +12,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -27,11 +26,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public Optional<User> findByIdCriteria(Serializable id) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery q = cb.createQuery(User.class);
-        Root o = q.from(User.class);
-        q.select(o);
-        q.where(cb.equal(o.get("id"), id));
-        return Optional.ofNullable((User) entityManager.createQuery(q).getSingleResult());
+        CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
+        root.fetch(User_.ROLE, JoinType.INNER);
+        root.fetch(User_.PROFILE, JoinType.INNER);
+        criteriaQuery.select(root).where(cb.equal(root.get(User_.ID), id));
+        return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
 
     @Override
@@ -39,20 +39,20 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
         Root<User> root = criteriaQuery.from(User.class);
-        root.fetch("role", JoinType.INNER);
-        root.fetch("profile", JoinType.INNER);
+        root.fetch(User_.ROLE, JoinType.INNER);
+        root.fetch(User_.PROFILE, JoinType.INNER);
         criteriaQuery.select(root).where(cb.equal(root.get(User_.ROLE), role));
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
         Root<User> root = criteriaQuery.from(User.class);
-        root.fetch("role", JoinType.INNER);
-        root.fetch("profile", JoinType.INNER);
-        criteriaQuery.select(root).where(cb.equal(root.get(User_.USERNAME), username));
+        root.fetch(User_.ROLE, JoinType.INNER);
+        root.fetch(User_.PROFILE, JoinType.INNER);
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(User_.USERNAME), username));
         return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
 

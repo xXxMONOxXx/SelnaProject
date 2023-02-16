@@ -3,7 +3,6 @@ package by.mishastoma.model.dao.impl;
 import by.mishastoma.config.HibernateConfig;
 import by.mishastoma.config.LiquibaseConfig;
 import by.mishastoma.model.dao.ItemDao;
-import by.mishastoma.model.entity.Genre;
 import by.mishastoma.model.entity.Item;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,7 +35,6 @@ public class ItemDaoImplTest {
     private static final Long DELETE_ID = 2L;
     private static Item expectedEntity;
     private static Item saveEntity;
-    private static Item deleteEntity;
 
     @Autowired
     private ItemDao dao;
@@ -54,10 +52,6 @@ public class ItemDaoImplTest {
                 .bookId(SAVE_BOOK_ID)
                 .takingDate(SAVE_TAKING_DATE)
                 .expirationDate(SAVE_EXPIRATION_DATE)
-                .build();
-
-        deleteEntity = Item.builder()
-                .id(DELETE_ID)
                 .build();
     }
 
@@ -80,6 +74,7 @@ public class ItemDaoImplTest {
 
     @Test
     public void deleteTest() {
+        Item deleteEntity = dao.findById(DELETE_ID).get();
         dao.delete(deleteEntity);
         Assert.assertTrue(dao.findById(DELETE_ID).isEmpty());
     }

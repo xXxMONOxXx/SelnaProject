@@ -31,7 +31,6 @@ public class AuthorDaoImplTest {
     private static final Long SAVE_ID = 4L;
     private static Author expectedEntity;
     private static Author saveEntity;
-    private static Author deleteEntity;
 
     @Autowired
     private AuthorDao dao;
@@ -48,10 +47,6 @@ public class AuthorDaoImplTest {
                 .firstname(SAVE_FIRSTNAME)
                 .surname(SAVE_SURNAME)
                 .patronymic(SAVE_PATRONYMIC)
-                .build();
-
-        deleteEntity = Author.builder()
-                .id(DELETE_ID)
                 .build();
     }
 
@@ -74,12 +69,12 @@ public class AuthorDaoImplTest {
     @Test
     public void getTest() {
         Author actualEntity = dao.findById(EXPECTED_ID).get();
-        expectedEntity.setPatronymic(EXPECTED_UPDATE_PATRONYMIC);
         Assert.assertEquals(expectedEntity, actualEntity);
     }
 
     @Test
     public void deleteTest() {
+        Author deleteEntity = dao.findById(DELETE_ID).get();
         dao.delete(deleteEntity);
         Assert.assertTrue(dao.findById(DELETE_ID).isEmpty());
     }

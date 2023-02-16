@@ -37,9 +37,9 @@ public class UserDaoImplTest {
     private static final String SAVE_ROLE_NAME = "librarian";
     private static final Long SAVE_ROLE_ID = 2L;
     private static final Long DELETE_ID = 3L;
+    private static final Long SAVE_ID = 6L;
     private static User expectedEntity;
     private static User saveEntity;
-    private static User deleteEntity;
     private static Role expectedRole;
     private static Role saveRole;
     private static List<User> expectedUsersWithAdminRole;
@@ -73,10 +73,6 @@ public class UserDaoImplTest {
                 .role(saveRole)
                 .build();
 
-        deleteEntity = User.builder()
-                .id(DELETE_ID)
-                .build();
-
         expectedUsersWithAdminRole = new ArrayList<>();
         expectedUsersWithAdminRole.add(expectedEntity);
     }
@@ -84,7 +80,7 @@ public class UserDaoImplTest {
     @Test
     public void saveTest() {
         dao.save(saveEntity);
-        Assert.assertTrue(dao.findByUsername(SAVE_USERNAME).isPresent());
+        Assert.assertTrue(dao.findById(SAVE_ID).isPresent());
     }
 
     @Test
@@ -97,6 +93,7 @@ public class UserDaoImplTest {
 
     @Test
     public void deleteTest() {
+        User deleteEntity = dao.findById(DELETE_ID).get();
         dao.delete(deleteEntity);
         Assert.assertTrue(dao.findById(DELETE_ID).isEmpty());
     }

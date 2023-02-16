@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDao extends GenericDao<User>{
+public interface UserDao extends GenericDao<User> {
 
     Optional<User> findByIdCriteria(Serializable id);
 

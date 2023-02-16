@@ -35,11 +35,6 @@ public class HibernateConfig {
     @Value("${hibernate.dialect}")
     private String dialect;
 
-    @Value("${hibernate.ddl-auto}")
-    private String hibernateDll;
-    @Value("${hibernate.merge.entity.copy.observer}")
-    private String mergeEntityCopyObserver;
-
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -76,9 +71,7 @@ public class HibernateConfig {
     private Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty(AvailableSettings.DIALECT, dialect);
-        //properties.setProperty(AvailableSettings.HBM2DDL_AUTO, hibernateDll);
         properties.setProperty(AvailableSettings.SHOW_SQL, showSql);
-        //properties.setProperty(AvailableSettings.MERGE_ENTITY_COPY_OBSERVER, mergeEntityCopyObserver);
         return properties;
     }
 

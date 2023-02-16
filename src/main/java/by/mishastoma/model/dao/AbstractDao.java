@@ -1,13 +1,11 @@
 package by.mishastoma.model.dao;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.Optional;
 
-public class AbstractDao<T> {
+public abstract class AbstractDao<T> {
     @PersistenceContext
     protected final EntityManager entityManager;
     private final Class<T> type;

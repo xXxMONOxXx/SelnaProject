@@ -3,7 +3,7 @@ package by.mishastoma.model.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -11,7 +11,7 @@ public class ItemDto {
     private Long id;
     private Long bookId;
     private Long userId;
-    private LocalDate takingDate;
-    private LocalDate expirationDate;
+    private Date takingDate;
+    private Date expirationDate;
 
 }

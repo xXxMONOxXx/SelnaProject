@@ -21,10 +21,10 @@ public class GenreDaoImpl extends AbstractDao<Genre> implements GenreDao {
 
     @Override
     public Optional<Genre> findByName(String name) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Genre> criteriaQuery = cb.createQuery(Genre.class);
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Genre> criteriaQuery = criteriaBuilder.createQuery(Genre.class);
         Root<Genre> root = criteriaQuery.from(Genre.class);
-        criteriaQuery.select(root).where(cb.equal(root.get(Genre_.NAME), name));
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(Genre_.NAME), name));
         return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
 }

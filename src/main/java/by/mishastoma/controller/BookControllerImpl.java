@@ -27,17 +27,12 @@ public class BookControllerImpl implements CrudController {
     }
 
     @Override
-    public void delete(String obj) {
-        try {
-            BookDto bookDto = objectMapper.readValue(obj, BookDto.class);
-            service.delete(bookDto);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public void delete(Long id) {
+        service.delete(id);
     }
 
     @Override
-    public String findById(long id) {
+    public String findById(Long id) {
         try {
             BookDto book = service.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
@@ -56,7 +51,7 @@ public class BookControllerImpl implements CrudController {
         }
     }
 
-    public String findBookByIdJpql(long id) {
+    public String findBookByIdJpql(Long id) {
         try {
             BookDto book = service.findBookByIdJpql(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
@@ -65,7 +60,7 @@ public class BookControllerImpl implements CrudController {
         }
     }
 
-    public String findBookByIdEntityGraph(long id) {
+    public String findBookByIdEntityGraph(Long id) {
         try {
             BookDto book = service.findBookByIdEntityGraph(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
@@ -74,7 +69,7 @@ public class BookControllerImpl implements CrudController {
         }
     }
 
-    public String findBookByIdCriteria(long id) {
+    public String findBookByIdCriteria(Long id) {
         try {
             BookDto book = service.findBookByIdCriteria(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);

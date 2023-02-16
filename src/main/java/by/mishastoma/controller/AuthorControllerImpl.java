@@ -27,17 +27,12 @@ public class AuthorControllerImpl implements CrudController {
     }
 
     @Override
-    public void delete(String obj) {
-        try {
-            AuthorDto authorDto = objectMapper.readValue(obj, AuthorDto.class);
-            service.delete(authorDto);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public void delete(Long id) {
+        service.delete(id);
     }
 
     @Override
-    public String findById(long id) {
+    public String findById(Long id) {
         try {
             AuthorDto author = service.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(author);

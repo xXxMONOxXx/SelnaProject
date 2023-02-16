@@ -28,17 +28,12 @@ public class ItemControllerImpl implements CrudController {
     }
 
     @Override
-    public void delete(String obj) {
-        try {
-            ItemDto itemDto = objectMapper.readValue(obj, ItemDto.class);
-            service.delete(itemDto);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public void delete(Long id) {
+        service.delete(id);
     }
 
     @Override
-    public String findById(long id) {
+    public String findById(Long id) {
         try {
             ItemDto item = service.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(item);

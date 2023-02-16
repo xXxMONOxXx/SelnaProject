@@ -7,9 +7,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class DTOUser {
+public class UserDto {
 
     private Long id;
+    private Boolean isBlocked;
     private String username;
     private String password;
     private RoleDto role;

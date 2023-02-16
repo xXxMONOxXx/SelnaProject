@@ -5,7 +5,7 @@ import by.mishastoma.model.entity.Book;
 import java.io.Serializable;
 import java.util.Optional;
 
-public interface BookDao extends GenericDao<Book>{
+public interface BookDao extends GenericDao<Book> {
 
     Optional<Book> findByIdJpql(Serializable id);
 

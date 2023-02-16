@@ -1,7 +1,7 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.model.dto.DTOUser;
 import by.mishastoma.model.dto.RoleDto;
+import by.mishastoma.model.dto.UserDto;
 import by.mishastoma.model.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,27 +22,22 @@ public class UserControllerImpl implements CrudController {
     @Override
     public void insert(String obj) {
         try {
-            DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
-            service.insert(dtoUser);
+            UserDto userDto = objectMapper.readValue(obj, UserDto.class);
+            service.insert(userDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void delete(String obj) {
-        try {
-            DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
-            service.delete(dtoUser);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public void delete(Long id) {
+        service.delete(id);
     }
 
     @Override
-    public String findById(long id) {
+    public String findById(Long id) {
         try {
-            DTOUser user = service.findById(id);
+            UserDto user = service.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -52,16 +47,16 @@ public class UserControllerImpl implements CrudController {
     @Override
     public void update(String obj) {
         try {
-            DTOUser dtoUser = objectMapper.readValue(obj, DTOUser.class);
-            service.update(dtoUser);
+            UserDto userDto = objectMapper.readValue(obj, UserDto.class);
+            service.update(userDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String findUserByIdCriteria(Integer id) {
+    public String findUserByIdCriteria(Long id) {
         try {
-            DTOUser user = service.findUserByIdCriteria(id);
+            UserDto user = service.findUserByIdCriteria(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -70,7 +65,7 @@ public class UserControllerImpl implements CrudController {
 
     public String findUserByUserName(String username) {
         try {
-            DTOUser user = service.findUserByUsername(username);
+            UserDto user = service.findUserByUsername(username);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -80,7 +75,7 @@ public class UserControllerImpl implements CrudController {
     public String findUserWithRole(String role) {
         try {
             RoleDto roleDto = objectMapper.readValue(role, RoleDto.class);
-            List<DTOUser> list = service.findUsersWithRole(roleDto);
+            List<UserDto> list = service.findUsersWithRole(roleDto);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

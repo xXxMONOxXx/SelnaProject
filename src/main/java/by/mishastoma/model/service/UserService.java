@@ -1,16 +1,16 @@
 package by.mishastoma.model.service;
 
-import by.mishastoma.model.dto.DTOUser;
 import by.mishastoma.model.dto.RoleDto;
+import by.mishastoma.model.dto.UserDto;
 
 import java.io.Serializable;
 import java.util.List;
 
-public interface UserService extends CrudService<DTOUser> {
+public interface UserService extends CrudService<UserDto> {
 
-    DTOUser findUserByIdCriteria(Serializable id);
+    UserDto findUserByIdCriteria(Serializable id);
 
-    DTOUser findUserByUsername(String username);
+    UserDto findUserByUsername(String username);
 
-    List<DTOUser> findUsersWithRole(RoleDto role);
+    List<UserDto> findUsersWithRole(RoleDto role);
 }

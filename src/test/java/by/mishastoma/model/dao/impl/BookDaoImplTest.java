@@ -41,7 +41,6 @@ public class BookDaoImplTest {
     private static Set<Item> expectedItems;
     private static Book expectedEntity;
     private static Book saveEntity;
-    private static Book deleteEntity;
 
     @Autowired
     private BookDao dao;
@@ -66,10 +65,6 @@ public class BookDaoImplTest {
                 .isbn(SAVE_ISBN)
                 .releaseDate(SAVE_RELEASE_DATE)
                 .build();
-
-        deleteEntity = Book.builder()
-                .id(DELETE_ID)
-                .build();
     }
 
     @Test
@@ -89,6 +84,7 @@ public class BookDaoImplTest {
 
     @Test
     public void deleteTest() {
+        Book deleteEntity = dao.findById(DELETE_ID).get();
         dao.delete(deleteEntity);
         Assert.assertTrue(dao.findById(DELETE_ID).isEmpty());
     }

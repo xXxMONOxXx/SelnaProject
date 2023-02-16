@@ -22,7 +22,7 @@ public class User {
     private Long id;
     @Basic
     @Column(name = "is_blocked")
-    private boolean isBlocked;
+    private Boolean isBlocked;
     @Basic
     @Column(name = "username")
     private String username;
