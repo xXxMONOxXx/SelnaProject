@@ -1,11 +1,14 @@
 package by.mishastoma.model.dao;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.Optional;
 
-public abstract class AbstractDao<T> {
+public class AbstractDao<T> {
+    @PersistenceContext
     protected final EntityManager entityManager;
     private final Class<T> type;
 
@@ -15,10 +18,7 @@ public abstract class AbstractDao<T> {
     }
 
     public void save(T t) {
-        entityManager.getTransaction().begin();
         entityManager.persist(t);
-        entityManager.flush();
-        entityManager.getTransaction().commit();
     }
 
     public Optional<T> findById(Serializable id) {
@@ -28,18 +28,15 @@ public abstract class AbstractDao<T> {
     }
 
     public void update(T t) {
-        entityManager.getTransaction().begin();
         entityManager.merge(t);
-        entityManager.flush();
-        entityManager.getTransaction().commit();
     }
 
     public void delete(T t) {
-        entityManager.getTransaction().begin();
+        //entityManager.getTransaction().begin();
         entityManager.remove(t);
         //entityManager.remove(t);
         //entityManager.flush();
-        entityManager.getTransaction().commit();
+        //entityManager.getTransaction().commit();
     }
 
 }

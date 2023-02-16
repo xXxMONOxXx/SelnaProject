@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -54,4 +55,5 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         criteriaQuery.select(root).where(cb.equal(root.get(User_.USERNAME), username));
         return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
+
 }
