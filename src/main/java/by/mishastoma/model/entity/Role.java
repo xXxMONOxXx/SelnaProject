@@ -1,19 +1,27 @@
 package by.mishastoma.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -30,11 +30,6 @@ public abstract class AbstractDao<T> {
     }
 
     public void delete(T t) {
-        //entityManager.getTransaction().begin();
         entityManager.remove(t);
-        //entityManager.remove(t);
-        //entityManager.flush();
-        //entityManager.getTransaction().commit();
     }
-
 }

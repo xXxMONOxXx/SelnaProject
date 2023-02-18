@@ -1,13 +1,13 @@
 package by.mishastoma.model.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
 import java.sql.Date;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
+@Builder
 public class BookDto {
 
     private Long id;

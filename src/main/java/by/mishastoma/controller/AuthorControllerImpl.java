@@ -4,23 +4,20 @@ import by.mishastoma.model.dto.AuthorDto;
 import by.mishastoma.model.service.AuthorService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class AuthorControllerImpl implements CrudController {
-    private final AuthorService service;
+    private final AuthorService authorService;
     private final ObjectMapper objectMapper;
-
-    private AuthorControllerImpl(AuthorService service, ObjectMapper objectMapper) {
-        this.service = service;
-        this.objectMapper = objectMapper;
-    }
 
     @Override
     public void insert(String obj) {
         try {
             AuthorDto authorDto = objectMapper.readValue(obj, AuthorDto.class);
-            service.insert(authorDto);
+            authorService.insert(authorDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -28,13 +25,13 @@ public class AuthorControllerImpl implements CrudController {
 
     @Override
     public void delete(Long id) {
-        service.delete(id);
+        authorService.delete(id);
     }
 
     @Override
     public String findById(Long id) {
         try {
-            AuthorDto author = service.findById(id);
+            AuthorDto author = authorService.findById(id);
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(author);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -45,7 +42,7 @@ public class AuthorControllerImpl implements CrudController {
     public void update(String obj) {
         try {
             AuthorDto authorDto = objectMapper.readValue(obj, AuthorDto.class);
-            service.update(authorDto);
+            authorService.update(authorDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

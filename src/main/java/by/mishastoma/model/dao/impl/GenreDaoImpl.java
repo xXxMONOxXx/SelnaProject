@@ -5,6 +5,7 @@ import by.mishastoma.model.dao.GenreDao;
 import by.mishastoma.model.entity.Genre;
 import by.mishastoma.model.entity.Genre_;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,6 +14,7 @@ import javax.persistence.criteria.Root;
 import java.util.Optional;
 
 @Component
+@Repository
 public class GenreDaoImpl extends AbstractDao<Genre> implements GenreDao {
 
     private GenreDaoImpl(EntityManager entityManager) {

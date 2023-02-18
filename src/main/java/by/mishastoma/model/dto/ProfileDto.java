@@ -1,12 +1,12 @@
 package by.mishastoma.model.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
 import java.sql.Date;
 
-@Getter
-@Setter
+@Data
+@Builder
 public class ProfileDto {
     private Long id;
     private String firstname;

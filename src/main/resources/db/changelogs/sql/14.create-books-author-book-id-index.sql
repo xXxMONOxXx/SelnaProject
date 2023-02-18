@@ -1,1 +1,0 @@
-create index idx_fk_book_id_author on books_author (fk_book_id);

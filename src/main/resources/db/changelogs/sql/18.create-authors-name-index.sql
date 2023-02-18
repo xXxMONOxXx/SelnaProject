@@ -1,1 +1,0 @@
-create index idx_authors_name on authors (firstname, surname, patronymic);

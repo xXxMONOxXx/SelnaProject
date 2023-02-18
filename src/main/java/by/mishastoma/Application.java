@@ -1,10 +1,6 @@
 package by.mishastoma;
 
-import by.mishastoma.controller.AuthorControllerImpl;
-import by.mishastoma.controller.BookControllerImpl;
 import by.mishastoma.controller.UserControllerImpl;
-import by.mishastoma.model.dto.UserDto;
-import by.mishastoma.model.service.UserService;
 import liquibase.servicelocator.LiquibaseService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +19,6 @@ public class Application {
     public static void main(String... args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
         UserControllerImpl controller = context.getBean(UserControllerImpl.class);
-        controller.delete(2L);
+        controller.delete(5L);
     }
 }

@@ -5,6 +5,7 @@ import by.mishastoma.model.dao.BookDao;
 import by.mishastoma.model.entity.Book;
 import by.mishastoma.model.entity.Book_;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
+@Repository
 public class BookDaoImpl extends AbstractDao<Book> implements BookDao {
 
     private BookDaoImpl(EntityManager entityManager) {

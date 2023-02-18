@@ -201,6 +201,9 @@
     <changeSet author="mishastoma" id="homework-2-insert-items-sample">
         <insert tableName="items">
             <column name="book_id" value="1"/>
+            <column name="user_id" value="1"/>
+            <column name="taking_date" value="2020-01-01"/>
+            <column name="expiration_date" value="2020-01-01"/>
         </insert>
         <insert tableName="items">
             <column name="book_id" value="2"/>
