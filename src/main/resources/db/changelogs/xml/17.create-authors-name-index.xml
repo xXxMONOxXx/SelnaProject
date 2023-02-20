@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="17.create-authors-name-index" author="mishastoma">
+        <createIndex indexName="idx_authors_name" tableName="authors">
+            <column name="firstname"/>
+            <column name="surname"/>
+            <column name="patronymic"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,82 +1,61 @@
 package by.mishastoma.model.dao.impl;
 
+import by.mishastoma.model.dao.AbstractDao;
 import by.mishastoma.model.dao.UserDao;
 import by.mishastoma.model.entity.Role;
 import by.mishastoma.model.entity.User;
-import by.mishastoma.util.DaoUtils;
+import by.mishastoma.model.entity.User_;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Locale;
+import java.util.Optional;
 
 @Component
-public class UserDaoImpl implements UserDao {
+@Repository
+public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
-    protected List<User> list = new ArrayList<>();
-
-    private UserDaoImpl() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
-        LocalDate dateMock1 = LocalDate.parse("2000-09-16", formatter);
-        LocalDate dateMock2 = LocalDate.parse("1998-02-13", formatter);
-        list.add(User.builder()
-                .id(1L)
-                .username("addy")
-                .password("6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b")
-                .role(Role.CUSTOMER)
-                .firstname("Addy")
-                .surname("Lamb")
-                .phone("375332949604")
-                .email("rogahn.charlie@franecki.com")
-                .birthdate(dateMock1)
-                .isBlocked(false)
-                .itemIds(new ArrayList<>())
-                .build());
-        list.add(User.builder()
-                .id(2L)
-                .username("max")
-                .password("d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35")
-                .role(Role.CUSTOMER)
-                .firstname("Max")
-                .surname("Evans")
-                .phone("375446926083")
-                .email("terry.maye@stracke.com")
-                .birthdate(dateMock2)
-                .isBlocked(false)
-                .itemIds(new ArrayList<>())
-                .build());
+    private UserDaoImpl(EntityManager entityManager) {
+        super(entityManager, User.class);
     }
 
     @Override
-    public void insert(User t) {
-        if (list.contains(t)) {
-            throw new RuntimeException("Can't add entity to dao, entity already exists " + t.toString());
-        }
-        list.add(t);
+    public Optional<User> findByIdCriteria(Serializable id) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
+        root.fetch(User_.ROLE, JoinType.INNER);
+        root.fetch(User_.PROFILE, JoinType.INNER);
+        criteriaQuery.select(root).where(cb.equal(root.get(User_.ID), id));
+        return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
 
     @Override
-    public void delete(User t) {
-        int index = DaoUtils.getIndexOfEntity(t, list);
-        if (index == -1) {
-            throw new RuntimeException("Can't delete entity from dao, entity doesn't exist " + t.toString());
-        }
-        list.remove(index);
+    public List<User> findByRole(Role role) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
+        root.fetch(User_.ROLE, JoinType.INNER);
+        root.fetch(User_.PROFILE, JoinType.INNER);
+        criteriaQuery.select(root).where(cb.equal(root.get(User_.ROLE), role));
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     @Override
-    public List<User> findAll() {
-        return new ArrayList<>(list);
+    public Optional<User> findByUsername(String username) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+        Root<User> root = criteriaQuery.from(User.class);
+        root.fetch(User_.ROLE, JoinType.INNER);
+        root.fetch(User_.PROFILE, JoinType.INNER);
+        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(User_.USERNAME), username));
+        return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
 
-    @Override
-    public void update(User t) {
-        int index = DaoUtils.getIndexOfEntity(t, list);
-        if (index == -1) {
-            throw new RuntimeException("Can't update entity, dao doesn't contain this entity " + t.toString());
-        }
-        list.set(index, t);
-    }
 }

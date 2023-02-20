@@ -2,13 +2,9 @@ package by.mishastoma.model.dao;
 
 import by.mishastoma.model.entity.Genre;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.util.Optional;
 
-public interface GenreDao extends CrudDao<Genre> {
-    void insertBookGenreRelation(long bookId, long genreId) throws SQLException;
+public interface GenreDao extends GenericDao<Genre> {
 
-    List<Long> getBooksGenres(long bookId) throws SQLException;
-
-    void deleteBookGenreRelation(long bookId, long genreId) throws SQLException;
+    Optional<Genre> findByName(String genre);
 }

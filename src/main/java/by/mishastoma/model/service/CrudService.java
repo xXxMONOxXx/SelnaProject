@@ -1,14 +1,13 @@
 package by.mishastoma.model.service;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.io.Serializable;
 
 public interface CrudService<M> {
     void insert(M m);
 
-    void delete(M m);
+    void delete(Serializable id);
 
-    List<M> findAll();
+    M findById(Serializable id);
 
     void update(M m);
 }

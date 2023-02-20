@@ -1,6 +1,6 @@
 package by.mishastoma.model.service;
 
-import by.mishastoma.model.dto.DTOAuthor;
+import by.mishastoma.model.dto.AuthorDto;
 
-public interface AuthorService extends CrudService<DTOAuthor> {
+public interface AuthorService extends CrudService<AuthorDto> {
 }

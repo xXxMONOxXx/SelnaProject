@@ -1,46 +1,38 @@
 package by.mishastoma.controller;
 
-import by.mishastoma.model.dto.DTOBook;
+import by.mishastoma.model.dto.BookDto;
 import by.mishastoma.model.service.BookService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class BookControllerImpl implements CrudController {
-    private final BookService service;
+    private final BookService bookService;
     private final ObjectMapper objectMapper;
 
     @Override
     public void insert(String obj) {
         try {
-            DTOBook dtoBook = objectMapper.readValue(obj, DTOBook.class);
-            service.insert(dtoBook);
+            BookDto bookDto = objectMapper.readValue(obj, BookDto.class);
+            bookService.insert(bookDto);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void delete(String obj) {
-        try {
-            DTOBook dtoBook = objectMapper.readValue(obj, DTOBook.class);
-            service.delete(dtoBook);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public void delete(Long id) {
+        bookService.delete(id);
     }
 
     @Override
-    public String findAll() {
+    public String findById(Long id) {
         try {
-            List<DTOBook> list = service.findAll();
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
+            BookDto book = bookService.findById(id);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -49,8 +41,44 @@ public class BookControllerImpl implements CrudController {
     @Override
     public void update(String obj) {
         try {
-            DTOBook dtoBook = objectMapper.readValue(obj, DTOBook.class);
-            service.update(dtoBook);
+            BookDto bookDto = objectMapper.readValue(obj, BookDto.class);
+            bookService.update(bookDto);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String findBookByIdJpql(Long id) {
+        try {
+            BookDto book = bookService.findBookByIdJpql(id);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String findBookByIdEntityGraph(Long id) {
+        try {
+            BookDto book = bookService.findBookByIdEntityGraph(id);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String findBookByIdCriteria(Long id) {
+        try {
+            BookDto book = bookService.findBookByIdCriteria(id);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String findBookByIsbn(String isbn) {
+        try {
+            BookDto book = bookService.findBookByIsbn(isbn);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(book);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

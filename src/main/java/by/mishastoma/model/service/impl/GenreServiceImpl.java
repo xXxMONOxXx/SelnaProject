@@ -1,59 +1,54 @@
 package by.mishastoma.model.service.impl;
 
+import by.mishastoma.exception.GenreNotFoundException;
 import by.mishastoma.model.dao.GenreDao;
-import by.mishastoma.model.dto.DTOGenre;
+import by.mishastoma.model.dto.GenreDto;
 import by.mishastoma.model.entity.Genre;
 import by.mishastoma.model.service.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.io.Serializable;
 
+@Service
 @Component
 @RequiredArgsConstructor
 public class GenreServiceImpl implements GenreService {
-    private final GenreDao dao;
+
+    private final GenreDao genreDao;
     private final ModelMapper modelMapper;
 
     @Override
-    public void insert(DTOGenre dtoGenre) {
-        try {
-            Genre genre = modelMapper.map(dtoGenre, Genre.class);
-            dao.insert(genre);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void insert(GenreDto genreDto) {
+        Genre genre = modelMapper.map(genreDto, Genre.class);
+        genreDao.save(genre);
+    }
+
+    @Transactional
+    @Override
+    public void delete(Serializable id) {
+        Genre genre = genreDao.findById(id).orElseThrow(() -> new GenreNotFoundException(id));
+        genreDao.delete(genre);
     }
 
     @Override
-    public void delete(DTOGenre dtoGenre) {
-        try {
-            Genre genre = modelMapper.map(dtoGenre, Genre.class);
-            dao.delete(genre);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public GenreDto findById(Serializable id) {
+        Genre genreEntity = genreDao.findById(id).orElseThrow(() -> new GenreNotFoundException(id));
+        return modelMapper.map(genreEntity, GenreDto.class);
     }
 
     @Override
-    public List<DTOGenre> findAll() {
-        try {
-            List<Genre> genres = dao.findAll();
-            return genres.stream().map(x -> modelMapper.map(x, DTOGenre.class)).toList();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void update(GenreDto genreDto) {
+        Genre genre = modelMapper.map(genreDto, Genre.class);
+        genreDao.update(genre);
     }
 
     @Override
-    public void update(DTOGenre dtoGenre) {
-        try {
-            Genre genre = modelMapper.map(dtoGenre, Genre.class);
-            dao.update(genre);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public GenreDto findGenreByName(String name) {
+        Genre genreEntity = genreDao.findByName(name).orElseThrow(() -> new GenreNotFoundException(name));
+        return modelMapper.map(genreEntity, GenreDto.class);
     }
 }

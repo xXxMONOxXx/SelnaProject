@@ -2,10 +2,17 @@ package by.mishastoma.model.dao;
 
 import by.mishastoma.model.entity.Book;
 
-import java.sql.SQLException;
+import java.io.Serializable;
+import java.util.Optional;
 
-public interface BookDao extends CrudDao<Book> {
-    Book get(long id) throws SQLException;
+public interface BookDao extends GenericDao<Book> {
 
-    Long getIdByIsbn(String isbn) throws SQLException;
+    Optional<Book> findByIdJpql(Serializable id);
+
+    Optional<Book> findByIdEntityGraph(Serializable id);
+
+    Optional<Book> findByIdCriteria(Serializable id);
+
+    Optional<Book> findByIsbn(String isbn);
+
 }

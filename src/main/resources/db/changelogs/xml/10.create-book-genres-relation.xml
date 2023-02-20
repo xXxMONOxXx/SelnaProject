@@ -1,0 +1,31 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet id="10.create-book-genres-relation" author="mishastoma">
+        <createTable tableName="book_genres">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="book_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="genre_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="book_id"
+                                 baseTableName="book_genres"
+                                 constraintName="book_id_fk_genre"
+                                 referencedColumnNames="id"
+                                 referencedTableName="books"/>
+        <addForeignKeyConstraint baseColumnNames="genre_id"
+                                 baseTableName="book_genres"
+                                 constraintName="genre_id_fk_genre"
+                                 referencedColumnNames="id"
+                                 referencedTableName="genres"/>
+
+    </changeSet>
+</databaseChangeLog>
+

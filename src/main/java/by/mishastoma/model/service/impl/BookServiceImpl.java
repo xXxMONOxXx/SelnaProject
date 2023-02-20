@@ -1,137 +1,74 @@
 package by.mishastoma.model.service.impl;
 
-import by.mishastoma.annotation.Transaction;
-import by.mishastoma.model.dao.AuthorDao;
+import by.mishastoma.exception.BookNotFoundException;
 import by.mishastoma.model.dao.BookDao;
-import by.mishastoma.model.dao.GenreDao;
-import by.mishastoma.model.dao.ItemDao;
-import by.mishastoma.model.dto.DTOBook;
+import by.mishastoma.model.dto.BookDto;
 import by.mishastoma.model.entity.Book;
-import by.mishastoma.model.entity.Item;
 import by.mishastoma.model.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.io.Serializable;
 
+@Service
 @Component
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
     private final BookDao bookDao;
-    private final AuthorDao authorDao;
-    private final ItemDao itemDao;
-    private final GenreDao genreDao;
     private final ModelMapper modelMapper;
 
-    @Transaction
+    @Transactional
     @Override
-    public void insert(DTOBook dtoBook){
-        try {
-            Book book = modelMapper.map(dtoBook, Book.class);
-            bookDao.insert(book);
-            book.setId(bookDao.getIdByIsbn(book.getIsbn()));
-            insertBookRelations(book);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void insert(BookDto bookDto) {
+        Book book = modelMapper.map(bookDto, Book.class);
+        bookDao.save(book);
     }
 
-    @Transaction
+    @Transactional
     @Override
-    public void delete(DTOBook dtoBook){
-        try {
-            Book book = modelMapper.map(dtoBook, Book.class);
-            deleteRelations(book);
-            bookDao.delete(book);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void delete(Serializable id) {
+        Book book = bookDao.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        bookDao.delete(book);
     }
 
     @Override
-    public List<DTOBook> findAll(){
-        try {
-            List<Book> books = bookDao.findAll();
-            for (int i = 0; i < books.size(); i++) {
-                getDataFromRelations(books.get(i));
-            }
-            return books.stream().map(x -> modelMapper.map(x, DTOBook.class)).toList();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public BookDto findById(Serializable id) {
+        Book bookEntity = bookDao.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        return modelMapper.map(bookEntity, BookDto.class);
     }
 
-    @Transaction
+    @Transactional
     @Override
-    public void update(DTOBook dtoBook){
-        try {
-            Book book = modelMapper.map(dtoBook, Book.class);
-            bookDao.update(book);
-            updateRelations(book);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void update(BookDto bookDto) {
+        Book book = modelMapper.map(bookDto, Book.class);
+        bookDao.update(book);
     }
 
-    private void insertBookRelations(Book book) throws SQLException {
-        for (Long id : book.getAuthorIds()) {
-            authorDao.insertBookAuthorRelation(book.getId(), id);
-        }
-        for (Long id : book.getGenreIds()) {
-            genreDao.insertBookGenreRelation(book.getId(), id);
-        }
-        for (int i = 0; i < book.getQuantity(); i++) {
-            itemDao.insert(Item.builder().bookId(book.getId()).build());
-        }
+    @Override
+    public BookDto findBookByIdJpql(Serializable id) {
+        Book bookEntity = bookDao.findByIdJpql(id).orElseThrow(() -> new BookNotFoundException(id));
+        return modelMapper.map(bookEntity, BookDto.class);
     }
 
-    private void deleteRelations(Book book) throws SQLException {
-        for (Long id : book.getAuthorIds()) {
-            authorDao.deleteBookAuthorRelation(book.getId(), id);
-        }
-        for (Long id : book.getGenreIds()) {
-            genreDao.deleteBookGenreRelation(book.getId(), id);
-        }
-        List<Long> itemIds = itemDao.getItemsIds(book.getId());
-        for (Long id : itemIds) {
-            itemDao.delete(Item.builder().id(id).build());
-        }
+    @Override
+    public BookDto findBookByIdEntityGraph(Serializable id) {
+        Book bookEntity = bookDao.findByIdEntityGraph(id).orElseThrow(() -> new BookNotFoundException(id));
+        return modelMapper.map(bookEntity, BookDto.class);
     }
 
-    private void updateRelations(Book book) throws SQLException {
-        for (Long id : book.getAuthorIds()) {
-            authorDao.deleteBookAuthorRelation(book.getId(), id);
-        }
-        for (Long id : book.getGenreIds()) {
-            genreDao.deleteBookGenreRelation(book.getId(), id);
-        }
-        for (Long id : book.getAuthorIds()) {
-            authorDao.insertBookAuthorRelation(book.getId(), id);
-        }
-        for (Long id : book.getGenreIds()) {
-            genreDao.insertBookGenreRelation(book.getId(), id);
-        }
-        int bookQuantity = book.getQuantity();
-        int currentQuantity = itemDao.count(book.getId());
-        if (bookQuantity != currentQuantity) {
-            if (bookQuantity > currentQuantity) {
-                for (int i = currentQuantity; i < bookQuantity; i++) {
-                    itemDao.insert(Item.builder().bookId(book.getId()).build());
-                }
-            } else {
-                for (int i = currentQuantity; i > bookQuantity; i--) {
-                    itemDao.deleteUnsignedItem(book.getId());
-                }
-            }
-        }
+    @Override
+    public BookDto findBookByIdCriteria(Serializable id) {
+        Book bookEntity = bookDao.findByIdCriteria(id).orElseThrow(() -> new BookNotFoundException(id));
+        return modelMapper.map(bookEntity, BookDto.class);
     }
 
-    private void getDataFromRelations(Book book) throws SQLException {
-        book.setGenreIds(genreDao.getBooksGenres(book.getId()));
-        book.setAuthorIds(authorDao.getBooksAuthors(book.getId()));
-        book.setQuantity(itemDao.count(book.getId()));
+    @Override
+    public BookDto findBookByIsbn(String isbn) {
+        Book bookEntity = bookDao.findByIsbn(isbn).orElseThrow(() -> new BookNotFoundException(isbn));
+        return modelMapper.map(bookEntity, BookDto.class);
     }
 }

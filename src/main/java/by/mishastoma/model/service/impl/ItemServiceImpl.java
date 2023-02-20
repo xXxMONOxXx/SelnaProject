@@ -1,60 +1,46 @@
 package by.mishastoma.model.service.impl;
 
+import by.mishastoma.exception.ItemNotFoundException;
 import by.mishastoma.model.dao.ItemDao;
-import by.mishastoma.model.dto.DTOItem;
+import by.mishastoma.model.dto.ItemDto;
 import by.mishastoma.model.entity.Item;
 import by.mishastoma.model.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.io.Serializable;
 
+@Service
 @Component
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
-    private final ItemDao dao;
+    private final ItemDao itemDao;
     private final ModelMapper modelMapper;
 
     @Override
-    public void insert(DTOItem dtoItem) {
-        try {
-            Item item = modelMapper.map(dtoItem, Item.class);
-            dao.insert(item);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void insert(ItemDto itemDto) {
+        Item item = modelMapper.map(itemDto, Item.class);
+        itemDao.save(item);
     }
 
     @Override
-    public void delete(DTOItem dtoItem) {
-        try {
-            Item item = modelMapper.map(dtoItem, Item.class);
-            dao.delete(item);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void delete(Serializable id) {
+        Item item = itemDao.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
+        itemDao.delete(item);
     }
 
     @Override
-    public List<DTOItem> findAll() {
-        try {
-            List<Item> items = dao.findAll();
-            return items.stream().map(x -> modelMapper.map(x, DTOItem.class)).toList();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public ItemDto findById(Serializable id) {
+        Item itemEntity = itemDao.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
+        return modelMapper.map(itemEntity, ItemDto.class);
     }
 
     @Override
-    public void update(DTOItem dtoItem) {
-        try {
-            Item item = modelMapper.map(dtoItem, Item.class);
-            dao.update(item);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void update(ItemDto itemDto) {
+        Item item = modelMapper.map(itemDto, Item.class);
+        itemDao.update(item);
     }
 }
