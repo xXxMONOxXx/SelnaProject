@@ -5,7 +5,7 @@ import by.mishastoma.config.LiquibaseConfig;
 import by.mishastoma.model.dao.UserDao;
 import by.mishastoma.model.entity.Role;
 import by.mishastoma.model.entity.User;
-import by.mishastoma.util.util.TestUtils;
+import by.mishastoma.util.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

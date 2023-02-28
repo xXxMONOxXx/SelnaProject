@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 
 @Service
-@Component
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 

@@ -1,11 +1,13 @@
 package by.mishastoma.controller;
 
-public interface CrudController {
+import org.springframework.http.ResponseEntity;
+
+public interface CrudController<T> {
     void insert(String obj);
 
     void delete(Long id);
 
-    String findById(Long id);
+    ResponseEntity<T> findById(Long id);
 
     void update(String obj);
 }

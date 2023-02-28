@@ -1,4 +1,4 @@
-package by.mishastoma.util.util;
+package by.mishastoma.util;
 
 import by.mishastoma.model.entity.Author;
 import by.mishastoma.model.entity.Book;

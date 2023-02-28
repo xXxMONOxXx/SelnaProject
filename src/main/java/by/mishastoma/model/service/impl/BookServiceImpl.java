@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 
 @Service
-@Component
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 

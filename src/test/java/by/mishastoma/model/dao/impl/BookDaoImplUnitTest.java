@@ -4,7 +4,7 @@ import by.mishastoma.config.HibernateConfig;
 import by.mishastoma.config.LiquibaseConfig;
 import by.mishastoma.model.dao.BookDao;
 import by.mishastoma.model.entity.Book;
-import by.mishastoma.util.util.TestUtils;
+import by.mishastoma.util.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

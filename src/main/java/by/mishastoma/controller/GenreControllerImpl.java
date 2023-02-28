@@ -5,11 +5,18 @@ import by.mishastoma.model.service.GenreService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Component
+
+@RestController
 @RequiredArgsConstructor
-public class GenreControllerImpl implements CrudController {
+@RequestMapping("/genres")
+public class GenreControllerImpl implements CrudController<GenreDto> {
     private final GenreService genreService;
     private final ObjectMapper objectMapper;
 
@@ -29,13 +36,10 @@ public class GenreControllerImpl implements CrudController {
     }
 
     @Override
-    public String findById(Long id) {
-        try {
-            GenreDto genre = genreService.findById(id);
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(genre);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<GenreDto> findById(@PathVariable Long id) {
+        GenreDto genre = genreService.findById(id);
+        return ResponseEntity.ok(genre);
     }
 
     @Override

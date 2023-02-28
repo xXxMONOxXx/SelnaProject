@@ -15,7 +15,6 @@ import java.io.Serializable;
 
 
 @Service
-@Component
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
