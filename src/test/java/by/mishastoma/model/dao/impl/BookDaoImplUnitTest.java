@@ -1,7 +1,7 @@
 package by.mishastoma.model.dao.impl;
 
-import by.mishastoma.config.HibernateConfig;
-import by.mishastoma.config.LiquibaseConfig;
+import by.mishastoma.config.db.HibernateConfig;
+import by.mishastoma.config.db.LiquibaseConfig;
 import by.mishastoma.model.dao.BookDao;
 import by.mishastoma.model.entity.Book;
 import by.mishastoma.util.TestUtils;
@@ -29,10 +29,11 @@ public class BookDaoImplUnitTest {
         //preparation
         Book expectedBook = TestUtils.buildSaveBook();
         //when
-        bookDao.save(expectedBook);
+        Book returnedBook = bookDao.save(expectedBook);
         //then
-        Book actualEntity = bookDao.findById(expectedBook.getId()).get();
-        Assert.assertEquals(expectedBook, actualEntity);
+        Book savedBook = bookDao.findById(returnedBook.getId()).get();
+        Assert.assertEquals(expectedBook, returnedBook);
+        Assert.assertEquals(returnedBook, savedBook);
     }
 
     @Test

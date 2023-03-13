@@ -15,8 +15,8 @@ public abstract class AbstractDao<T> {
         this.entityManager = entityManager;
     }
 
-    public void save(T t) {
-        entityManager.persist(t);
+    public T save(T t) {
+        return entityManager.merge(t);
     }
 
     public Optional<T> findById(Serializable id) {

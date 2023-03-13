@@ -1,8 +1,9 @@
 package by.mishastoma.model.dao.impl;
 
-import by.mishastoma.config.HibernateConfig;
-import by.mishastoma.config.LiquibaseConfig;
+import by.mishastoma.config.db.HibernateConfig;
+import by.mishastoma.config.db.LiquibaseConfig;
 import by.mishastoma.model.dao.GenreDao;
+import by.mishastoma.model.entity.Author;
 import by.mishastoma.model.entity.Genre;
 import by.mishastoma.util.TestUtils;
 import org.junit.Assert;
@@ -30,10 +31,11 @@ public class GenreDaoImplUnitTest {
         //preparation
         Genre expectedGenre = TestUtils.buildSaveGenre();
         //when
-        genreDao.save(expectedGenre);
+        Genre returnedGenre = genreDao.save(expectedGenre);
         //then
-        Genre actualGenre = genreDao.findById(expectedGenre.getId()).get();
-        Assert.assertEquals(expectedGenre, actualGenre);
+        Genre savedGenre = genreDao.findById(returnedGenre.getId()).get();
+        Assert.assertEquals(expectedGenre, returnedGenre);
+        Assert.assertEquals(returnedGenre, savedGenre);
     }
 
     @Test

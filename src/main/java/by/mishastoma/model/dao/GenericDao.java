@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 public interface GenericDao<T> {
-    void save(T entity);
+    T save(T entity);
 
     Optional<T> findById(Serializable id);
 
