@@ -1,9 +1,8 @@
 package by.mishastoma.web.controller.impl;
 
+import by.mishastoma.service.ItemService;
 import by.mishastoma.web.controller.CrudController;
 import by.mishastoma.web.dto.ItemDto;
-import by.mishastoma.service.ItemService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +24,14 @@ public class ItemControllerImpl implements CrudController<ItemDto> {
     private final ItemService itemService;
 
     @Override
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody ItemDto item) {
         itemService.save(item);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Override
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         itemService.delete(id);
         return ResponseEntity.ok().build();
@@ -46,8 +45,8 @@ public class ItemControllerImpl implements CrudController<ItemDto> {
     }
 
     @Override
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody ItemDto item) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody ItemDto item, @PathVariable Long id) {
         itemService.update(item);
         return ResponseEntity.ok().build();
     }

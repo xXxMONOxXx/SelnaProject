@@ -2,12 +2,10 @@ package by.mishastoma.controller.impl;
 
 import by.mishastoma.config.ControllerTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
-import by.mishastoma.exception.AuthorNotFoundException;
 import by.mishastoma.exception.ItemNotFoundException;
 import by.mishastoma.service.ItemService;
 import by.mishastoma.util.TestUtils;
 import by.mishastoma.web.controller.impl.ItemControllerImpl;
-import by.mishastoma.web.dto.AuthorDto;
 import by.mishastoma.web.dto.ItemDto;
 import by.mishastoma.web.handler.ControllerExceptionHandler;
 import org.junit.Test;
@@ -50,7 +48,7 @@ public class ItemControllerImplTest {
         Serializable id = TestUtils.buildDefaultItem().getId();
         Mockito.doNothing().when(itemService).delete(id);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/items/delete/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/items/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         //then
@@ -64,7 +62,7 @@ public class ItemControllerImplTest {
         ItemDto itemDto = TestUtils.buildSaveItemDto();
         Mockito.when(itemService.save(itemDto)).thenReturn(itemDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.post("/items/add")
+        mockMvc.perform(MockMvcRequestBuilders.post("/items")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildDefaultItemJson()))
                 .andExpect(status().isCreated());
@@ -76,15 +74,15 @@ public class ItemControllerImplTest {
     public void updateTest() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(itemController).build();
-        ItemDto authorDto = TestUtils.buildUpdateItemDto();
-        Mockito.doNothing().when(itemService).update(authorDto);
+        ItemDto itemDto = TestUtils.buildUpdateItemDto();
+        Mockito.doNothing().when(itemService).update(itemDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.put("/items/update")
+        mockMvc.perform(MockMvcRequestBuilders.put("/items/{id}", itemDto.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildUpdateItemJson()))
                 .andExpect(status().isOk());
         //then
-        Mockito.verify(itemService, Mockito.times(1)).update(authorDto);
+        Mockito.verify(itemService, Mockito.times(1)).update(itemDto);
     }
 
     @Test

@@ -15,11 +15,10 @@ import by.mishastoma.web.dto.UserDto;
 import lombok.experimental.UtilityClass;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 @UtilityClass
 public class TestUtils {
-    private final  Long DEFAULT_ROLE_ID = 3L;
+    private final Long DEFAULT_ROLE_ID = 3L;
     private final String DEFAULT_ROLE_NAME = "admin";
     private final Long DEFAULT_ID = 1L;
     private final Long GET_ID = 2L;
@@ -58,7 +57,7 @@ public class TestUtils {
         return author;
     }
 
-    public Author buildGetAuthor(){
+    public Author buildGetAuthor() {
         Author author = buildUpdateAuthor();
         author.setId(GET_ID);
         return author;
@@ -87,7 +86,7 @@ public class TestUtils {
         return book;
     }
 
-    public Book buildGetBook(){
+    public Book buildGetBook() {
         Book book = buildUpdateBook();
         book.setId(GET_ID);
         return book;
@@ -112,7 +111,7 @@ public class TestUtils {
         return genre;
     }
 
-    public Genre buildGetGenre(){
+    public Genre buildGetGenre() {
         Genre genre = buildUpdateGenre();
         genre.setId(GET_ID);
         return genre;
@@ -138,7 +137,7 @@ public class TestUtils {
         return item;
     }
 
-    public Item buildGetItem(){
+    public Item buildGetItem() {
         Item item = buildUpdateItem();
         item.setId(GET_ID);
         return item;
@@ -168,7 +167,7 @@ public class TestUtils {
         return user;
     }
 
-    public User buildGetUser(){
+    public User buildGetUser() {
         User user = buildUpdateUser();
         user.setId(GET_ID);
         return user;
@@ -181,14 +180,14 @@ public class TestUtils {
                 .build();
     }
 
-    public AuthorDto buildSaveAuthorDto(){
+    public AuthorDto buildSaveAuthorDto() {
         return AuthorDto.builder()
                 .firstname(DEFAULT_NAME)
                 .surname(DEFAULT_NAME)
                 .build();
     }
 
-    public AuthorDto buildDefaultAuthorDto(){
+    public AuthorDto buildDefaultAuthorDto() {
         return AuthorDto.builder()
                 .id(DEFAULT_ID)
                 .firstname(DEFAULT_FIRSTNAME)
@@ -196,19 +195,19 @@ public class TestUtils {
                 .build();
     }
 
-    public AuthorDto buildGetAuthorDto(){
+    public AuthorDto buildGetAuthorDto() {
         AuthorDto authorDto = buildUpdateAuthorDto();
         authorDto.setId(GET_ID);
         return authorDto;
     }
 
-    public AuthorDto buildUpdateAuthorDto(){
+    public AuthorDto buildUpdateAuthorDto() {
         AuthorDto authorDto = buildDefaultAuthorDto();
         authorDto.setPatronymic(DEFAULT_NAME);
         return authorDto;
     }
 
-    public BookDto buildSaveBookDto(){
+    public BookDto buildSaveBookDto() {
         return BookDto.builder()
                 .title(DEFAULT_NAME)
                 .isbn(TEST_ISBN)
@@ -216,7 +215,7 @@ public class TestUtils {
                 .build();
     }
 
-    public BookDto buildDefaultBookDto(){
+    public BookDto buildDefaultBookDto() {
         return BookDto.builder()
                 .id(DEFAULT_ID)
                 .title(DEFAULT_TITLE)
@@ -225,44 +224,44 @@ public class TestUtils {
                 .build();
     }
 
-    public BookDto buildGetBookDto(){
+    public BookDto buildGetBookDto() {
         BookDto bookDto = buildUpdateBookDto();
         bookDto.setId(GET_ID);
         return bookDto;
     }
 
-    public BookDto buildUpdateBookDto(){
+    public BookDto buildUpdateBookDto() {
         BookDto bookDto = buildDefaultBookDto();
         bookDto.setTitle(DEFAULT_NAME);
         return bookDto;
     }
 
-    public GenreDto buildSaveGenreDto(){
+    public GenreDto buildSaveGenreDto() {
         return GenreDto.builder()
                 .name(DEFAULT_NAME)
                 .build();
     }
 
-    public GenreDto buildDefaultGenreDto(){
+    public GenreDto buildDefaultGenreDto() {
         return GenreDto.builder()
                 .id(DEFAULT_ID)
                 .name(DEFAULT_GENRE_NAME)
                 .build();
     }
 
-    public GenreDto buildUpdateGenreDto(){
+    public GenreDto buildUpdateGenreDto() {
         GenreDto genreDto = buildDefaultGenreDto();
         genreDto.setName(DEFAULT_NAME);
         return genreDto;
     }
 
-    public GenreDto buildGetGenreDto(){
+    public GenreDto buildGetGenreDto() {
         GenreDto genreDto = buildUpdateGenreDto();
         genreDto.setId(GET_ID);
         return genreDto;
     }
 
-    public ItemDto buildDefaultItemDto(){
+    public ItemDto buildDefaultItemDto() {
         return ItemDto.builder()
                 .id(DEFAULT_ID)
                 .bookId(DEFAULT_ID)
@@ -270,7 +269,7 @@ public class TestUtils {
                 .build();
     }
 
-    public ItemDto buildUpdateItemDto(){
+    public ItemDto buildUpdateItemDto() {
         ItemDto itemDto = buildDefaultItemDto();
         itemDto.setUserId(null);
         return itemDto;
@@ -282,20 +281,20 @@ public class TestUtils {
                 .build();
     }
 
-    public ItemDto buildGetItemDto(){
+    public ItemDto buildGetItemDto() {
         ItemDto itemDto = buildUpdateItemDto();
         itemDto.setId(GET_ID);
         return itemDto;
     }
 
-    public RoleDto buildDefaultRoleDto(){
+    public RoleDto buildDefaultRoleDto() {
         return RoleDto.builder()
                 .id(3L)
                 .role("admin")
                 .build();
     }
 
-    public UserDto buildDefaultUserDto(){
+    public UserDto buildDefaultUserDto() {
         return UserDto.builder()
                 .id(DEFAULT_ID)
                 .username(DEFAULT_USERNAME)
@@ -305,7 +304,7 @@ public class TestUtils {
                 .build();
     }
 
-    public UserDto buildUpdateUserDto(){
+    public UserDto buildUpdateUserDto() {
         UserDto userDto = buildDefaultUserDto();
         userDto.setIsBlocked(true);
         return userDto;
@@ -319,20 +318,20 @@ public class TestUtils {
                 .build();
     }
 
-    public UserDto buildGetUserDto(){
+    public UserDto buildGetUserDto() {
         UserDto userDto = buildUpdateUserDto();
         userDto.setId(GET_ID);
         return userDto;
     }
 
-    public String buildDefaultAuthorJson(){
+    public String buildDefaultAuthorJson() {
         return String.format("{" +
                 "    \"firstname\": \"%s\"," +
                 "    \"surname\": \"%s\" " +
-                "}", DEFAULT_NAME, DEFAULT_NAME) ;
+                "}", DEFAULT_NAME, DEFAULT_NAME);
     }
 
-    public String buildUpdateAuthorJson(){
+    public String buildUpdateAuthorJson() {
         return String.format("{" +
                 "    \"id\": %d," +
                 "    \"firstname\": \"%s\"," +
@@ -342,55 +341,55 @@ public class TestUtils {
                 "}", DEFAULT_ID, DEFAULT_FIRSTNAME, DEFAULT_SURNAME, DEFAULT_NAME);
     }
 
-    public String buildDefaultBookJson(){
+    public String buildDefaultBookJson() {
         System.out.println(DEFAULT_DATE.toString());
         return String.format("{" +
                 "    \"title\": \"%s\"," +
                 "    \"isbn\": \"%s\"," +
                 "    \"releaseDate\": %s," +
-                "    \"authors\": null,"+
-                "    \"genres\": null"+
+                "    \"authors\": null," +
+                "    \"genres\": null" +
                 "}", DEFAULT_NAME, TEST_ISBN, DEFAULT_DATE.getTime());
     }
 
-    public String buildUpdateBookJson(){
+    public String buildUpdateBookJson() {
         return String.format("{" +
                 "    \"id\": %d," +
                 "    \"title\": \"%s\"," +
                 "    \"isbn\": \"%s\"," +
                 "    \"releaseDate\": %s," +
-                "    \"authors\": null,"+
-                "    \"genres\": null"+
-                "}",DEFAULT_ID, DEFAULT_NAME, DEFAULT_ISBN, DEFAULT_DATE.getTime());
+                "    \"authors\": null," +
+                "    \"genres\": null" +
+                "}", DEFAULT_ID, DEFAULT_NAME, DEFAULT_ISBN, DEFAULT_DATE.getTime());
     }
 
-    public String buildDefaultGenreJson(){
+    public String buildDefaultGenreJson() {
         return String.format("{" +
                 "    \"name\": \"%s\"" +
                 "}", DEFAULT_NAME);
     }
 
-    public String buildUpdateGenreJson(){
+    public String buildUpdateGenreJson() {
         return String.format("{" +
                 "    \"id\": \"%d\"," +
                 "    \"name\": \"%s\"" +
                 "}", DEFAULT_ID, DEFAULT_NAME);
     }
 
-    public String buildDefaultItemJson(){
+    public String buildDefaultItemJson() {
         return String.format("{" +
                 "    \"bookId\": %d" +
                 "}", DEFAULT_ID);
     }
 
-    public String buildUpdateItemJson(){
+    public String buildUpdateItemJson() {
         return String.format("{" +
                 "    \"id\": %d," +
                 "    \"bookId\": %d" +
                 "}", DEFAULT_ID, DEFAULT_ID);
     }
 
-    public String buildUpdateUserJson(){
+    public String buildUpdateUserJson() {
         return String.format("    {" +
                         "        \"id\": %d," +
                         "            \"isBlocked\": %b," +
@@ -406,7 +405,7 @@ public class TestUtils {
                 DEFAULT_ROLE_ID, DEFAULT_ROLE_NAME);
     }
 
-    public String buildDefaultUserJson(){
+    public String buildDefaultUserJson() {
         return String.format("    {" +
                 "            \"username\": \"%s\"," +
                 "            \"password\": \"%s\"," +

@@ -9,5 +9,5 @@ public interface CrudController<T> {
 
     ResponseEntity<T> findById(Long id);
 
-    ResponseEntity<?> update(T t);
+    ResponseEntity<?> update(T t, Long id);
 }

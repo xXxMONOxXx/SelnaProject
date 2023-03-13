@@ -48,7 +48,7 @@ public class UserControllerImplTest {
         Serializable id = TestUtils.buildDefaultUser().getId();
         Mockito.doNothing().when(userService).delete(id);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/delete/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         //then
@@ -62,7 +62,7 @@ public class UserControllerImplTest {
         UserDto userDto = TestUtils.buildSaveUserDto();
         Mockito.when(userService.save(userDto)).thenReturn(userDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.post("/users/add")
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildDefaultUserJson()))
                 .andExpect(status().isCreated());
@@ -77,7 +77,7 @@ public class UserControllerImplTest {
         UserDto userDto = TestUtils.buildUpdateUserDto();
         Mockito.doNothing().when(userService).update(userDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.put("/users/update")
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/{id}", userDto.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildUpdateUserJson()))
                 .andExpect(status().isOk());
@@ -120,14 +120,14 @@ public class UserControllerImplTest {
     }
 
     @Test
-    public void findByUsernameTest() throws Exception{
+    public void findByUsernameTest() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
         UserDto userDto = TestUtils.buildGetUserDto();
         String username = userDto.getUsername();
         Mockito.when(userService.findUserByUsername(username)).thenReturn(userDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/username/{username}", username)
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/?username=" + username)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(userDto.getId()))
@@ -139,14 +139,14 @@ public class UserControllerImplTest {
     }
 
     @Test
-    public void findByUsernameTest_NotFound() throws Exception{
+    public void findByUsernameTest_NotFound() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(userController)
                 .setControllerAdvice(new ControllerExceptionHandler()).build();
         String username = TestUtils.NOT_FOUND_USERNAME;
         Mockito.when(userService.findUserByUsername(username)).thenThrow(UserNotFoundException.class);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/username/{username}", username)
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/?username=" + username)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
         //then

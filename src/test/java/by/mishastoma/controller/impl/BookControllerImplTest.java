@@ -2,12 +2,10 @@ package by.mishastoma.controller.impl;
 
 import by.mishastoma.config.ControllerTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
-import by.mishastoma.exception.AuthorNotFoundException;
 import by.mishastoma.exception.BookNotFoundException;
 import by.mishastoma.service.BookService;
 import by.mishastoma.util.TestUtils;
 import by.mishastoma.web.controller.impl.BookControllerImpl;
-import by.mishastoma.web.dto.AuthorDto;
 import by.mishastoma.web.dto.BookDto;
 import by.mishastoma.web.handler.ControllerExceptionHandler;
 import org.junit.Test;
@@ -50,7 +48,7 @@ public class BookControllerImplTest {
         Serializable id = TestUtils.buildDefaultBook().getId();
         Mockito.doNothing().when(bookService).delete(id);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/books/delete/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/books/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         //then
@@ -64,7 +62,7 @@ public class BookControllerImplTest {
         BookDto bookDto = TestUtils.buildSaveBookDto();
         Mockito.when(bookService.save(bookDto)).thenReturn(bookDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.post("/books/add")
+        mockMvc.perform(MockMvcRequestBuilders.post("/books")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildDefaultBookJson()))
                 .andExpect(status().isCreated());
@@ -79,7 +77,7 @@ public class BookControllerImplTest {
         BookDto bookDto = TestUtils.buildUpdateBookDto();
         Mockito.doNothing().when(bookService).update(bookDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.put("/books/update")
+        mockMvc.perform(MockMvcRequestBuilders.put("/books/{id}", bookDto.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildUpdateBookJson()))
                 .andExpect(status().isOk());
@@ -119,14 +117,14 @@ public class BookControllerImplTest {
     }
 
     @Test
-    public void findByIsbn() throws Exception{
+    public void findByIsbn() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(bookController).build();
         BookDto bookDto = TestUtils.buildGetBookDto();
         String isbn = TestUtils.buildDefaultBook().getIsbn();
         Mockito.when(bookService.findBookByIsbn(isbn)).thenReturn(bookDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/books/isbn/{isbn}", isbn)
+        mockMvc.perform(MockMvcRequestBuilders.get("/books/?isbn=" + isbn)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(bookDto.getId()))
@@ -138,14 +136,14 @@ public class BookControllerImplTest {
     }
 
     @Test
-    public void findByIsbn_NotFound() throws Exception{
+    public void findByIsbn_NotFound() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(bookController)
                 .setControllerAdvice(new ControllerExceptionHandler()).build();
         String isbn = TestUtils.buildSaveBook().getIsbn();
         Mockito.when(bookService.findBookByIsbn(isbn)).thenThrow(BookNotFoundException.class);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/books/isbn/{isbn}", isbn)
+        mockMvc.perform(MockMvcRequestBuilders.get("/books/?isbn=" + isbn)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
         //then

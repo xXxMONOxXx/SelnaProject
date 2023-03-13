@@ -42,6 +42,8 @@ public class AuthorControllerImplTest {
     @Autowired
     private AuthorControllerImpl authorController;
 
+    @BeforeEach
+
     @Test
     public void deleteTest() throws Exception {
         //preparation
@@ -49,7 +51,7 @@ public class AuthorControllerImplTest {
         Serializable id = TestUtils.buildDefaultAuthor().getId();
         Mockito.doNothing().when(authorService).delete(id);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/authors/delete/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/authors/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         //then
@@ -63,7 +65,7 @@ public class AuthorControllerImplTest {
         AuthorDto authorDto = TestUtils.buildSaveAuthorDto();
         Mockito.when(authorService.save(authorDto)).thenReturn(authorDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.post("/authors/add")
+        mockMvc.perform(MockMvcRequestBuilders.post("/authors")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildDefaultAuthorJson()))
                 .andExpect(status().isCreated());
@@ -78,7 +80,7 @@ public class AuthorControllerImplTest {
         AuthorDto authorDto = TestUtils.buildUpdateAuthorDto();
         Mockito.doNothing().when(authorService).update(authorDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.put("/authors/update")
+        mockMvc.perform(MockMvcRequestBuilders.put("/authors/{id}", authorDto.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildUpdateAuthorJson()))
                 .andExpect(status().isOk());

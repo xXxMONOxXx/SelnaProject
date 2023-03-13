@@ -1,4 +1,4 @@
-package by.mishastoma.model.service.impl;
+package by.mishastoma.service.impl;
 
 import by.mishastoma.config.ServiceTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
@@ -32,7 +32,7 @@ public class BookServiceImplTest {
     private BookService bookService;
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         //preparation
         BookDto bookDto = TestUtils.buildSaveBookDto();
         Book book = TestUtils.buildSaveBook();
@@ -45,7 +45,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         Serializable id = TestUtils.buildDefaultBookDto().getId();
         Book book = TestUtils.buildDefaultBook();
         Mockito.doNothing().when(bookDao).delete(book);
@@ -57,7 +57,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         //preparation
         BookDto bookDto = TestUtils.buildUpdateBookDto();
         Book book = TestUtils.buildUpdateBook();
@@ -69,7 +69,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void getTest(){
+    public void getTest() {
         //preparation
         BookDto expectedBook = TestUtils.buildGetBookDto();
         Serializable id = expectedBook.getId();
@@ -83,7 +83,7 @@ public class BookServiceImplTest {
     }
 
     @Test(expected = BookNotFoundException.class)
-    public void getTest_NotFound(){
+    public void getTest_NotFound() {
         //preparation
         Serializable id = TestUtils.NOT_FOUND_ID;
         Mockito.when(bookDao.findById(id)).thenReturn(Optional.ofNullable(null));

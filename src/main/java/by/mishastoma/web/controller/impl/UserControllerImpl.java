@@ -1,11 +1,8 @@
 package by.mishastoma.web.controller.impl;
 
-import by.mishastoma.web.controller.CrudController;
-import by.mishastoma.web.dto.RoleDto;
-import by.mishastoma.web.dto.UserDto;
 import by.mishastoma.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import by.mishastoma.web.controller.CrudController;
+import by.mishastoma.web.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,14 +23,14 @@ public class UserControllerImpl implements CrudController<UserDto> {
     private final UserService userService;
 
     @Override
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody UserDto user) {
         userService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Override
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         userService.delete(id);
         return ResponseEntity.ok().build();
@@ -48,14 +44,15 @@ public class UserControllerImpl implements CrudController<UserDto> {
     }
 
     @Override
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody UserDto user) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody UserDto user, @PathVariable Long id) {
+        user.setId(id);
         userService.update(user);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/username/{username}")
-    public ResponseEntity<UserDto> findUserByUserName(@PathVariable String username) {
+    @GetMapping
+    public ResponseEntity<UserDto> findUserByUserName(@RequestParam String username) {
         UserDto user = userService.findUserByUsername(username);
         return ResponseEntity.ok(user);
     }

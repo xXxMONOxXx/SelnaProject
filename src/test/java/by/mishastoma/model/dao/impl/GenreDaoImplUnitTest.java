@@ -3,7 +3,6 @@ package by.mishastoma.model.dao.impl;
 import by.mishastoma.config.db.HibernateConfig;
 import by.mishastoma.config.db.LiquibaseConfig;
 import by.mishastoma.model.dao.GenreDao;
-import by.mishastoma.model.entity.Author;
 import by.mishastoma.model.entity.Genre;
 import by.mishastoma.util.TestUtils;
 import org.junit.Assert;

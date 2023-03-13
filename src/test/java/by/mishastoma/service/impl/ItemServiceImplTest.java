@@ -1,14 +1,12 @@
-package by.mishastoma.model.service.impl;
+package by.mishastoma.service.impl;
 
 import by.mishastoma.config.ServiceTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
 import by.mishastoma.exception.ItemNotFoundException;
 import by.mishastoma.model.dao.ItemDao;
-import by.mishastoma.model.entity.Genre;
 import by.mishastoma.model.entity.Item;
 import by.mishastoma.service.ItemService;
 import by.mishastoma.util.TestUtils;
-import by.mishastoma.web.dto.GenreDto;
 import by.mishastoma.web.dto.ItemDto;
 import org.junit.Assert;
 import org.junit.Test;
@@ -34,7 +32,7 @@ public class ItemServiceImplTest {
     private ItemService itemService;
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         //preparation
         ItemDto itemDto = TestUtils.buildSaveItemDto();
         Item item = TestUtils.buildSaveItem();
@@ -47,7 +45,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         //preparation
         Serializable id = TestUtils.buildDefaultItemDto().getId();
         Item item = TestUtils.buildDefaultItem();
@@ -60,7 +58,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         //preparation
         ItemDto itemDto = TestUtils.buildUpdateItemDto();
         Item item = TestUtils.buildUpdateItem();
@@ -72,7 +70,7 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void getTest(){
+    public void getTest() {
         //preparation
         ItemDto expectedItem = TestUtils.buildGetItemDto();
         Serializable id = expectedItem.getId();
@@ -86,7 +84,7 @@ public class ItemServiceImplTest {
     }
 
     @Test(expected = ItemNotFoundException.class)
-    public void getTest_NotFound(){
+    public void getTest_NotFound() {
         //preparation
         Serializable id = TestUtils.NOT_FOUND_ID;
         Mockito.when(itemDao.findById(id)).thenReturn(Optional.ofNullable(null));

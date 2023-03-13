@@ -1,14 +1,12 @@
-package by.mishastoma.model.service.impl;
+package by.mishastoma.service.impl;
 
 import by.mishastoma.config.ServiceTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
 import by.mishastoma.exception.GenreNotFoundException;
 import by.mishastoma.model.dao.GenreDao;
-import by.mishastoma.model.entity.Book;
 import by.mishastoma.model.entity.Genre;
 import by.mishastoma.service.GenreService;
 import by.mishastoma.util.TestUtils;
-import by.mishastoma.web.dto.BookDto;
 import by.mishastoma.web.dto.GenreDto;
 import org.junit.Assert;
 import org.junit.Test;
@@ -34,7 +32,7 @@ public class GenreServiceImplTest {
     private GenreService genreService;
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         //preparation
         GenreDto genreDto = TestUtils.buildSaveGenreDto();
         Genre genre = TestUtils.buildSaveGenre();
@@ -47,7 +45,7 @@ public class GenreServiceImplTest {
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         //preparation
         Serializable id = TestUtils.buildDefaultGenreDto().getId();
         Genre genre = TestUtils.buildDefaultGenre();
@@ -60,7 +58,7 @@ public class GenreServiceImplTest {
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         //preparation
         GenreDto genreDto = TestUtils.buildUpdateGenreDto();
         Genre genre = TestUtils.buildUpdateGenre();
@@ -72,7 +70,7 @@ public class GenreServiceImplTest {
     }
 
     @Test
-    public void getTest(){
+    public void getTest() {
         //preparation
         GenreDto expectedGenre = TestUtils.buildGetGenreDto();
         Serializable id = expectedGenre.getId();
@@ -86,7 +84,7 @@ public class GenreServiceImplTest {
     }
 
     @Test(expected = GenreNotFoundException.class)
-    public void getTest_NotFound(){
+    public void getTest_NotFound() {
         //preparation
         Serializable id = TestUtils.NOT_FOUND_ID;
         Mockito.when(genreDao.findById(id)).thenReturn(Optional.ofNullable(null));

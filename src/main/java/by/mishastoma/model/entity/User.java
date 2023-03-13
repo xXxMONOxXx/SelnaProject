@@ -68,10 +68,9 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User that = (User) o;
-        if(this.getId() == null || that.getId() == null){
+        if (this.getId() == null || that.getId() == null) {
             return Objects.equals(username, that.username);
-        }
-        else{
+        } else {
             return Objects.equals(id, that.id);
         }
     }

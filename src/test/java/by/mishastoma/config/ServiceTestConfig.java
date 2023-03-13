@@ -17,27 +17,27 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class ServiceTestConfig {
 
     @Bean
-    public AuthorDao authorDao(){
+    public AuthorDao authorDao() {
         return Mockito.mock(AuthorDao.class);
     }
 
     @Bean
-    public BookDao bookDao(){
+    public BookDao bookDao() {
         return Mockito.mock(BookDao.class);
     }
 
     @Bean
-    public GenreDao genreDao(){
+    public GenreDao genreDao() {
         return Mockito.mock(GenreDao.class);
     }
 
     @Bean
-    public ItemDao itemDao(){
+    public ItemDao itemDao() {
         return Mockito.mock(ItemDao.class);
     }
 
     @Bean
-    public UserDao userDao(){
+    public UserDao userDao() {
         return Mockito.mock(UserDao.class);
     }
 }

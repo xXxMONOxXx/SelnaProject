@@ -1,12 +1,9 @@
 package by.mishastoma.web.controller.impl;
 
+import by.mishastoma.service.BookService;
 import by.mishastoma.web.controller.CrudController;
 import by.mishastoma.web.dto.BookDto;
-import by.mishastoma.service.BookService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -26,14 +24,14 @@ public class BookControllerImpl implements CrudController<BookDto> {
     private final BookService bookService;
 
     @Override
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody BookDto book) {
         bookService.save(book);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Override
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         bookService.delete(id);
         return ResponseEntity.ok().build();
@@ -47,14 +45,14 @@ public class BookControllerImpl implements CrudController<BookDto> {
     }
 
     @Override
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody  BookDto book) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody BookDto book, @PathVariable Long id) {
         bookService.update(book);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/isbn/{isbn}")
-    public ResponseEntity<BookDto> findBookByIsbn(@PathVariable String isbn) {
+    @GetMapping
+    public ResponseEntity<BookDto> findBookByIsbn(@RequestParam String isbn) {
         BookDto book = bookService.findBookByIsbn(isbn);
         return ResponseEntity.ok(book);
     }

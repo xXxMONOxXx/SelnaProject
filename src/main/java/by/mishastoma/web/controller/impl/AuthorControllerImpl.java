@@ -1,9 +1,8 @@
 package by.mishastoma.web.controller.impl;
 
+import by.mishastoma.service.AuthorService;
 import by.mishastoma.web.controller.CrudController;
 import by.mishastoma.web.dto.AuthorDto;
-import by.mishastoma.service.AuthorService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +22,14 @@ public class AuthorControllerImpl implements CrudController<AuthorDto> {
     private final AuthorService authorService;
 
     @Override
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody AuthorDto author) {
         authorService.save(author);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Override
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         authorService.delete(id);
         return ResponseEntity.ok().build();
@@ -44,8 +43,8 @@ public class AuthorControllerImpl implements CrudController<AuthorDto> {
     }
 
     @Override
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody AuthorDto author) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody AuthorDto author, @PathVariable Long id) {
         authorService.update(author);
         return ResponseEntity.ok().build();
     }

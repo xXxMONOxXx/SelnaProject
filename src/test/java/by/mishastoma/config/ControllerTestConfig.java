@@ -1,10 +1,5 @@
 package by.mishastoma.config;
 
-import by.mishastoma.model.dao.AuthorDao;
-import by.mishastoma.model.dao.BookDao;
-import by.mishastoma.model.dao.GenreDao;
-import by.mishastoma.model.dao.ItemDao;
-import by.mishastoma.model.dao.UserDao;
 import by.mishastoma.service.AuthorService;
 import by.mishastoma.service.BookService;
 import by.mishastoma.service.GenreService;
@@ -22,27 +17,27 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class ControllerTestConfig {
 
     @Bean
-    public AuthorService authorService(){
+    public AuthorService authorService() {
         return Mockito.mock(AuthorService.class);
     }
 
     @Bean
-    public BookService bookService(){
+    public BookService bookService() {
         return Mockito.mock(BookService.class);
     }
 
     @Bean
-    public GenreService genreService(){
+    public GenreService genreService() {
         return Mockito.mock(GenreService.class);
     }
 
     @Bean
-    public ItemService itemService(){
+    public ItemService itemService() {
         return Mockito.mock(ItemService.class);
     }
 
     @Bean
-    public UserService userService(){
+    public UserService userService() {
         return Mockito.mock(UserService.class);
     }
 }

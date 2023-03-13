@@ -2,9 +2,9 @@ package by.mishastoma.service.impl;
 
 import by.mishastoma.exception.GenreNotFoundException;
 import by.mishastoma.model.dao.GenreDao;
+import by.mishastoma.model.entity.Genre;
 import by.mishastoma.service.GenreService;
 import by.mishastoma.web.dto.GenreDto;
-import by.mishastoma.model.entity.Genre;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

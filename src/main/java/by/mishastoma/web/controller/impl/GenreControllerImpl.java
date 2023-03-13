@@ -1,10 +1,8 @@
 package by.mishastoma.web.controller.impl;
 
+import by.mishastoma.service.GenreService;
 import by.mishastoma.web.controller.CrudController;
 import by.mishastoma.web.dto.GenreDto;
-import by.mishastoma.service.GenreService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -25,14 +24,14 @@ public class GenreControllerImpl implements CrudController<GenreDto> {
     private final GenreService genreService;
 
     @Override
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody GenreDto genre) {
         genreService.save(genre);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Override
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         genreService.delete(id);
         return ResponseEntity.ok().build();
@@ -46,15 +45,15 @@ public class GenreControllerImpl implements CrudController<GenreDto> {
     }
 
     @Override
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody GenreDto genre) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody GenreDto genre, @PathVariable Long id) {
         genreService.update(genre);
         return ResponseEntity.ok().build();
     }
 
 
-    @GetMapping("/name/{name}")
-    public ResponseEntity<GenreDto> findGenreByName(@PathVariable String name) {
+    @GetMapping
+    public ResponseEntity<GenreDto> findGenreByName(@RequestParam String name) {
         GenreDto genre = genreService.findGenreByName(name);
         return ResponseEntity.ok(genre);
     }

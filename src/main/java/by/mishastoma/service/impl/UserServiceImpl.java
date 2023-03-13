@@ -2,11 +2,11 @@ package by.mishastoma.service.impl;
 
 import by.mishastoma.exception.UserNotFoundException;
 import by.mishastoma.model.dao.UserDao;
+import by.mishastoma.model.entity.Role;
+import by.mishastoma.model.entity.User;
 import by.mishastoma.service.UserService;
 import by.mishastoma.web.dto.RoleDto;
 import by.mishastoma.web.dto.UserDto;
-import by.mishastoma.model.entity.Role;
-import by.mishastoma.model.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void delete(Serializable id) {
         User user = userDao.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-         userDao.delete(user);
+        userDao.delete(user);
     }
 
     @Override

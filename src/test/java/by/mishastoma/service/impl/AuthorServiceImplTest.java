@@ -1,4 +1,4 @@
-package by.mishastoma.model.service.impl;
+package by.mishastoma.service.impl;
 
 import by.mishastoma.config.ServiceTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -31,7 +30,7 @@ public class AuthorServiceImplTest {
     private AuthorService authorService;
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         //preparation
         AuthorDto authorDto = TestUtils.buildSaveAuthorDto();
         Author author = TestUtils.buildSaveAuthor();
@@ -44,7 +43,7 @@ public class AuthorServiceImplTest {
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         //preparation
         Serializable id = TestUtils.buildDefaultAuthorDto().getId();
         Author author = TestUtils.buildDefaultAuthor();
@@ -57,7 +56,7 @@ public class AuthorServiceImplTest {
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         //preparation
         AuthorDto authorDto = TestUtils.buildUpdateAuthorDto();
         Author author = TestUtils.buildUpdateAuthor();
@@ -69,7 +68,7 @@ public class AuthorServiceImplTest {
     }
 
     @Test
-    public void getTest(){
+    public void getTest() {
         //preparation
         AuthorDto expectedAuthor = TestUtils.buildGetAuthorDto();
         Serializable id = expectedAuthor.getId();
@@ -83,7 +82,7 @@ public class AuthorServiceImplTest {
     }
 
     @Test(expected = AuthorNotFoundException.class)
-    public void getTest_NotFoundException(){
+    public void getTest_NotFoundException() {
         //preparation
         Serializable id = TestUtils.NOT_FOUND_ID;
         Mockito.when(authorDao.findById(id)).thenReturn(Optional.ofNullable(null));

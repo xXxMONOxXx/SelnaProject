@@ -2,12 +2,10 @@ package by.mishastoma.controller.impl;
 
 import by.mishastoma.config.ControllerTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
-import by.mishastoma.exception.AuthorNotFoundException;
 import by.mishastoma.exception.GenreNotFoundException;
 import by.mishastoma.service.GenreService;
 import by.mishastoma.util.TestUtils;
 import by.mishastoma.web.controller.impl.GenreControllerImpl;
-import by.mishastoma.web.dto.AuthorDto;
 import by.mishastoma.web.dto.GenreDto;
 import by.mishastoma.web.handler.ControllerExceptionHandler;
 import org.junit.Test;
@@ -50,7 +48,7 @@ public class GenreControllerImplTest {
         Serializable id = TestUtils.buildDefaultGenre().getId();
         Mockito.doNothing().when(genreService).delete(id);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/genres/delete/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/genres/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         //then
@@ -64,7 +62,7 @@ public class GenreControllerImplTest {
         GenreDto genreDto = TestUtils.buildSaveGenreDto();
         Mockito.when(genreService.save(genreDto)).thenReturn(genreDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.post("/genres/add")
+        mockMvc.perform(MockMvcRequestBuilders.post("/genres")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildDefaultGenreJson()))
                 .andExpect(status().isCreated());
@@ -79,7 +77,7 @@ public class GenreControllerImplTest {
         GenreDto genreDto = TestUtils.buildUpdateGenreDto();
         Mockito.doNothing().when(genreService).update(genreDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.put("/genres/update")
+        mockMvc.perform(MockMvcRequestBuilders.put("/genres/{id}", genreDto.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildUpdateGenreJson()))
                 .andExpect(status().isOk());
@@ -120,14 +118,14 @@ public class GenreControllerImplTest {
     }
 
     @Test
-    public void findByName() throws Exception{
+    public void findByName() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(genreController).build();
         GenreDto genreDto = TestUtils.buildGetGenreDto();
         String name = genreDto.getName();
         Mockito.when(genreService.findGenreByName(name)).thenReturn(genreDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/genres/name/{name}", name)
+        mockMvc.perform(MockMvcRequestBuilders.get("/genres/?name=" + name)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(genreDto.getId()))
@@ -137,14 +135,14 @@ public class GenreControllerImplTest {
     }
 
     @Test
-    public void findByName_NotFound() throws Exception{
+    public void findByName_NotFound() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(genreController)
                 .setControllerAdvice(new ControllerExceptionHandler()).build();
         String name = TestUtils.buildDefaultGenre().getName();
         Mockito.when(genreService.findGenreByName(name)).thenThrow(GenreNotFoundException.class);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/genres/name/{name}", name)
+        mockMvc.perform(MockMvcRequestBuilders.get("/genres/?name=" + name)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
         //then

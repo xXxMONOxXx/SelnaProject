@@ -1,4 +1,4 @@
-package by.mishastoma.model.service.impl;
+package by.mishastoma.service.impl;
 
 import by.mishastoma.config.ServiceTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
@@ -32,7 +32,7 @@ public class UserServiceImplTest {
     private UserService userService;
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         //preparation
         UserDto userDto = TestUtils.buildSaveUserDto();
         User user = TestUtils.buildSaveUser();
@@ -45,7 +45,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         //preparation
         Serializable id = TestUtils.buildDefaultUserDto().getId();
         User user = TestUtils.buildDefaultUser();
@@ -58,7 +58,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         //preparation
         UserDto userDto = TestUtils.buildUpdateUserDto();
         User user = TestUtils.buildUpdateUser();
@@ -70,7 +70,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void getTest(){
+    public void getTest() {
         //preparation
         UserDto expectedUser = TestUtils.buildGetUserDto();
         Serializable id = expectedUser.getId();
@@ -84,7 +84,7 @@ public class UserServiceImplTest {
     }
 
     @Test(expected = UserNotFoundException.class)
-    public void getTest_NotFound(){
+    public void getTest_NotFound() {
         //preparation
         Serializable id = TestUtils.NOT_FOUND_ID;
         Mockito.when(userDao.findById(id)).thenReturn(Optional.ofNullable(null));
@@ -95,7 +95,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void findUserByUsername(){
+    public void findUserByUsername() {
         //preparation
         UserDto expectedUser = TestUtils.buildGetUserDto();
         User user = TestUtils.buildGetUser();
@@ -108,7 +108,7 @@ public class UserServiceImplTest {
     }
 
     @Test(expected = UserNotFoundException.class)
-    public void findUserByUsername_NotFound(){
+    public void findUserByUsername_NotFound() {
         //preparation
         Mockito.when(userDao.findByUsername(TestUtils.NOT_FOUND_USERNAME)).thenReturn(Optional.ofNullable(null));
         //when

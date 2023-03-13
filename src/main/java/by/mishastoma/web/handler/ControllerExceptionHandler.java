@@ -14,27 +14,27 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(AuthorNotFoundException.class)
-    public ResponseEntity<?> handleAuthorNotFound(){
+    public ResponseEntity<?> handleAuthorNotFound() {
         return new ResponseEntity<>("Author not found.", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BookNotFoundException.class)
-    public ResponseEntity<?> handleBookNotFound(){
+    public ResponseEntity<?> handleBookNotFound() {
         return new ResponseEntity<>("Book not found.", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(GenreNotFoundException.class)
-    public ResponseEntity<?> handleGenreNotFound(){
+    public ResponseEntity<?> handleGenreNotFound() {
         return new ResponseEntity<>("Genre not found.", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ItemNotFoundException.class)
-    public ResponseEntity<?> handleItemNotFound(){
+    public ResponseEntity<?> handleItemNotFound() {
         return new ResponseEntity<>("Item not found.", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<?> handleUserNotFound(){
+    public ResponseEntity<?> handleUserNotFound() {
         return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
     }
 }
