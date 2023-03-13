@@ -54,7 +54,11 @@ public class Author {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author that = (Author) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstname, that.firstname) && Objects.equals(surname, that.surname) && Objects.equals(patronymic, that.patronymic);
+        if (this.getId() == null || that.getId() == null) {
+            return Objects.equals(firstname, that.firstname) && Objects.equals(surname, that.surname) && Objects.equals(patronymic, that.patronymic);
+        } else {
+            return Objects.equals(id, that.id);
+        }
     }
 
     @Override

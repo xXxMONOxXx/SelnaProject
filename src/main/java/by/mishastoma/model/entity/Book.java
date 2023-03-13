@@ -75,7 +75,11 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book that = (Book) o;
-        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(isbn, that.isbn);
+        if (this.getId() == null || that.getId() == null) {
+            return Objects.equals(title, that.title) && Objects.equals(isbn, that.isbn);
+        } else {
+            return Objects.equals(id, that.id);
+        }
     }
 
     @Override

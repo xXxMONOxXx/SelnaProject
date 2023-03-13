@@ -1,10 +1,10 @@
 package by.mishastoma.model.dao.impl;
 
-import by.mishastoma.config.HibernateConfig;
-import by.mishastoma.config.LiquibaseConfig;
+import by.mishastoma.config.db.HibernateConfig;
+import by.mishastoma.config.db.LiquibaseConfig;
 import by.mishastoma.model.dao.AuthorDao;
 import by.mishastoma.model.entity.Author;
-import by.mishastoma.util.util.TestUtils;
+import by.mishastoma.util.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,10 +29,11 @@ public class AuthorDaoImplUnitTest {
         //preparation
         Author expectedAuthor = TestUtils.buildSaveAuthor();
         //when
-        authorDao.save(expectedAuthor);
+        Author returnedAuthor = authorDao.save(expectedAuthor);
         //then
-        Author actualAuthor = authorDao.findById(expectedAuthor.getId()).get();
-        Assert.assertEquals(expectedAuthor, actualAuthor);
+        Author savedAuthor = authorDao.findById(returnedAuthor.getId()).get();
+        Assert.assertEquals(expectedAuthor, returnedAuthor);
+        Assert.assertEquals(returnedAuthor, savedAuthor);
     }
 
     @Test

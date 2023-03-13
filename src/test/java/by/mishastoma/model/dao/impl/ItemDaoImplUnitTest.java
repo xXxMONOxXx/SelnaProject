@@ -1,10 +1,10 @@
 package by.mishastoma.model.dao.impl;
 
-import by.mishastoma.config.HibernateConfig;
-import by.mishastoma.config.LiquibaseConfig;
+import by.mishastoma.config.db.HibernateConfig;
+import by.mishastoma.config.db.LiquibaseConfig;
 import by.mishastoma.model.dao.ItemDao;
 import by.mishastoma.model.entity.Item;
-import by.mishastoma.util.util.TestUtils;
+import by.mishastoma.util.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ public class ItemDaoImplUnitTest {
         //preparation
         Item expectedItem = TestUtils.buildSaveItem();
         //when
-        itemDao.save(expectedItem);
+        expectedItem.setId(itemDao.save(expectedItem).getId());
         //then
         Item actualItem = itemDao.findById(expectedItem.getId()).get();
         Assert.assertEquals(expectedItem, actualItem);

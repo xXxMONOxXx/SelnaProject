@@ -1,11 +1,11 @@
 package by.mishastoma.model.dao.impl;
 
-import by.mishastoma.config.HibernateConfig;
-import by.mishastoma.config.LiquibaseConfig;
+import by.mishastoma.config.db.HibernateConfig;
+import by.mishastoma.config.db.LiquibaseConfig;
 import by.mishastoma.model.dao.UserDao;
 import by.mishastoma.model.entity.Role;
 import by.mishastoma.model.entity.User;
-import by.mishastoma.util.util.TestUtils;
+import by.mishastoma.util.TestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,9 +34,11 @@ public class UserDaoImplUnitTest {
         //preparation
         User expectedUser = TestUtils.buildSaveUser();
         //when
-        userDao.save(expectedUser);
+        User returnedUser = userDao.save(expectedUser);
         //then
-        Assert.assertTrue(userDao.findById(expectedUser.getId()).isPresent());
+        User savedUser = userDao.findById(returnedUser.getId()).get();
+        Assert.assertEquals(expectedUser, returnedUser);
+        Assert.assertEquals(returnedUser, savedUser);
     }
 
     @Test
