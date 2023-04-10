@@ -12,6 +12,9 @@ import by.mishastoma.web.dto.GenreDto;
 import by.mishastoma.web.dto.ItemDto;
 import by.mishastoma.web.dto.RoleDto;
 import by.mishastoma.web.dto.UserDto;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.experimental.UtilityClass;
 
 import java.sql.Date;
@@ -30,11 +33,22 @@ public class TestUtils {
     private final String DEFAULT_TITLE = "Romeo and Juliet";
     private final String DEFAULT_ISBN = "9785171025212";
     private final String DEFAULT_NAME = "Test";
+    private final String DEFAULT_GENRE_NAME_UPDATE = "update";
     private final String DEFAULT_GENRE_NAME = "Fantasy";
     private final String TEST_ISBN = "9999999999999";
     private final Date DEFAULT_DATE = Date.valueOf("2020-01-01");
+    private final long UPDATE_ID = 2;
+    private final String DEFAULT_PASSWORD_IT = "$2a$12$/tuGAxIFvhUE9HukNjYN0.jrP4VqC4nleBsucXkth./a.xtxOscx2";
+    private final String SECRET = "bd2b1aaf7ef4f09be9f52ce2d8d599674d81aa9d6a4421696dc4d93dd0619d682ce56b4d64a9ef097761ced99e0f67265b5f76085e5b0ee7ca4696b2ad6fe2b2";
     public final Long NOT_FOUND_ID = 99L;
     public final String NOT_FOUND_USERNAME = "not_found";
+    public final String ISBN_NOT_FOUND = "12223344512";
+    public final String GENRE_NOT_FOUND = "ggg";
+    public final String ADMIN_USERNAME = "addy";
+    public final String ADMIN_PASSWORD = "123456";
+    public final String ADMIN_ROLE = "admin";
+    public final long DELETE_ID = 3;
+
 
     public Author buildDefaultAuthor() {
         return Author.builder()
@@ -207,6 +221,22 @@ public class TestUtils {
         return authorDto;
     }
 
+    public AuthorDto buildDefaultItForAuthor() {
+        return AuthorDto.builder()
+                .id(DEFAULT_ID)
+                .firstname("William")
+                .surname("Shakespeare")
+                .build();
+    }
+
+    public BookDto buildDefaultItForBook() {
+        return BookDto.builder()
+                .id(DEFAULT_ID)
+                .isbn("9785171025212")
+                .title("Romeo and Juliet")
+                .build();
+    }
+
     public BookDto buildSaveBookDto() {
         return BookDto.builder()
                 .title(DEFAULT_NAME)
@@ -259,6 +289,20 @@ public class TestUtils {
         GenreDto genreDto = buildUpdateGenreDto();
         genreDto.setId(GET_ID);
         return genreDto;
+    }
+
+    public GenreDto buildDefaultToFindGenre() {
+        return GenreDto.builder()
+                .id(DEFAULT_ID)
+                .name(DEFAULT_GENRE_NAME)
+                .build();
+    }
+
+    public GenreDto buildUpdateGenreIT() {
+        return GenreDto.builder()
+                .id(UPDATE_ID)
+                .name(DEFAULT_GENRE_NAME_UPDATE)
+                .build();
     }
 
     public ItemDto buildDefaultItemDto() {
@@ -324,6 +368,16 @@ public class TestUtils {
         return userDto;
     }
 
+    public UserDto buildDefaultUserIT() {
+        return UserDto.builder()
+                .id(DEFAULT_ID)
+                .username(DEFAULT_USERNAME)
+                .password(DEFAULT_PASSWORD_IT)
+                .isBlocked(DEFAULT_IS_BLOCKED)
+                .role(buildDefaultRoleDto())
+                .build();
+    }
+
     public String buildDefaultAuthorJson() {
         return String.format("{" +
                 "    \"firstname\": \"%s\"," +
@@ -367,6 +421,13 @@ public class TestUtils {
         return String.format("{" +
                 "    \"name\": \"%s\"" +
                 "}", DEFAULT_NAME);
+    }
+
+    public String buildUpdateGenreJsonIT() {
+        return String.format("{" +
+                "    \"id\": \"%d\"," +
+                "    \"name\": \"%s\"" +
+                "}", UPDATE_ID, DEFAULT_GENRE_NAME_UPDATE);
     }
 
     public String buildUpdateGenreJson() {
@@ -416,6 +477,20 @@ public class TestUtils {
                 "        \"profile\": null," +
                 "        \"items\": null" +
                 "    }", DEFAULT_NAME, DEFAULT_PASSWORD, DEFAULT_ROLE_ID, DEFAULT_ROLE_NAME);
+    }
+
+    public String buildValidToken() {
+        Claims claims = Jwts.claims().setSubject(DEFAULT_USERNAME);
+
+        java.util.Date now = new java.util.Date();
+        java.util.Date exp = new java.util.Date(System.currentTimeMillis() + 1000);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(exp)
+                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .compact();
     }
 
 }

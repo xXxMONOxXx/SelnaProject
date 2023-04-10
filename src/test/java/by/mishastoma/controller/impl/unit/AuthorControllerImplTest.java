@@ -1,12 +1,12 @@
-package by.mishastoma.controller.impl;
+package by.mishastoma.controller.impl.unit;
 
 import by.mishastoma.config.ControllerTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
-import by.mishastoma.exception.ItemNotFoundException;
-import by.mishastoma.service.ItemService;
+import by.mishastoma.exception.AuthorNotFoundException;
+import by.mishastoma.service.AuthorService;
 import by.mishastoma.util.TestUtils;
-import by.mishastoma.web.controller.impl.ItemControllerImpl;
-import by.mishastoma.web.dto.ItemDto;
+import by.mishastoma.web.controller.impl.AuthorControllerImpl;
+import by.mishastoma.web.dto.AuthorDto;
 import by.mishastoma.web.handler.ControllerExceptionHandler;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,88 +31,90 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ControllerTestConfig.class, MapperConfig.class})
-public class ItemControllerImplTest {
+public class AuthorControllerImplTest {
 
     private MockMvc mockMvc;
 
     @Autowired
-    private ItemControllerImpl itemController;
+    private AuthorService authorService;
 
     @Autowired
-    private ItemService itemService;
+    private AuthorControllerImpl authorController;
 
     @Test
     public void deleteTest() throws Exception {
         //preparation
-        mockMvc = MockMvcBuilders.standaloneSetup(itemController).build();
-        Serializable id = TestUtils.buildDefaultItem().getId();
-        Mockito.doNothing().when(itemService).delete(id);
+        mockMvc = MockMvcBuilders.standaloneSetup(authorController).build();
+        Serializable id = TestUtils.buildDefaultAuthor().getId();
+        Mockito.doNothing().when(authorService).delete(id);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/items/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/authors/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         //then
-        Mockito.verify(itemService, Mockito.times(1)).delete(id);
+        Mockito.verify(authorService, Mockito.times(1)).delete(id);
     }
 
     @Test
     public void addTest() throws Exception {
         //preparation
-        mockMvc = MockMvcBuilders.standaloneSetup(itemController).build();
-        ItemDto itemDto = TestUtils.buildSaveItemDto();
-        Mockito.when(itemService.save(itemDto)).thenReturn(itemDto);
+        mockMvc = MockMvcBuilders.standaloneSetup(authorController).build();
+        AuthorDto authorDto = TestUtils.buildSaveAuthorDto();
+        Mockito.when(authorService.save(authorDto)).thenReturn(authorDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.post("/items")
+        mockMvc.perform(MockMvcRequestBuilders.post("/authors")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtils.buildDefaultItemJson()))
+                        .content(TestUtils.buildDefaultAuthorJson()))
                 .andExpect(status().isCreated());
         //then
-        Mockito.verify(itemService, Mockito.times(1)).save(itemDto);
+        Mockito.verify(authorService, Mockito.times(1)).save(authorDto);
     }
 
     @Test
     public void updateTest() throws Exception {
         //preparation
-        mockMvc = MockMvcBuilders.standaloneSetup(itemController).build();
-        ItemDto itemDto = TestUtils.buildUpdateItemDto();
-        Mockito.doNothing().when(itemService).update(itemDto);
+        mockMvc = MockMvcBuilders.standaloneSetup(authorController).build();
+        AuthorDto authorDto = TestUtils.buildUpdateAuthorDto();
+        Mockito.doNothing().when(authorService).update(authorDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.put("/items/{id}", itemDto.getId())
+        mockMvc.perform(MockMvcRequestBuilders.put("/authors/{id}", authorDto.getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtils.buildUpdateItemJson()))
+                        .content(TestUtils.buildUpdateAuthorJson()))
                 .andExpect(status().isOk());
         //then
-        Mockito.verify(itemService, Mockito.times(1)).update(itemDto);
+        Mockito.verify(authorService, Mockito.times(1)).update(authorDto);
     }
 
     @Test
     public void findByIdTest() throws Exception {
         //preparation
-        mockMvc = MockMvcBuilders.standaloneSetup(itemController).build();
-        ItemDto itemDto = TestUtils.buildGetItemDto();
-        Serializable id = itemDto.getId();
-        Mockito.when(itemService.findById(id)).thenReturn(itemDto);
+        mockMvc = MockMvcBuilders.standaloneSetup(authorController).build();
+        AuthorDto authorDto = TestUtils.buildGetAuthorDto();
+        Serializable id = authorDto.getId();
+        Mockito.when(authorService.findById(id)).thenReturn(authorDto);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/items/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value(itemDto.getId()));
+                .andExpect(jsonPath("id").value(authorDto.getId()))
+                .andExpect(jsonPath("firstname").value(authorDto.getFirstname()))
+                .andExpect(jsonPath("surname").value(authorDto.getSurname()));
         //then
-        Mockito.verify(itemService, Mockito.times(1)).findById(id);
+        Mockito.verify(authorService, Mockito.times(1)).findById(id);
     }
 
     @Test
     public void findByIdTest_NotFound() throws Exception {
         //preparation
-        mockMvc = MockMvcBuilders.standaloneSetup(itemController)
+        mockMvc = MockMvcBuilders.standaloneSetup(authorController)
                 .setControllerAdvice(new ControllerExceptionHandler()).build();
         Serializable id = TestUtils.NOT_FOUND_ID;
-        Mockito.when(itemService.findById(id)).thenThrow(ItemNotFoundException.class);
+        Mockito.when(authorService.findById(id)).thenThrow(AuthorNotFoundException.class);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/items/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
         //then
-        Mockito.verify(itemService, Mockito.times(1)).findById(id);
+        Mockito.verify(authorService, Mockito.times(1)).findById(id);
     }
 }

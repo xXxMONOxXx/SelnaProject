@@ -13,4 +13,8 @@ public interface UserService extends CrudService<UserDto> {
     UserDto findUserByUsername(String username);
 
     List<UserDto> findUsersWithRole(RoleDto role);
+
+    String signIn(UserDto user);
+
+    boolean tryLogIn(String surname, String password);
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/authors")
@@ -23,7 +25,7 @@ public class AuthorControllerImpl implements CrudController<AuthorDto> {
 
     @Override
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody AuthorDto author) {
+    public ResponseEntity<?> save(@Valid @RequestBody AuthorDto author) {
         authorService.save(author);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -44,7 +46,8 @@ public class AuthorControllerImpl implements CrudController<AuthorDto> {
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody AuthorDto author, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody @Valid AuthorDto author, @PathVariable Long id) {
+        author.setId(id);
         authorService.update(author);
         return ResponseEntity.ok().build();
     }

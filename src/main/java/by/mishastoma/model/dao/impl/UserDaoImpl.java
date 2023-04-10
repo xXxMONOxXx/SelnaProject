@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -49,13 +50,17 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public Optional<User> findByUsername(String username) {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-        Root<User> root = criteriaQuery.from(User.class);
-        root.fetch(User_.ROLE, JoinType.INNER);
-        root.fetch(User_.PROFILE, JoinType.INNER);
-        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(User_.USERNAME), username));
-        return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+            Root<User> root = criteriaQuery.from(User.class);
+            root.fetch(User_.ROLE, JoinType.INNER);
+            root.fetch(User_.PROFILE, JoinType.INNER);
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(User_.USERNAME), username));
+            return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
 }

@@ -10,10 +10,12 @@ import by.mishastoma.util.TestUtils;
 import by.mishastoma.web.dto.AuthorDto;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -21,6 +23,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 @WebAppConfiguration
+@ExtendWith(SpringExtension.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ServiceTestConfig.class, MapperConfig.class})
 public class AuthorServiceImplTest {

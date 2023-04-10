@@ -66,6 +66,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public BookDto findBookByIsbn(String isbn) {
         Book bookEntity = bookDao.findByIsbn(isbn).orElseThrow(() -> new BookNotFoundException(isbn));
         return modelMapper.map(bookEntity, BookDto.class);

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class ItemControllerImpl implements CrudController<ItemDto> {
 
     @Override
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody ItemDto item) {
+    public ResponseEntity<?> save(@RequestBody @Valid ItemDto item) {
         itemService.save(item);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -46,7 +48,8 @@ public class ItemControllerImpl implements CrudController<ItemDto> {
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody ItemDto item, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody @Valid ItemDto item, @PathVariable Long id) {
+        item.setId(id);
         itemService.update(item);
         return ResponseEntity.ok().build();
     }
