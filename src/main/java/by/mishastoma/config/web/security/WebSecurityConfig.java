@@ -17,19 +17,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static by.mishastoma.util.Endpoint.*;
+
 @Configuration
 @EnableWebSecurity
 @ComponentScan("by.mishastoma")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String USERS_URL = "/users/**";
-    private static final String BOOKS_URL = "/books/**";
-    private static final String ITEMS_URL = "/items/**";
-    private static final String GENRES_URL = "/genres/**";
-    private static final String AUTHORS_URL = "/authors/**";
-    public static final String ADMIN = "ROLE_admin";
-    public static final String LIBRARIAN = "ROLE_librarian";
+
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -58,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         httpSecurity.authorizeRequests()
 
-                .antMatchers(USERS_URL + "signin", USERS_URL + "signup")
+                .antMatchers(String.format("%s%s", USERS_URL, SIGN_IN), String.format("%s%s", USERS_URL, SIGN_UP))
                 .permitAll()
 
                 .antMatchers(HttpMethod.GET, GENRES_URL, BOOKS_URL, AUTHORS_URL)

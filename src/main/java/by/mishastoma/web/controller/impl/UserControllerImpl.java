@@ -1,6 +1,7 @@
 package by.mishastoma.web.controller.impl;
 
 import by.mishastoma.service.UserService;
+import by.mishastoma.util.JwtToken;
 import by.mishastoma.util.JwtUtils;
 import by.mishastoma.web.controller.CrudController;
 import by.mishastoma.web.dto.UserDto;
@@ -98,7 +99,7 @@ public class UserControllerImpl implements CrudController<UserDto> {
                     (new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String token = jwtUtils.generateJwtToken(userDetails);
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(new JwtToken(token));
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
