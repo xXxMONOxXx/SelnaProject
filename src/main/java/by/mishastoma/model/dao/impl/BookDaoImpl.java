@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -55,10 +56,14 @@ public class BookDaoImpl extends AbstractDao<Book> implements BookDao {
 
     @Override
     public Optional<Book> findByIsbn(String isbn) {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
-        Root<Book> root = criteriaQuery.from(Book.class);
-        criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(Book_.ISBN), isbn));
-        return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
+            Root<Book> root = criteriaQuery.from(Book.class);
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(Book_.ISBN), isbn));
+            return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 }

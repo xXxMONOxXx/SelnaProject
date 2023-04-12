@@ -8,12 +8,11 @@ import by.mishastoma.model.dao.UserDao;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
-@Configuration
-@ComponentScan("by.mishastoma.service")
+@ComponentScan({"by.mishastoma.util", "by.mishastoma.service"})
 public class ServiceTestConfig {
 
     @Bean
@@ -39,5 +38,10 @@ public class ServiceTestConfig {
     @Bean
     public UserDao userDao() {
         return Mockito.mock(UserDao.class);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return Mockito.mock(PasswordEncoder.class);
     }
 }

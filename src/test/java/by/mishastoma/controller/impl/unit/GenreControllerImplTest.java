@@ -1,4 +1,4 @@
-package by.mishastoma.controller.impl;
+package by.mishastoma.controller.impl.unit;
 
 import by.mishastoma.config.ControllerTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;

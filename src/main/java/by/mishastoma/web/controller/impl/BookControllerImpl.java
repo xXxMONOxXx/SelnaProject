@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +28,7 @@ public class BookControllerImpl implements CrudController<BookDto> {
 
     @Override
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody BookDto book) {
+    public ResponseEntity<?> save(@RequestBody @Valid BookDto book) {
         bookService.save(book);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -46,13 +49,15 @@ public class BookControllerImpl implements CrudController<BookDto> {
 
     @Override
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody BookDto book, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody @Valid BookDto book, @PathVariable Long id) {
+        book.setId(id);
         bookService.update(book);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping
-    public ResponseEntity<BookDto> findBookByIsbn(@RequestParam String isbn) {
+    public ResponseEntity<BookDto> findBookByIsbn(@RequestParam @Size(max = 13, min = 13,
+            message = "Isbn must be 13 numbers long") String isbn) {
         BookDto book = bookService.findBookByIsbn(isbn);
         return ResponseEntity.ok(book);
     }

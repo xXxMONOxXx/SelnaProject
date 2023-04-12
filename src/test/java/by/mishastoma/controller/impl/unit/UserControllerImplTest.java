@@ -1,4 +1,4 @@
-package by.mishastoma.controller.impl;
+package by.mishastoma.controller.impl.unit;
 
 import by.mishastoma.config.ControllerTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
@@ -14,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -37,9 +39,10 @@ public class UserControllerImplTest {
 
     @Autowired
     private UserControllerImpl userController;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Test
     public void deleteTest() throws Exception {
@@ -86,6 +89,7 @@ public class UserControllerImplTest {
     }
 
     @Test
+    @WithMockUser("addy")
     public void findByIdTest() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
@@ -105,6 +109,7 @@ public class UserControllerImplTest {
     }
 
     @Test
+    @WithMockUser("addy")
     public void findByIdTest_NotFound() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(userController)
@@ -120,6 +125,7 @@ public class UserControllerImplTest {
     }
 
     @Test
+    @WithMockUser("addy")
     public void findByUsernameTest() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
@@ -135,10 +141,11 @@ public class UserControllerImplTest {
                 .andExpect(jsonPath("password").value(userDto.getPassword()))
                 .andExpect(jsonPath("isBlocked").value(userDto.getIsBlocked()));
         //then
-        Mockito.verify(userService, Mockito.times(1)).findUserByUsername(username);
+        Mockito.verify(userService, Mockito.times(2)).findUserByUsername(username);
     }
 
     @Test
+    @WithMockUser("addy")
     public void findByUsernameTest_NotFound() throws Exception {
         //preparation
         mockMvc = MockMvcBuilders.standaloneSetup(userController)

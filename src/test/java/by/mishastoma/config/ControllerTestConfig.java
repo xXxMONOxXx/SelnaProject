@@ -8,12 +8,11 @@ import by.mishastoma.service.UserService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
-@Configuration
-@ComponentScan({"by.mishastoma.web.controller", "by.mishastoma.web.handler"})
+@ComponentScan({"by.mishastoma.util", "by.mishastoma.web.controller", "by.mishastoma.web.handler"})
 public class ControllerTestConfig {
 
     @Bean
@@ -39,5 +38,10 @@ public class ControllerTestConfig {
     @Bean
     public UserService userService() {
         return Mockito.mock(UserService.class);
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        return Mockito.mock(AuthenticationManager.class);
     }
 }

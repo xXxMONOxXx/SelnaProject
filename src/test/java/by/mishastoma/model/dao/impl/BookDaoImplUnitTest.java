@@ -50,12 +50,12 @@ public class BookDaoImplUnitTest {
     @Test
     public void deleteTest() {
         //preparation
-        Book defaultBook = TestUtils.buildDefaultBook();
-        Book foundBook = bookDao.findById(defaultBook.getId()).get();
+        Book deleteBook = TestUtils.buildGetBook();
+        Book foundBook = bookDao.findById(deleteBook.getId()).get();
         //when
         bookDao.delete(foundBook);
         //then
-        Assert.assertTrue(bookDao.findById(defaultBook.getId()).isEmpty());
+        Assert.assertTrue(bookDao.findById(deleteBook.getId()).isEmpty());
     }
 
     @Test
