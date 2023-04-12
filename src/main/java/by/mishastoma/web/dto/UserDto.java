@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class UserDto {
     private Long id;
     private Boolean isBlocked;
     @Size(max = 32, message = "Username maximum size is 32")
+    @Pattern(regexp="^[a-zA-Z0-9_-]{3,16}$\n")
     private String username;
     @Size(min = 6, max = 64, message = "Password's length is shorter than 6 or longer than 64")
     private String password;
