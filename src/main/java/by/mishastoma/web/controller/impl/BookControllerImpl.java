@@ -30,14 +30,14 @@ public class BookControllerImpl implements CrudController<BookDto> {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid BookDto book) {
         bookService.save(book);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Book was created");
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         bookService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Book was deleted");
     }
 
     @Override
@@ -52,12 +52,14 @@ public class BookControllerImpl implements CrudController<BookDto> {
     public ResponseEntity<?> update(@RequestBody @Valid BookDto book, @PathVariable Long id) {
         book.setId(id);
         bookService.update(book);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).body("Book was updated");
     }
 
     @GetMapping
-    public ResponseEntity<BookDto> findBookByIsbn(@RequestParam @Size(max = 13, min = 13,
-            message = "Isbn must be 13 numbers long") String isbn) {
+    public ResponseEntity<BookDto> findBookByIsbn(@RequestParam
+                                                  @Size(min = 10, max = 10, message = "ISBN must be 10 or 13 characters long")
+                                                  @Size(min = 13, max = 13, message = "ISBN must be 10 or 13 characters long")
+                                                  String isbn) {
         BookDto book = bookService.findBookByIsbn(isbn);
         return ResponseEntity.ok(book);
     }

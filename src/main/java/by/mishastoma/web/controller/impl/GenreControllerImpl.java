@@ -38,7 +38,7 @@ public class GenreControllerImpl implements CrudController<GenreDto> {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         genreService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Genre was deleted");
     }
 
     @Override
@@ -53,7 +53,7 @@ public class GenreControllerImpl implements CrudController<GenreDto> {
     public ResponseEntity<?> update(@RequestBody @Valid GenreDto genre, @PathVariable Long id) {
         genre.setId(id);
         genreService.update(genre);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).body("Genre was updated");
     }
 
     @GetMapping

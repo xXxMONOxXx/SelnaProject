@@ -29,14 +29,14 @@ public class ItemControllerImpl implements CrudController<ItemDto> {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid ItemDto item) {
         itemService.save(item);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Item was created");
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         itemService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Item was deleted");
     }
 
     @Override
@@ -51,6 +51,6 @@ public class ItemControllerImpl implements CrudController<ItemDto> {
     public ResponseEntity<?> update(@RequestBody @Valid ItemDto item, @PathVariable Long id) {
         item.setId(id);
         itemService.update(item);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).body("Item was updated");
     }
 }

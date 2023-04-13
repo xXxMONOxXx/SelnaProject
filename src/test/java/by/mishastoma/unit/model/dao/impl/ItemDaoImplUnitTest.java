@@ -1,8 +1,9 @@
-package by.mishastoma.model.dao.impl;
+package by.mishastoma.unit.model.dao.impl;
 
 import by.mishastoma.config.db.HibernateConfig;
 import by.mishastoma.config.db.LiquibaseConfig;
 import by.mishastoma.model.dao.ItemDao;
+import by.mishastoma.model.dao.impl.ItemDaoImpl;
 import by.mishastoma.model.entity.Item;
 import by.mishastoma.util.TestUtils;
 import org.junit.Assert;

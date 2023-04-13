@@ -15,6 +15,6 @@ import javax.validation.constraints.Size;
 public class RoleDto {
     private Long id;
     @Size(max = 32, message = "Role maximum size is 32")
-    @Pattern(regexp="^[A-Za-z]+$", message = "Invalid role")
+    @Pattern(regexp = "[A-Za-z]+", message = "Invalid role")
     private String role;
 }

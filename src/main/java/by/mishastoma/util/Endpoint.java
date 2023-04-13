@@ -2,7 +2,7 @@ package by.mishastoma.util;
 
 public class Endpoint {
 
-    private Endpoint(){
+    private Endpoint() {
 
     }
 

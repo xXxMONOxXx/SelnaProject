@@ -26,7 +26,6 @@ import static by.mishastoma.util.Endpoint.*;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired

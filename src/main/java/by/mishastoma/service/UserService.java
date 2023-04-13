@@ -16,5 +16,5 @@ public interface UserService extends CrudService<UserDto> {
 
     String signIn(UserDto user);
 
-    boolean tryLogIn(String surname, String password);
+    void signUp(UserDto user);
 }

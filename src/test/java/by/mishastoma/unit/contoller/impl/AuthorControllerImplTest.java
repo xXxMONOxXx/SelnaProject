@@ -1,4 +1,4 @@
-package by.mishastoma.controller.impl.unit;
+package by.mishastoma.unit.contoller.impl;
 
 import by.mishastoma.config.ControllerTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
@@ -50,7 +50,7 @@ public class AuthorControllerImplTest {
         //when
         mockMvc.perform(MockMvcRequestBuilders.delete("/authors/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
         //then
         Mockito.verify(authorService, Mockito.times(1)).delete(id);
     }

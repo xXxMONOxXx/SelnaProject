@@ -1,4 +1,4 @@
-package by.mishastoma.controller.impl.unit;
+package by.mishastoma.unit.contoller.impl;
 
 import by.mishastoma.config.ControllerTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
@@ -53,7 +53,7 @@ public class UserControllerImplTest {
         //when
         mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
         //then
         Mockito.verify(userService, Mockito.times(1)).delete(id);
     }
@@ -68,9 +68,8 @@ public class UserControllerImplTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtils.buildDefaultUserJson()))
-                .andExpect(status().isCreated());
-        //then
-        Mockito.verify(userService, Mockito.times(1)).save(userDto);
+                //then
+                .andExpect(status().isLocked());
     }
 
     @Test

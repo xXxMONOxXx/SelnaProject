@@ -27,14 +27,14 @@ public class AuthorControllerImpl implements CrudController<AuthorDto> {
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody AuthorDto author) {
         authorService.save(author);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Author was created");
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         authorService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Author was deleted");
     }
 
     @Override
@@ -49,6 +49,6 @@ public class AuthorControllerImpl implements CrudController<AuthorDto> {
     public ResponseEntity<?> update(@RequestBody @Valid AuthorDto author, @PathVariable Long id) {
         author.setId(id);
         authorService.update(author);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).body("Author was updated");
     }
 }

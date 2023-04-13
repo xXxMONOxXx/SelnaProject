@@ -4,6 +4,7 @@ import by.mishastoma.exception.AuthorNotFoundException;
 import by.mishastoma.exception.BookNotFoundException;
 import by.mishastoma.exception.GenreNotFoundException;
 import by.mishastoma.exception.ItemNotFoundException;
+import by.mishastoma.exception.UniqueIdentifierIsTaken;
 import by.mishastoma.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,10 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> handleUserNotFound() {
         return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UniqueIdentifierIsTaken.class)
+    public ResponseEntity<?> handleUniqueIdentifier(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,11 +1,16 @@
 package by.mishastoma.service.impl;
 
+import by.mishastoma.exception.UniqueIdentifierIsTaken;
 import by.mishastoma.exception.UserNotFoundException;
 import by.mishastoma.model.dao.UserDao;
+import by.mishastoma.model.dao.impl.ProfileDao;
+import by.mishastoma.model.entity.Profile;
 import by.mishastoma.model.entity.Role;
 import by.mishastoma.model.entity.User;
 import by.mishastoma.service.UserService;
 import by.mishastoma.util.JwtUtils;
+import by.mishastoma.util.RoleUtil;
+import by.mishastoma.web.dto.ProfileDto;
 import by.mishastoma.web.dto.RoleDto;
 import by.mishastoma.web.dto.UserDto;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +25,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
-
     private final JwtUtils jwtUtils;
     private final UserDao userDao;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final ProfileDao profileDao;
 
     @Override
     @Transactional
@@ -90,18 +94,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean tryLogIn(String username, String password) {
-        Optional<User> user = userDao.findByUsername(username);
-        if (user.isEmpty()) {
-            log.info("Fail");
-            log.info(username);
-            log.info(password);
-            return false;
-        } else {
-            log.info(user.get().getPassword());
-            log.info(passwordEncoder.encode(password));
-            return user.get().getPassword().equals(passwordEncoder.encode(password));
-        }
+    @Transactional
+    public void signUp(UserDto user) {
+        areIdentifiersUnoccupied(user);
+        registerUser(user);
     }
 
     @Override
@@ -109,5 +105,34 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDao.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+    }
+
+    private void areIdentifiersUnoccupied(UserDto userDto) throws UniqueIdentifierIsTaken {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (userDao.findByUsername(userDto.getUsername()).isPresent()) {
+            stringBuilder.append("Username is already taken. ");
+        }
+        if (userDao.findUserByEmail(userDto.getProfile().getEmail()).isPresent()) {
+            stringBuilder.append("Email is already in use. ");
+        }
+        if (userDao.findUserByPhone(userDto.getProfile().getPhone()).isPresent()) {
+            stringBuilder.append("Phone is already is use. ");
+        }
+        if (!stringBuilder.isEmpty()) {
+            throw new UniqueIdentifierIsTaken(stringBuilder.toString());
+        }
+    }
+
+    private void registerUser(UserDto user) {
+        user.setRole(RoleUtil.createDefaultRole());
+        user.setItems(null);
+        user.setId(null);
+        user.setIsBlocked(false);
+        ProfileDto profile = user.getProfile();
+        user.setProfile(null);
+        User saveUser = userDao.save(modelMapper.map(user, User.class));
+        profile.setUserId(saveUser.getId());
+        profile.setUser(modelMapper.map(saveUser, UserDto.class));
+        profileDao.save(modelMapper.map(profile, Profile.class));
     }
 }

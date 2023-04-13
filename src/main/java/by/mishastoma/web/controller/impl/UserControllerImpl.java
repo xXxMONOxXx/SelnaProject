@@ -47,15 +47,14 @@ public class UserControllerImpl implements CrudController<UserDto> {
     @Override
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid UserDto user) {
-        userService.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.LOCKED).body("User signup instead of save");
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         userService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User was deleted");
     }
 
     @Override
@@ -76,7 +75,7 @@ public class UserControllerImpl implements CrudController<UserDto> {
     public ResponseEntity<?> update(@RequestBody UserDto user, @PathVariable Long id) {
         user.setId(id);
         userService.update(user);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).body("User was updated");
     }
 
     @GetMapping
@@ -103,5 +102,11 @@ public class UserControllerImpl implements CrudController<UserDto> {
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUp(@RequestBody @Valid UserDto user) {
+        userService.signUp(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User was successfully registered");
     }
 }
