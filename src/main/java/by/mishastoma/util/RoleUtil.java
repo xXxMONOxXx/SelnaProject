@@ -1,13 +1,16 @@
 package by.mishastoma.util;
 
 import by.mishastoma.web.dto.RoleDto;
-import lombok.experimental.UtilityClass;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-@UtilityClass
+@Component
 public class RoleUtil {
 
-    private Long ID = 1L;
-    private String ROLE = "user";
+    @Value("${default.role.id}")
+    private Long ID;
+    @Value("${default.role}")
+    private String ROLE;
 
     public RoleDto createDefaultRole() {
         return RoleDto.builder()

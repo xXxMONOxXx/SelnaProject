@@ -2,6 +2,8 @@ package by.mishastoma.service.impl;
 
 import by.mishastoma.exception.BookNotFoundException;
 import by.mishastoma.model.dao.BookDao;
+import by.mishastoma.model.dao.ItemDao;
+import by.mishastoma.model.dao.UserDao;
 import by.mishastoma.model.entity.Book;
 import by.mishastoma.service.BookService;
 import by.mishastoma.web.dto.BookDto;

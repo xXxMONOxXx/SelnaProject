@@ -56,10 +56,9 @@ public class BookControllerImpl implements CrudController<BookDto> {
     }
 
     @GetMapping
-    public ResponseEntity<BookDto> findBookByIsbn(@RequestParam
-                                                  @Size(min = 10, max = 10, message = "ISBN must be 10 or 13 characters long")
-                                                  @Size(min = 13, max = 13, message = "ISBN must be 10 or 13 characters long")
-                                                  String isbn) {
+    public ResponseEntity<BookDto> findBookByIsbn
+            (@RequestParam @Size(min = 10, max = 10, message = "ISBN must be 10 or 13 characters long")
+             @Size(min = 13, max = 13, message = "ISBN must be 10 or 13 characters long") String isbn) {
         BookDto book = bookService.findBookByIsbn(isbn);
         return ResponseEntity.ok(book);
     }

@@ -73,7 +73,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             Root<Profile> root = criteriaQuery.from(Profile.class);
             criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(Profile_.PHONE), phone));
             return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult().getUser());
-            //todo check
         } catch (NoResultException e) {
             return Optional.empty();
         }
@@ -87,7 +86,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             Root<Profile> root = criteriaQuery.from(Profile.class);
             criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(Profile_.EMAIL), email));
             return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult().getUser());
-            //todo check
         } catch (NoResultException e) {
             return Optional.empty();
         }

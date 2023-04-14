@@ -1,6 +1,6 @@
 package by.mishastoma.service.impl;
 
-import by.mishastoma.exception.UniqueIdentifierIsTaken;
+import by.mishastoma.exception.UniqueIdentifierIsTakenException;
 import by.mishastoma.exception.UserNotFoundException;
 import by.mishastoma.model.dao.UserDao;
 import by.mishastoma.model.dao.impl.ProfileDao;
@@ -30,10 +30,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
+    private final RoleUtil roleUtil;
     private final JwtUtils jwtUtils;
     private final UserDao userDao;
     private final ModelMapper modelMapper;
-    private final PasswordEncoder passwordEncoder;
     private final ProfileDao profileDao;
 
     @Override
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
     }
 
-    private void areIdentifiersUnoccupied(UserDto userDto) throws UniqueIdentifierIsTaken {
+    private void areIdentifiersUnoccupied(UserDto userDto) throws UniqueIdentifierIsTakenException {
         StringBuilder stringBuilder = new StringBuilder();
         if (userDao.findByUsername(userDto.getUsername()).isPresent()) {
             stringBuilder.append("Username is already taken. ");
@@ -119,12 +119,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             stringBuilder.append("Phone is already is use. ");
         }
         if (!stringBuilder.isEmpty()) {
-            throw new UniqueIdentifierIsTaken(stringBuilder.toString());
+            throw new UniqueIdentifierIsTakenException(stringBuilder.toString());
         }
     }
 
     private void registerUser(UserDto user) {
-        user.setRole(RoleUtil.createDefaultRole());
+        user.setRole(roleUtil.createDefaultRole());
         user.setItems(null);
         user.setId(null);
         user.setIsBlocked(false);

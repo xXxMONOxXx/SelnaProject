@@ -13,6 +13,9 @@ public class Endpoint {
     public static final String AUTHORS_URL = "/authors/**";
     public static final String ADMIN = "ROLE_admin";
     public static final String LIBRARIAN = "ROLE_librarian";
+    public static final String USER = "ROLE_user";
     public static final String SIGN_IN = "signin";
     public static final String SIGN_UP = "signup";
+    public static final String ASSIGN = "assign/**";
+    public static final String UNASSIGN = "unassign";
 }
