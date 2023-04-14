@@ -16,14 +16,16 @@ import by.mishastoma.web.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -62,6 +64,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void update(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
         userDao.update(user);
+    }
+
+    @Override
+    @Transactional
+    public Page<UserDto> getAll(int pageNumber, int pageSize) {
+        Page<User> users = userDao.getAll(pageNumber, pageSize);
+        List<UserDto> userDtos = new ArrayList<>();
+        for (User user : users.getContent()) {
+            userDtos.add(modelMapper.map(user, UserDto.class));
+        }
+        return new PageImpl<>(userDtos, users.getPageable(), users.getTotalElements());
     }
 
     @Override

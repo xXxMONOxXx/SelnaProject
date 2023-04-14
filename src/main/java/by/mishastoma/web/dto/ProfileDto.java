@@ -1,5 +1,6 @@
 package by.mishastoma.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,5 +35,6 @@ public class ProfileDto {
     private String email;
     @Past(message = "Invalid birthdate, user must be already be born")
     private Date birthdate;
+    @JsonIgnore
     private UserDto user;
 }

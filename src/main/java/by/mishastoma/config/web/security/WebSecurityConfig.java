@@ -73,6 +73,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, USERS_URL)
                 .hasAuthority(ADMIN)
 
+                .antMatchers(String.format("%s%s", USERS_URL, GET_ALL),
+                        String.format("%s%s", ITEMS_URL, GET_ALL))
+                .hasAuthority(ADMIN)
+
                 .anyRequest()
                 .authenticated()
 

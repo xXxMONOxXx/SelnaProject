@@ -6,6 +6,7 @@ import by.mishastoma.web.controller.CrudController;
 import by.mishastoma.web.dto.ItemDto;
 import by.mishastoma.web.dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +61,14 @@ public class ItemControllerImpl implements CrudController<ItemDto> {
         item.setId(id);
         itemService.update(item);
         return ResponseEntity.status(HttpStatus.OK).body("Item was updated");
+    }
+
+    @Override
+    @GetMapping("/browse")
+    public ResponseEntity<?> getAll(@RequestParam(name = "page", defaultValue = "1") int pageNumber,
+                                    @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+        Page<ItemDto> authors = itemService.getAll(pageNumber, pageSize);
+        return ResponseEntity.ok(authors);
     }
 
     @PostMapping("/assign/{bookId}")

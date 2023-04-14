@@ -18,4 +18,5 @@ public class Endpoint {
     public static final String SIGN_UP = "signup";
     public static final String ASSIGN = "assign/**";
     public static final String UNASSIGN = "unassign";
+    public static final String GET_ALL = "browse";
 }

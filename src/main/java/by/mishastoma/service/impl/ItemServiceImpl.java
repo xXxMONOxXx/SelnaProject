@@ -9,11 +9,15 @@ import by.mishastoma.web.dto.ItemDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +52,17 @@ public class ItemServiceImpl implements ItemService {
     public void update(ItemDto itemDto) {
         Item item = modelMapper.map(itemDto, Item.class);
         itemDao.update(item);
+    }
+
+    @Override
+    @Transactional
+    public Page<ItemDto> getAll(int pageNumber, int pageSize) {
+        Page<Item> items = itemDao.getAll(pageNumber, pageSize);
+        List<ItemDto> itemDtos = new ArrayList<>();
+        for (Item item : items.getContent()) {
+            itemDtos.add(modelMapper.map(item, ItemDto.class));
+        }
+        return new PageImpl<>(itemDtos, items.getPageable(), items.getTotalElements());
     }
 
     @Override

@@ -2,17 +2,19 @@ package by.mishastoma.service.impl;
 
 import by.mishastoma.exception.BookNotFoundException;
 import by.mishastoma.model.dao.BookDao;
-import by.mishastoma.model.dao.ItemDao;
-import by.mishastoma.model.dao.UserDao;
 import by.mishastoma.model.entity.Book;
 import by.mishastoma.service.BookService;
 import by.mishastoma.web.dto.BookDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +49,17 @@ public class BookServiceImpl implements BookService {
     public void update(BookDto bookDto) {
         Book book = modelMapper.map(bookDto, Book.class);
         bookDao.update(book);
+    }
+
+    @Override
+    @Transactional
+    public Page<BookDto> getAll(int pageNumber, int pageSize) {
+        Page<Book> books = bookDao.getAll(pageNumber, pageSize);
+        List<BookDto> bookDtos = new ArrayList<>();
+        for (Book book : books.getContent()) {
+            bookDtos.add(modelMapper.map(book, BookDto.class));
+        }
+        return new PageImpl<>(bookDtos, books.getPageable(), books.getTotalElements());
     }
 
     @Override

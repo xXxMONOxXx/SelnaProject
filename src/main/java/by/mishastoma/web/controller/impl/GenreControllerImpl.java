@@ -5,6 +5,7 @@ import by.mishastoma.web.controller.CrudController;
 import by.mishastoma.web.dto.GenreDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,6 +55,14 @@ public class GenreControllerImpl implements CrudController<GenreDto> {
         genre.setId(id);
         genreService.update(genre);
         return ResponseEntity.status(HttpStatus.OK).body("Genre was updated");
+    }
+
+    @Override
+    @GetMapping("/browse")
+    public ResponseEntity<?> getAll(@RequestParam(name = "page", defaultValue = "1") int pageNumber,
+                                    @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+        Page<GenreDto> authors = genreService.getAll(pageNumber, pageSize);
+        return ResponseEntity.ok(authors);
     }
 
     @GetMapping

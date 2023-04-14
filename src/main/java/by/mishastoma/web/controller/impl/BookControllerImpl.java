@@ -4,6 +4,7 @@ import by.mishastoma.service.BookService;
 import by.mishastoma.web.controller.CrudController;
 import by.mishastoma.web.dto.BookDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -53,6 +54,14 @@ public class BookControllerImpl implements CrudController<BookDto> {
         book.setId(id);
         bookService.update(book);
         return ResponseEntity.status(HttpStatus.OK).body("Book was updated");
+    }
+
+    @Override
+    @GetMapping("/browse")
+    public ResponseEntity<?> getAll(@RequestParam(name = "page", defaultValue = "1") int pageNumber,
+                                    @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+        Page<BookDto> authors = bookService.getAll(pageNumber, pageSize);
+        return ResponseEntity.ok(authors);
     }
 
     @GetMapping

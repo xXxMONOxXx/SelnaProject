@@ -4,6 +4,7 @@ import by.mishastoma.service.AuthorService;
 import by.mishastoma.web.controller.CrudController;
 import by.mishastoma.web.dto.AuthorDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -50,5 +52,13 @@ public class AuthorControllerImpl implements CrudController<AuthorDto> {
         author.setId(id);
         authorService.update(author);
         return ResponseEntity.status(HttpStatus.OK).body("Author was updated");
+    }
+
+    @Override
+    @GetMapping("/browse")
+    public ResponseEntity<?> getAll(@RequestParam(name = "page", defaultValue = "1") int pageNumber,
+                                    @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+        Page<AuthorDto> authors = authorService.getAll(pageNumber, pageSize);
+        return ResponseEntity.ok(authors);
     }
 }
