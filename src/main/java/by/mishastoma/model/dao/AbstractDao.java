@@ -51,7 +51,7 @@ public abstract class AbstractDao<T> {
                 this::countEntities);
     }
 
-    private Long countEntities() {
+    protected Long countEntities() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<T> root = cq.from(type);

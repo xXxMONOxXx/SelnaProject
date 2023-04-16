@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -70,11 +68,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public Page<UserDto> getAll(int pageNumber, int pageSize) {
         Page<User> users = userDao.getAll(pageNumber, pageSize);
-        List<UserDto> userDtos = new ArrayList<>();
-        for (User user : users.getContent()) {
-            userDtos.add(modelMapper.map(user, UserDto.class));
-        }
-        return new PageImpl<>(userDtos, users.getPageable(), users.getTotalElements());
+        return users.map(mappingContext -> modelMapper.map(mappingContext, UserDto.class));
     }
 
     @Override
@@ -143,9 +137,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setIsBlocked(false);
         ProfileDto profile = user.getProfile();
         user.setProfile(null);
+
         User saveUser = userDao.save(modelMapper.map(user, User.class));
+
         profile.setUserId(saveUser.getId());
         profile.setUser(modelMapper.map(saveUser, UserDto.class));
+
         profileDao.save(modelMapper.map(profile, Profile.class));
     }
 }

@@ -8,13 +8,10 @@ import by.mishastoma.web.dto.AuthorDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
@@ -56,10 +53,13 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional
     public Page<AuthorDto> getAll(int pageNumber, int pageSize) {
         Page<Author> authors = authorDao.getAll(pageNumber, pageSize);
-        List<AuthorDto> authorDtos = new ArrayList<>();
-        for (Author author : authors.getContent()) {
-            authorDtos.add(modelMapper.map(author, AuthorDto.class));
-        }
-        return new PageImpl<>(authorDtos, authors.getPageable(), authors.getTotalElements());
+        return authors.map(mappingContext -> modelMapper.map(mappingContext, AuthorDto.class));
+    }
+
+    @Override
+    @Transactional
+    public Page<AuthorDto> search(AuthorDto authorDto, int pageNumber, int pageSize) {
+        Page<Author> authors = authorDao.search(modelMapper.map(authorDto, Author.class), pageNumber, pageSize);
+        return authors.map(mappingContext -> modelMapper.map(mappingContext, AuthorDto.class));
     }
 }

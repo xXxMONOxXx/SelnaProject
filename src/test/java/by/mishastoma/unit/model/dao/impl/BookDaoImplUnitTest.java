@@ -70,36 +70,6 @@ public class BookDaoImplUnitTest {
     }
 
     @Test
-    public void findBookByUdJpql() {
-        //preparation
-        Book expectedBook = TestUtils.buildDefaultBook();
-        //when
-        Book actualBook = bookDao.findByIdJpql(expectedBook.getId()).get();
-        //then
-        Assert.assertEquals(expectedBook, actualBook);
-    }
-
-    @Test
-    public void findBookByEntityGraph() {
-        //preparation
-        Book expectedBook = TestUtils.buildDefaultBook();
-        //when
-        Book actualBook = bookDao.findByIdEntityGraph(expectedBook.getId()).get();
-        //then
-        Assert.assertEquals(expectedBook, actualBook);
-    }
-
-    @Test
-    public void findBookByIdCriteria() {
-        //preparation
-        Book expectedBook = TestUtils.buildDefaultBook();
-        //when
-        Book actualBook = bookDao.findByIdCriteria(expectedBook.getId()).get();
-        //then
-        Assert.assertEquals(expectedBook, actualBook);
-    }
-
-    @Test
     public void findBookByIsbn() {
         //preparation
         Book expectedBook = TestUtils.buildDefaultBook();

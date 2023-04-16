@@ -10,14 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -58,11 +55,7 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public Page<ItemDto> getAll(int pageNumber, int pageSize) {
         Page<Item> items = itemDao.getAll(pageNumber, pageSize);
-        List<ItemDto> itemDtos = new ArrayList<>();
-        for (Item item : items.getContent()) {
-            itemDtos.add(modelMapper.map(item, ItemDto.class));
-        }
-        return new PageImpl<>(itemDtos, items.getPageable(), items.getTotalElements());
+        return items.map(mappingContext -> modelMapper.map(mappingContext, ItemDto.class));
     }
 
     @Override
@@ -73,9 +66,11 @@ public class ItemServiceImpl implements ItemService {
             return false;
         }
         Item item = itemDao.getFreeItemForBook(bookId).orElseThrow(() -> new NoFreeBooksFoundException(bookId));
+
         item.setUserId(userId);
         item.setTakingDate(new Date(System.currentTimeMillis()));
         item.setExpirationDate(expirationDate);
+
         itemDao.update(item);
         return true;
     }
@@ -84,9 +79,11 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void unassignItem(Long itemId) {
         Item item = itemDao.findById(itemId).orElseThrow(() -> new ItemNotFoundException(itemId));
+
         item.setUserId(null);
         item.setExpirationDate(null);
         item.setTakingDate(null);
+
         itemDao.update(item);
     }
 }

@@ -61,4 +61,12 @@ public class AuthorControllerImpl implements CrudController<AuthorDto> {
         Page<AuthorDto> authors = authorService.getAll(pageNumber, pageSize);
         return ResponseEntity.ok(authors);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> search(@RequestBody AuthorDto author,
+                                    @RequestParam(name = "page", defaultValue = "1") int pageNumber,
+                                    @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+        Page<AuthorDto> authors = authorService.search(author, pageNumber, pageSize);
+        return ResponseEntity.ok(authors);
+    }
 }
