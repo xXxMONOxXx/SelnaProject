@@ -7,6 +7,7 @@ import by.mishastoma.service.AuthorService;
 import by.mishastoma.web.dto.AuthorDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,5 +47,19 @@ public class AuthorServiceImpl implements AuthorService {
     public void update(AuthorDto authorDto) {
         Author author = modelMapper.map(authorDto, Author.class);
         authorDao.update(author);
+    }
+
+    @Override
+    @Transactional
+    public Page<AuthorDto> getAll(int pageNumber, int pageSize) {
+        Page<Author> authors = authorDao.getAll(pageNumber, pageSize);
+        return authors.map(mappingContext -> modelMapper.map(mappingContext, AuthorDto.class));
+    }
+
+    @Override
+    @Transactional
+    public Page<AuthorDto> search(AuthorDto authorDto, int pageNumber, int pageSize) {
+        Page<Author> authors = authorDao.search(modelMapper.map(authorDto, Author.class), pageNumber, pageSize);
+        return authors.map(mappingContext -> modelMapper.map(mappingContext, AuthorDto.class));
     }
 }

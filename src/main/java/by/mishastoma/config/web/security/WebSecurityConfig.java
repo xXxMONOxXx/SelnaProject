@@ -25,8 +25,6 @@ import static by.mishastoma.util.Endpoint.*;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -60,6 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, GENRES_URL, BOOKS_URL, AUTHORS_URL)
                 .permitAll()
 
+                .antMatchers(String.format("%s%s", ITEMS_URL, ASSIGN),
+                        String.format("%s%s", ITEMS_URL, UNASSIGN)).hasAnyAuthority(ADMIN, LIBRARIAN, USER)
+
                 .antMatchers(HttpMethod.PUT, GENRES_URL, BOOKS_URL, AUTHORS_URL, ITEMS_URL)
                 .hasAnyAuthority(LIBRARIAN, ADMIN)
 
@@ -71,6 +72,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.PUT, USERS_URL)
                 .hasAuthority(ADMIN)
+
+                .antMatchers(String.format("%s%s", USERS_URL, GET_ALL),
+                        String.format("%s%s", ITEMS_URL, GET_ALL))
+                .hasAuthority(ADMIN)
+
+                .antMatchers(String.format("%s%s", ITEMS_URL, GET_BY_BOOK_ID))
+                .hasAnyAuthority(LIBRARIAN, ADMIN)
 
                 .anyRequest()
                 .authenticated()

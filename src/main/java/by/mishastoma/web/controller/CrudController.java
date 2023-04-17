@@ -10,4 +10,6 @@ public interface CrudController<T> {
     ResponseEntity<T> findById(Long id);
 
     ResponseEntity<?> update(T t, Long id);
+
+    ResponseEntity<?> getAll(int pageNumber, int pageSize);
 }

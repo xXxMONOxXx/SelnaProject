@@ -1,8 +1,9 @@
-package by.mishastoma.model.dao.impl;
+package by.mishastoma.unit.model.dao.impl;
 
 import by.mishastoma.config.db.HibernateConfig;
 import by.mishastoma.config.db.LiquibaseConfig;
 import by.mishastoma.model.dao.BookDao;
+import by.mishastoma.model.dao.impl.BookDaoImpl;
 import by.mishastoma.model.entity.Book;
 import by.mishastoma.util.TestUtils;
 import org.junit.Assert;
@@ -64,36 +65,6 @@ public class BookDaoImplUnitTest {
         Book expectedBook = TestUtils.buildDefaultBook();
         //when
         Book actualBook = bookDao.findById(expectedBook.getId()).get();
-        //then
-        Assert.assertEquals(expectedBook, actualBook);
-    }
-
-    @Test
-    public void findBookByUdJpql() {
-        //preparation
-        Book expectedBook = TestUtils.buildDefaultBook();
-        //when
-        Book actualBook = bookDao.findByIdJpql(expectedBook.getId()).get();
-        //then
-        Assert.assertEquals(expectedBook, actualBook);
-    }
-
-    @Test
-    public void findBookByEntityGraph() {
-        //preparation
-        Book expectedBook = TestUtils.buildDefaultBook();
-        //when
-        Book actualBook = bookDao.findByIdEntityGraph(expectedBook.getId()).get();
-        //then
-        Assert.assertEquals(expectedBook, actualBook);
-    }
-
-    @Test
-    public void findBookByIdCriteria() {
-        //preparation
-        Book expectedBook = TestUtils.buildDefaultBook();
-        //when
-        Book actualBook = bookDao.findByIdCriteria(expectedBook.getId()).get();
         //then
         Assert.assertEquals(expectedBook, actualBook);
     }

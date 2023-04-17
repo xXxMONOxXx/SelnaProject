@@ -8,6 +8,7 @@ import by.mishastoma.web.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,15 +48,14 @@ public class UserControllerImpl implements CrudController<UserDto> {
     @Override
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Valid UserDto user) {
-        userService.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.LOCKED).body("User signup instead of save");
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         userService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User was deleted");
     }
 
     @Override
@@ -76,7 +76,15 @@ public class UserControllerImpl implements CrudController<UserDto> {
     public ResponseEntity<?> update(@RequestBody UserDto user, @PathVariable Long id) {
         user.setId(id);
         userService.update(user);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).body("User was updated");
+    }
+
+    @Override
+    @GetMapping("/browse")
+    public ResponseEntity<?> getAll(@RequestParam(name = "page", defaultValue = "1") int pageNumber,
+                                    @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+        Page<UserDto> authors = userService.getAll(pageNumber, pageSize);
+        return ResponseEntity.ok(authors);
     }
 
     @GetMapping
@@ -103,5 +111,11 @@ public class UserControllerImpl implements CrudController<UserDto> {
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUp(@RequestBody @Valid UserDto user) {
+        userService.signUp(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User was successfully registered");
     }
 }

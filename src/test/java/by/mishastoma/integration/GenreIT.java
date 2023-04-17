@@ -1,8 +1,8 @@
-package by.mishastoma.controller.impl.it;
+package by.mishastoma.integration;
 
 import by.mishastoma.config.AppConfig;
 import by.mishastoma.util.TestUtils;
-import by.mishastoma.web.dto.AuthorDto;
+import by.mishastoma.web.dto.GenreDto;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
-public class AuthorIT {
+public class GenreIT {
 
     private MockMvc mockMvc;
     @Autowired
@@ -41,45 +41,12 @@ public class AuthorIT {
         mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
                 .apply(springSecurity())
                 .build();
-        Serializable id = TestUtils.buildGetAuthorDto().getId();
+        Serializable id = TestUtils.buildDefaultGenre().getId();
         //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/authors/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/genres/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
         //then
-        mockMvc.perform(MockMvcRequestBuilders.get("/authors/{id}", id)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    public void deleteTest_Unauthorized() throws Exception {
-        //preparation
-        mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
-                .apply(springSecurity())
-                .build();
-        Serializable id = TestUtils.buildGetAuthorDto().getId();
-        //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/authors/{id}", id)
-                        .contentType(MediaType.APPLICATION_JSON))
-                //then
-                .andExpect(status().isForbidden());
-
-    }
-
-    @Test
-    public void deleteTest_AccessDenied() throws Exception {
-        //preparation
-        mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
-                .apply(springSecurity())
-                .build();
-        Serializable id = TestUtils.buildGetAuthorDto().getId();
-        //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/authors/{id}", id)
-                        .contentType(MediaType.APPLICATION_JSON))
-                //then
-                .andExpect(status().isForbidden());
-
     }
 
     @Test
@@ -89,15 +56,13 @@ public class AuthorIT {
         mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
                 .apply(springSecurity())
                 .build();
+        GenreDto genreDto = TestUtils.buildSaveGenreDto();
         //when
-        mockMvc.perform(MockMvcRequestBuilders.post("/authors")
+        mockMvc.perform(MockMvcRequestBuilders.post("/genres")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtils.buildDefaultAuthorJson()))
+                        .content(TestUtils.buildDefaultGenreJson()))
                 .andExpect(status().isCreated());
         //then
-        mockMvc.perform(MockMvcRequestBuilders.get("/authors/{id}", 1)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
     }
 
     @Test
@@ -107,15 +72,12 @@ public class AuthorIT {
         mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
                 .apply(springSecurity())
                 .build();
-        AuthorDto authorDto = TestUtils.buildUpdateAuthorDto();
+        GenreDto genreDto = TestUtils.buildUpdateGenreIT();
         //when
-        mockMvc.perform(MockMvcRequestBuilders.put("/authors/{id}", authorDto.getId())
+        mockMvc.perform(MockMvcRequestBuilders.put("/genres/{id}", genreDto.getId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtils.buildUpdateAuthorJson()))
-                .andExpect(status().isOk());
-        //then
-        mockMvc.perform(MockMvcRequestBuilders.get("/authors/{id}", authorDto.getId())
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .content(TestUtils.buildUpdateGenreJsonIT()))
+                //then
                 .andExpect(status().isOk());
     }
 
@@ -125,16 +87,16 @@ public class AuthorIT {
         mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
                 .apply(springSecurity())
                 .build();
-        AuthorDto authorDto = TestUtils.buildDefaultItForAuthor();
-        Serializable id = authorDto.getId();
+        GenreDto genreDto = TestUtils.buildDefaultToFindGenre();
+        Serializable id = genreDto.getId();
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/authors/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.get("/genres/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 //then
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value(authorDto.getId()))
-                .andExpect(jsonPath("firstname").value(authorDto.getFirstname()))
-                .andExpect(jsonPath("surname").value(authorDto.getSurname()));
+                .andExpect(jsonPath("id").value(genreDto.getId()))
+                .andExpect(jsonPath("name").value(genreDto.getName()));
+
     }
 
     @Test
@@ -145,7 +107,40 @@ public class AuthorIT {
                 .build();
         Serializable id = TestUtils.NOT_FOUND_ID;
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/authors/{id}", id)
+        mockMvc.perform(MockMvcRequestBuilders.get("/genres/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                //then
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void findByName() throws Exception {
+        //preparation
+        mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
+                .apply(springSecurity())
+                .build();
+        GenreDto genreDto = TestUtils.buildDefaultToFindGenre();
+        String name = genreDto.getName();
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/genres/?name=" + name)
+                        .contentType(MediaType.APPLICATION_JSON))
+                //then
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value(genreDto.getId()))
+                .andExpect(jsonPath("name").value(genreDto.getName()));
+
+    }
+
+    @Test
+    public void findByName_NotFound() throws Exception {
+        //preparation
+        mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
+                .apply(springSecurity())
+                .build();
+        String name = TestUtils.GENRE_NOT_FOUND;
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/genres/?name=" + name)
                         .contentType(MediaType.APPLICATION_JSON))
                 //then
                 .andExpect(status().isNotFound());

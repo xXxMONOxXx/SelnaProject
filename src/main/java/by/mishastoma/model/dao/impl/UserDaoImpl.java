@@ -2,6 +2,8 @@ package by.mishastoma.model.dao.impl;
 
 import by.mishastoma.model.dao.AbstractDao;
 import by.mishastoma.model.dao.UserDao;
+import by.mishastoma.model.entity.Profile;
+import by.mishastoma.model.entity.Profile_;
 import by.mishastoma.model.entity.Role;
 import by.mishastoma.model.entity.User;
 import by.mishastoma.model.entity.User_;
@@ -58,6 +60,32 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             root.fetch(User_.PROFILE, JoinType.INNER);
             criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(User_.USERNAME), username));
             return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<User> findUserByPhone(String phone) {
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Profile> criteriaQuery = criteriaBuilder.createQuery(Profile.class);
+            Root<Profile> root = criteriaQuery.from(Profile.class);
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(Profile_.PHONE), phone));
+            return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult().getUser());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Profile> criteriaQuery = criteriaBuilder.createQuery(Profile.class);
+            Root<Profile> root = criteriaQuery.from(Profile.class);
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get(Profile_.EMAIL), email));
+            return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult().getUser());
         } catch (NoResultException e) {
             return Optional.empty();
         }

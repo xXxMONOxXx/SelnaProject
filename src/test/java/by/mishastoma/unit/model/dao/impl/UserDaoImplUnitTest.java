@@ -1,8 +1,9 @@
-package by.mishastoma.model.dao.impl;
+package by.mishastoma.unit.model.dao.impl;
 
 import by.mishastoma.config.db.HibernateConfig;
 import by.mishastoma.config.db.LiquibaseConfig;
 import by.mishastoma.model.dao.UserDao;
+import by.mishastoma.model.dao.impl.UserDaoImpl;
 import by.mishastoma.model.entity.Role;
 import by.mishastoma.model.entity.User;
 import by.mishastoma.util.TestUtils;

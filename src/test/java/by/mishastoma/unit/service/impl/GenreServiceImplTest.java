@@ -1,4 +1,4 @@
-package by.mishastoma.service.impl;
+package by.mishastoma.unit.service.impl;
 
 import by.mishastoma.config.ServiceTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;

@@ -15,4 +15,8 @@ public interface UserDao extends GenericDao<User> {
     List<User> findByRole(Role role);
 
     Optional<User> findByUsername(String username);
+
+    Optional<User> findUserByPhone(String phone);
+
+    Optional<User> findUserByEmail(String email);
 }

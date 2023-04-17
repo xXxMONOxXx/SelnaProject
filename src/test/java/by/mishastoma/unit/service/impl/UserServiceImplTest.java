@@ -1,9 +1,10 @@
-package by.mishastoma.service.impl;
+package by.mishastoma.unit.service.impl;
 
 import by.mishastoma.config.ServiceTestConfig;
 import by.mishastoma.config.mapper.MapperConfig;
 import by.mishastoma.exception.UserNotFoundException;
 import by.mishastoma.model.dao.UserDao;
+import by.mishastoma.model.dao.impl.ProfileDao;
 import by.mishastoma.model.entity.User;
 import by.mishastoma.service.UserService;
 import by.mishastoma.util.TestUtils;
@@ -30,6 +31,9 @@ public class UserServiceImplTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ProfileDao profileDao;
 
     @Test
     public void saveTest() {
