@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -70,8 +71,8 @@ public class BookControllerImpl implements CrudController<BookDto> {
 
     @GetMapping
     public ResponseEntity<BookDto> findBookByIsbn
-            (@RequestParam @Size(min = 10, max = 10, message = "ISBN must be 10 or 13 characters long")
-             @Size(min = 13, max = 13, message = "ISBN must be 10 or 13 characters long") String isbn) {
+            (@RequestParam @Pattern(regexp = "\\d{10}|\\d{13}",
+                    message = "ISBN must be 10 or 13 characters long and contain only numbers") String isbn) {
         BookDto book = bookService.findBookByIsbn(isbn);
         return ResponseEntity.ok(book);
     }

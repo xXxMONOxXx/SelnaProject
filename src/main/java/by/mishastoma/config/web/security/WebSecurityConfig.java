@@ -77,6 +77,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         String.format("%s%s", ITEMS_URL, GET_ALL))
                 .hasAuthority(ADMIN)
 
+                .antMatchers(String.format("%s%s", ITEMS_URL, GET_BY_BOOK_ID))
+                .hasAnyAuthority(LIBRARIAN, ADMIN)
+
                 .anyRequest()
                 .authenticated()
 

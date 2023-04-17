@@ -4,6 +4,9 @@ import by.mishastoma.model.dao.AbstractDao;
 import by.mishastoma.model.dao.ItemDao;
 import by.mishastoma.model.entity.Item;
 import by.mishastoma.model.entity.Item_;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -48,5 +51,16 @@ public class ItemDaoImpl extends AbstractDao<Item> implements ItemDao {
         Root<Item> root = criteriaQuery.from(Item.class);
         criteriaQuery.select(criteriaBuilder.count(root)).where(criteriaBuilder.equal(root.get(Item_.USER_ID), id));
         return entityManager.createQuery(criteriaQuery).getSingleResult();
+    }
+
+    @Override
+    public Page<Item> getItemsForBook(Long bookId, int pageNumber, int pageSize) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Item> query = builder.createQuery(Item.class);
+        Root<Item> root = query.from(Item.class);
+        query.select(root).where(builder.equal(root.get(Item_.BOOK_ID), bookId));
+        TypedQuery<Item> typedQuery = entityManager.createQuery(query);
+        return PageableExecutionUtils.getPage(typedQuery.getResultList(), PageRequest.of(pageNumber - 1, pageSize),
+                this::countEntities);
     }
 }

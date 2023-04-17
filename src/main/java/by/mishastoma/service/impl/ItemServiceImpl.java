@@ -86,4 +86,10 @@ public class ItemServiceImpl implements ItemService {
 
         itemDao.update(item);
     }
+
+    @Override
+    public Page<ItemDto> getItemsForBook(Long bookId, int pageNumber, int pageSize) {
+        Page<Item> items = itemDao.getItemsForBook(bookId, pageNumber, pageSize);
+        return items.map(mappingContext -> modelMapper.map(mappingContext, ItemDto.class));
+    }
 }

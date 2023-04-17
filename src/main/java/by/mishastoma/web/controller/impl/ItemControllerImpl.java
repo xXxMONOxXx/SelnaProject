@@ -97,4 +97,12 @@ public class ItemControllerImpl implements CrudController<ItemDto> {
             return ResponseEntity.status(HttpStatus.OK).body("Book was unassigned");
         }
     }
+
+    @GetMapping("/bookid/{bookId}")
+    public ResponseEntity<?> getItemsForBook(@PathVariable Long bookId,
+                                             @RequestParam(name = "page", defaultValue = "1") int pageNumber,
+                                             @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+        Page<ItemDto> items = itemService.getItemsForBook(bookId, pageNumber, pageSize);
+        return ResponseEntity.ok().body(items);
+    }
 }

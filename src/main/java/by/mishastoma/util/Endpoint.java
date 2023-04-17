@@ -1,11 +1,10 @@
 package by.mishastoma.util;
 
+
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class Endpoint {
-
-    private Endpoint() {
-
-    }
-
     public static final String USERS_URL = "/users/**";
     public static final String BOOKS_URL = "/books/**";
     public static final String ITEMS_URL = "/items/**";
@@ -19,4 +18,5 @@ public class Endpoint {
     public static final String ASSIGN = "assign/**";
     public static final String UNASSIGN = "unassign";
     public static final String GET_ALL = "browse";
+    public static final String GET_BY_BOOK_ID = "bookid/**";
 }

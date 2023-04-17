@@ -18,11 +18,9 @@ public class BookDto {
 
     private Long id;
     @Size(max = 256, message = "Title maximum size is 32")
-    @Pattern(regexp = "[a-zA-Z0-9_-]", message = "Invalid title")
+    @Pattern(regexp = "^[\\w\\s-]+$", message = "Invalid title")
     private String title;
-    @Size(min = 10, max = 10, message = "ISBN must be 10 or 13 characters long")
-    @Size(min = 13, max = 13, message = "ISBN must be 10 or 13 characters long")
-    @Pattern(regexp = "-?\\d+", message = "ISBN must contain only numbers")
+    @Pattern(regexp = "\\d{10}|\\d{13}", message = "ISBN must be 10 or 13 characters long and contain only numbers")
     private String isbn;
     private Date releaseDate;
     private Set<AuthorDto> authors;

@@ -13,7 +13,6 @@ import by.mishastoma.web.dto.GenreDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +27,6 @@ public class BookServiceImpl implements BookService {
 
     private final BookDao bookDao;
     private final ModelMapper modelMapper;
-    @Value("${sort.property.book}")
-    private String propertySort;
 
     @Override
     @Transactional

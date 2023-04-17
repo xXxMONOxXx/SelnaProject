@@ -18,6 +18,5 @@ public interface BookService extends CrudService<BookDto> {
 
     Page<BookDto> findBookByTitle(String title, int pageNumber, int pageSize);
 
-    Page<BookDto> findBookWithParameters(BookSearchRequest bookSearchRequest, int pageNumber,
-                                         int pageSize);
+    Page<BookDto> findBookWithParameters(BookSearchRequest bookSearchRequest, int pageNumber, int pageSize);
 }

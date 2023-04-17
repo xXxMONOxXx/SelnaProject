@@ -1,10 +1,12 @@
 package by.mishastoma.util;
 
 import by.mishastoma.web.dto.RoleDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class RoleUtil {
 
     @Value("${default.role.id}")
