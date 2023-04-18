@@ -9,7 +9,6 @@ import by.mishastoma.model.entity.Genre;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.support.PageableExecutionUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -23,7 +22,6 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
-@Component
 @Repository
 public class BookDaoImpl extends AbstractDao<Book> implements BookDao {
 

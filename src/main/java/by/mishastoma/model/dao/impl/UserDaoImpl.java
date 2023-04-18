@@ -7,7 +7,6 @@ import by.mishastoma.model.entity.Profile_;
 import by.mishastoma.model.entity.Role;
 import by.mishastoma.model.entity.User;
 import by.mishastoma.model.entity.User_;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -20,7 +19,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-@Component
 @Repository
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 

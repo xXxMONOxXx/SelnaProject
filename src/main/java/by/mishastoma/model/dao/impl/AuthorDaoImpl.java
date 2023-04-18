@@ -7,7 +7,6 @@ import by.mishastoma.model.entity.Author_;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.support.PageableExecutionUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -19,7 +18,6 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 @Repository
 public class AuthorDaoImpl extends AbstractDao<Author> implements AuthorDao {
     private AuthorDaoImpl(EntityManager entityManager) {

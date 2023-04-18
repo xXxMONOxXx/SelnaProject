@@ -3,7 +3,6 @@ package by.mishastoma.config.web.security;
 import by.mishastoma.web.filter.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +20,6 @@ import static by.mishastoma.util.Endpoint.*;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan("by.mishastoma")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
